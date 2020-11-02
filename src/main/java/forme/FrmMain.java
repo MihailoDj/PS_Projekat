@@ -27,7 +27,34 @@ public class FrmMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBarMain = new javax.swing.JMenuBar();
+        jMenuFilm = new javax.swing.JMenu();
+        jmiDodaj = new javax.swing.JMenuItem();
+        jMenuAbout = new javax.swing.JMenu();
+        jmiAboutSoftware = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jMenuFilm.setText("Film");
+
+        jmiDodaj.setText("Dodaj");
+        jmiDodaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiDodajActionPerformed(evt);
+            }
+        });
+        jMenuFilm.add(jmiDodaj);
+
+        jMenuBarMain.add(jMenuFilm);
+
+        jMenuAbout.setText("About");
+
+        jmiAboutSoftware.setText("Software");
+        jMenuAbout.add(jmiAboutSoftware);
+
+        jMenuBarMain.add(jMenuAbout);
+
+        setJMenuBar(jMenuBarMain);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -37,11 +64,15 @@ public class FrmMain extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 276, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jmiDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDodajActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiDodajActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +110,10 @@ public class FrmMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenuAbout;
+    private javax.swing.JMenuBar jMenuBarMain;
+    private javax.swing.JMenu jMenuFilm;
+    private javax.swing.JMenuItem jmiAboutSoftware;
+    private javax.swing.JMenuItem jmiDodaj;
     // End of variables declaration//GEN-END:variables
 }

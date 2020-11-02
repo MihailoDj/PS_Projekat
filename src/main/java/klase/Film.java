@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
-
-import forme.FrmPrijavljivanje;
+package klase;
 
 /**
  *
  * @author Mihailo
  */
-public class Main {
-    public static void main(String[] args) {
-        new FrmPrijavljivanje().setVisible(true);
-    }
+public class Film {
+    
 }

@@ -5,6 +5,13 @@
  */
 package forme;
 
+import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import klase.Korisnik;
+import kontroler.Kontroler;
+
 /**
  *
  * @author Mihailo
@@ -105,8 +112,7 @@ public class FrmPrijavljivanje extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLozinkaActionPerformed
 
     private void btnPrijavljivanjeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrijavljivanjeActionPerformed
-        this.dispose();
-        new FrmMain().setVisible(true);
+        prijaviKorisnika();
     }//GEN-LAST:event_btnPrijavljivanjeActionPerformed
 
     /**
@@ -151,4 +157,38 @@ public class FrmPrijavljivanje extends javax.swing.JFrame {
     private javax.swing.JTextField txtKorisnickoIme;
     private javax.swing.JPasswordField txtLozinka;
     // End of variables declaration//GEN-END:variables
+
+    private void overiFormu() throws Exception{
+        String korisnickoIme = txtKorisnickoIme.getText().trim();
+        String lozinka = String.valueOf(txtLozinka.getPassword());
+        String greska = "";
+        
+        if (korisnickoIme.isEmpty()) {
+            greska += "Unesite korisničko ime!\n";
+        }
+        
+        if (lozinka.isEmpty()) {
+            greska += "Unesite lozinku!\n";
+        }
+        
+        if (!greska.isEmpty()) {
+            throw new Exception(greska);
+        }
+    }
+
+    private void prijaviKorisnika() {
+        try {
+            overiFormu();
+            Kontroler kontroler = new Kontroler();
+            Korisnik korisnik = kontroler.prijaviKorisnika(txtKorisnickoIme.getText().trim(), 
+                    String.valueOf(txtLozinka.getPassword()));
+            
+            JOptionPane.showMessageDialog(this, "Dobrodošli, " + korisnik.getKorisnickoIme(), "Uspešno prijavljivanje", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+            new FrmMain().setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Greška!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

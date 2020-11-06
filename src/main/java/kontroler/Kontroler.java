@@ -5,21 +5,30 @@
  */
 package kontroler;
 
+import java.util.List;
 import klase.Korisnik;
-import korisnici.Korisnici;
+import korisnici.RepozitorijumKorisnika;
 
 /**
  *
  * @author Mihailo
  */
 public class Kontroler {
-    private final Korisnici korisnici;
+    private final RepozitorijumKorisnika repozitorijumKorisnika;
 
     public Kontroler() {
-        this.korisnici = new Korisnici();
+        this.repozitorijumKorisnika = new RepozitorijumKorisnika();
     }
     
-    public Korisnik prijavljivanje(String korisnickoIme, String lozinka){
-        return null;
+    public Korisnik prijaviKorisnika(String korisnickoIme, String lozinka) throws Exception{
+        List<Korisnik> korisnici = repozitorijumKorisnika.vratiSve();
+        
+        for (Korisnik korisnik : korisnici) {
+            if (korisnik.getKorisnickoIme().equals(korisnickoIme) && korisnik.getLozinka().equals(lozinka)) {
+                return korisnik;
+            }
+        }
+        
+        throw new Exception("Takav korisnik ne postoji!");
     }
 }

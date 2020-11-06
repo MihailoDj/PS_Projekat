@@ -12,27 +12,27 @@ import java.util.Objects;
  * @author Mihailo
  */
 public class Korisnik {
-    private Long korisnikID;
+    private int korisnikID;
     private String korisnickoIme;
     private String lozinka;
-    private Long ulogaID;
+    private boolean admin;
 
     public Korisnik() {
         
     }
     
-    public Korisnik(Long korisnikID, String korisnickoIme, String lozinka, Long ulogaID) {
+    public Korisnik(int korisnikID, String korisnickoIme, String lozinka, boolean admin) {
         this.korisnikID = korisnikID;
         this.korisnickoIme = korisnickoIme;
         this.lozinka = lozinka;
-        this.ulogaID = ulogaID;
+        this.admin = admin;
     }
 
-    public Long getKorisnikID() {
+    public int getKorisnikID() {
         return korisnikID;
     }
 
-    public void setKorisnikID(Long korisnikID) {
+    public void setKorisnikID(int korisnikID) {
         this.korisnikID = korisnikID;
     }
 
@@ -51,22 +51,22 @@ public class Korisnik {
     public void setLozinka(String lozinka) {
         this.lozinka = lozinka;
     }
-
-    public Long getUlogaID() {
-        return ulogaID;
+    
+    public boolean isAdmin() {
+        return admin;
     }
 
-    public void setUlogaID(Long ulogaID) {
-        this.ulogaID = ulogaID;
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 47 * hash + Objects.hashCode(this.korisnikID);
-        hash = 47 * hash + Objects.hashCode(this.korisnickoIme);
-        hash = 47 * hash + Objects.hashCode(this.lozinka);
-        hash = 47 * hash + Objects.hashCode(this.ulogaID);
+        int hash = 7;
+        hash = 73 * hash + this.korisnikID;
+        hash = 73 * hash + Objects.hashCode(this.korisnickoIme);
+        hash = 73 * hash + Objects.hashCode(this.lozinka);
+        hash = 73 * hash + (this.admin ? 1 : 0);
         return hash;
     }
 
@@ -90,8 +90,8 @@ public class Korisnik {
 
     @Override
     public String toString() {
-        return "Korisnik{" + "korisnikID=" + korisnikID + ", korisnickoIme=" + korisnickoIme + ", lozinka=" + lozinka + ", ulogaID=" + ulogaID + '}';
+        return "Korisnik{" + "korisnikID=" + korisnikID + ", korisnickoIme=" + korisnickoIme + ", lozinka=" + lozinka + ", admin=" + admin + '}';
     }
-    
+
     
 }

@@ -14,5 +14,6 @@ import forme.FrmPrijavljivanje;
 public class Main {
     public static void main(String[] args) {
         new FrmPrijavljivanje().setVisible(true);
+        //Netbeans remote push test
     }
 }

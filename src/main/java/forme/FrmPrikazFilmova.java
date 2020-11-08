@@ -5,10 +5,13 @@
  */
 package forme;
 
+import java.awt.Component;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import klase.Film;
+import klase.Reziser;
 import kontroler.Kontroler;
 
 /**
@@ -101,6 +104,21 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInformacijeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformacijeActionPerformed
+        if (tblFilmovi.getSelectedRow() != -1) {
+            Film film = new Film();
+            film.setFilmID((int)tblFilmovi.getValueAt(tblFilmovi.getSelectedRow(), 0));
+            film.setNaziv((String)tblFilmovi.getValueAt(tblFilmovi.getSelectedRow(), 1));
+            film.setDatumIzdanja((Date) tblFilmovi.getValueAt(tblFilmovi.getSelectedRow(), 2));
+            film.setProsecnaOcena((Double) tblFilmovi.getValueAt(tblFilmovi.getSelectedRow(), 3));
+            film.setReziser((Reziser)tblFilmovi.getValueAt(tblFilmovi.getSelectedRow(), 4));
+            film.setOpis("");
+            
+            FrmFilm frmFilm = new FrmFilm(new FrmMain(), true, film);
+            frmFilm.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Za prikaz informacija morate izabrati film", 
+                    "Greška", JOptionPane.ERROR_MESSAGE);
+        }
         
     }//GEN-LAST:event_btnInformacijeActionPerformed
 
@@ -118,7 +136,7 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
         popuniTabeluFilmova();
     }
 
-    private void popuniTabeluFilmova() {
+    public void popuniTabeluFilmova() {
         List<Film> filmovi = Kontroler.vratiInstancu().vratiSveFilmove();
         DefaultTableModel dtm = (DefaultTableModel) tblFilmovi.getModel();
         

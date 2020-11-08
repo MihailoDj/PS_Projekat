@@ -5,6 +5,7 @@
  */
 package forme;
 
+import com.sun.source.util.TaskEvent;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -28,6 +29,21 @@ public class FrmFilm extends javax.swing.JDialog {
         setTitle("Forma za rad sa filmovima");
         
         ucitajCB();
+        btnUkloni.setEnabled(false);
+        btnIzmeni.setEnabled(false);
+        btnDodaj.setEnabled(true);
+    }
+    
+    public FrmFilm(java.awt.Frame parent, boolean modal, Film film) {
+        super(parent, modal);
+        initComponents();
+        setLocationRelativeTo(null);
+        setTitle("Forma za rad sa filmovima");
+        
+        pripremiProzor(film);
+        btnUkloni.setEnabled(true);
+        btnIzmeni.setEnabled(true);
+        btnDodaj.setEnabled(false);
     }
 
     /**
@@ -51,6 +67,8 @@ public class FrmFilm extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtOpis = new javax.swing.JTextArea();
         btnDodaj = new javax.swing.JButton();
+        btnIzmeni = new javax.swing.JButton();
+        btnUkloni = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -76,34 +94,54 @@ public class FrmFilm extends javax.swing.JDialog {
             }
         });
 
+        btnIzmeni.setText("Izmeni film");
+        btnIzmeni.setEnabled(false);
+        btnIzmeni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniActionPerformed(evt);
+            }
+        });
+
+        btnUkloni.setText("Ukloni film");
+        btnUkloni.setEnabled(false);
+        btnUkloni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUkloniActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnDodaj)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblIFilmID, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblDatumIzdanja))
-                            .addGap(13, 13, 13)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtDatumIzdanja, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                                .addComponent(txtFilmID, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtNaziv)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblReziser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblOpis, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cbReziser, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblIFilmID, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDatumIzdanja))
+                        .addGap(13, 13, 13)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtDatumIzdanja, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                            .addComponent(txtFilmID, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtNaziv)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblReziser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblOpis, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbReziser, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnUkloni)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnIzmeni)
+                        .addGap(29, 29, 29)
+                        .addComponent(btnDodaj)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +167,11 @@ public class FrmFilm extends javax.swing.JDialog {
                     .addComponent(lblOpis)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnDodaj)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnDodaj)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnUkloni)
+                        .addComponent(btnIzmeni)))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -155,12 +197,44 @@ public class FrmFilm extends javax.swing.JDialog {
         txtNaziv.setText(null);
         txtDatumIzdanja.setText(null);
         txtOpis.setText(null);
-        cbReziser.setSelectedIndex(0);
+        cbReziser.setSelectedIndex(-1);
     }//GEN-LAST:event_btnDodajActionPerformed
+
+    private void btnUkloniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUkloniActionPerformed
+        Film film = new Film();
+        
+        film.setFilmID(Integer.parseInt(txtFilmID.getText().trim()));
+        film.setNaziv(txtNaziv.getText().trim());
+        film.setDatumIzdanja(new Date());
+        film.setOpis(txtOpis.getText().trim());
+        film.setReziser((Reziser)cbReziser.getSelectedItem());
+        film.setProsecnaOcena(0);
+        
+        Kontroler.vratiInstancu().ukloniFilm(film);
+        JOptionPane.showMessageDialog(this, "Uklonjen film: " + film.getNaziv(), "Info", JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
+    }//GEN-LAST:event_btnUkloniActionPerformed
+
+    private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
+        Film film = new Film();
+        
+        film.setFilmID(Integer.parseInt(txtFilmID.getText().trim()));
+        film.setNaziv(txtNaziv.getText().trim());
+        film.setDatumIzdanja(new Date());
+        film.setOpis(txtOpis.getText().trim());
+        film.setReziser((Reziser)cbReziser.getSelectedItem());
+        film.setProsecnaOcena(0);
+        
+        Kontroler.vratiInstancu().izmeniFilm(film);
+        JOptionPane.showMessageDialog(this, "Izmenjen film: " + film.getNaziv(), "Info", JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
+    }//GEN-LAST:event_btnIzmeniActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj;
+    private javax.swing.JButton btnIzmeni;
+    private javax.swing.JButton btnUkloni;
     private javax.swing.JComboBox<Object> cbReziser;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDatumIzdanja;
@@ -174,11 +248,12 @@ public class FrmFilm extends javax.swing.JDialog {
     private javax.swing.JTextArea txtOpis;
     // End of variables declaration//GEN-END:variables
 
-    private void ucitajCB() {
-        popuniCBReziser();
+    private void pripremiProzor(Film film) {
+        ucitajCB();
+        popuniPolja(film);
     }
-
-    private void popuniCBReziser() {
+    
+    private void ucitajCB() {
         cbReziser.removeAllItems();
         List<Reziser> reziseri = Kontroler.vratiInstancu().vratiSveRezisere();
         
@@ -186,4 +261,14 @@ public class FrmFilm extends javax.swing.JDialog {
             cbReziser.addItem(reziser);
         }
     }
+
+    private void popuniPolja(Film film) {
+        txtFilmID.setText(String.valueOf(film.getFilmID()));
+        txtNaziv.setText(film.getNaziv());
+        txtDatumIzdanja.setText(String.valueOf(film.getDatumIzdanja()));
+        cbReziser.setSelectedItem(film.getReziser());
+        txtOpis.setText(film.getOpis());
+    }
+
+    
 }

@@ -60,4 +60,12 @@ public class Kontroler {
     public List<Film> vratiSveFilmove() {
         return repozitorijumFilmova.vratiSveFilmove();
     }
+    
+    public void ukloniFilm(Film film) {
+        repozitorijumFilmova.ukloniFilm(film);
+    }
+
+    public void izmeniFilm(Film film) {
+        repozitorijumFilmova.izmeniFIlm(film);
+    }
 }

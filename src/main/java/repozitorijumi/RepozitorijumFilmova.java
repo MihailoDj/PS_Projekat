@@ -27,4 +27,19 @@ public class RepozitorijumFilmova {
     public List<Film> vratiSveFilmove() {
         return filmovi;
     }
+    
+    public void ukloniFilm(Film film) {
+        filmovi.remove(film);
+    }
+
+    public void izmeniFIlm(Film film) {
+        for (Film f : filmovi) {
+            if (f.getFilmID() == film.getFilmID()) {
+                f.setNaziv(film.getNaziv());
+                f.setDatumIzdanja(film.getDatumIzdanja());
+                f.setOpis(film.getOpis());
+                f.setReziser(film.getReziser());
+            }
+        }
+    }
 }

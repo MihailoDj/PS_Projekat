@@ -110,14 +110,12 @@ public class Film {
         if (!Objects.equals(this.naziv, other.naziv)) {
             return false;
         }
-        if (!Objects.equals(this.datumIzdanja, other.datumIzdanja)) {
-            return false;
-        }
         if (!Objects.equals(this.reziser, other.reziser)) {
             return false;
         }
         return true;
     }
+
 
     @Override
     public String toString() {

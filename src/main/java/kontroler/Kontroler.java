@@ -56,4 +56,8 @@ public class Kontroler {
     public void dodajFilm(Film film) {
         repozitorijumFilmova.dodajFilm(film);
     }
+    
+    public List<Film> vratiSveFilmove() {
+        return repozitorijumFilmova.vratiSveFilmove();
+    }
 }

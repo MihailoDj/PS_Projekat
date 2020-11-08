@@ -31,6 +31,7 @@ public class FrmMain extends javax.swing.JFrame {
         jMenuBarMain = new javax.swing.JMenuBar();
         jMenuFilm = new javax.swing.JMenu();
         jmiDodaj = new javax.swing.JMenuItem();
+        jmiPrikaziSveFilmove = new javax.swing.JMenuItem();
         jMenuAbout = new javax.swing.JMenu();
         jmiAboutSoftware = new javax.swing.JMenuItem();
 
@@ -45,6 +46,14 @@ public class FrmMain extends javax.swing.JFrame {
             }
         });
         jMenuFilm.add(jmiDodaj);
+
+        jmiPrikaziSveFilmove.setText("Prikaži sve");
+        jmiPrikaziSveFilmove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiPrikaziSveFilmoveActionPerformed(evt);
+            }
+        });
+        jMenuFilm.add(jmiPrikaziSveFilmove);
 
         jMenuBarMain.add(jMenuFilm);
 
@@ -74,6 +83,10 @@ public class FrmMain extends javax.swing.JFrame {
     private void jmiDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDodajActionPerformed
         new FrmFilm().setVisible(true);
     }//GEN-LAST:event_jmiDodajActionPerformed
+
+    private void jmiPrikaziSveFilmoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPrikaziSveFilmoveActionPerformed
+        new FrmPrikazFilmova(this, true).setVisible(true);
+    }//GEN-LAST:event_jmiPrikaziSveFilmoveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -116,5 +129,6 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuFilm;
     private javax.swing.JMenuItem jmiAboutSoftware;
     private javax.swing.JMenuItem jmiDodaj;
+    private javax.swing.JMenuItem jmiPrikaziSveFilmove;
     // End of variables declaration//GEN-END:variables
 }

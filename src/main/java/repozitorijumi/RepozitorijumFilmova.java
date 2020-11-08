@@ -23,4 +23,8 @@ public class RepozitorijumFilmova {
     public void dodajFilm(Film film) {
         filmovi.add(film);
     }
+    
+    public List<Film> vratiSveFilmove() {
+        return filmovi;
+    }
 }

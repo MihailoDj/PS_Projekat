@@ -24,6 +24,7 @@ public class FrmPrijavljivanje extends javax.swing.JFrame {
     public FrmPrijavljivanje() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Prijavljivanje na sistem");
     }
 
     /**
@@ -43,7 +44,7 @@ public class FrmPrijavljivanje extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblKorisnickoIme.setText("Korisnicko ime");
+        lblKorisnickoIme.setText("Korisničko ime");
 
         txtKorisnickoIme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,7 +83,7 @@ public class FrmPrijavljivanje extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtKorisnickoIme)
                             .addComponent(txtLozinka, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

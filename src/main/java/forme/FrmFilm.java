@@ -51,7 +51,7 @@ public class FrmFilm extends javax.swing.JFrame {
         txtOpis = new javax.swing.JTextArea();
         btnDodaj = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblIFilmID.setText("ID:");
 
@@ -59,7 +59,7 @@ public class FrmFilm extends javax.swing.JFrame {
 
         lblDatumIzdanja.setText("Datum izdanja:");
 
-        lblReziser.setText("Reziser:");
+        lblReziser.setText("Režiser:");
 
         lblOpis.setText("Opis:");
 

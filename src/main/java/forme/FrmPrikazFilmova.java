@@ -47,7 +47,7 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Naziv", "Datum izdanja", "Prosecna ocena", "Reziser"
+                "ID", "Naziv", "Datum izdanja", "Prosečna ocena", "Režiser"
             }
         ) {
             Class[] types = new Class [] {

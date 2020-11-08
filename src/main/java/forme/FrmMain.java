@@ -70,18 +70,18 @@ public class FrmMain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 613, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 276, Short.MAX_VALUE)
+            .addGap(0, 401, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDodajActionPerformed
-        new FrmFilm().setVisible(true);
+        new FrmFilm(this,true).setVisible(true);
     }//GEN-LAST:event_jmiDodajActionPerformed
 
     private void jmiPrikaziSveFilmoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPrikaziSveFilmoveActionPerformed

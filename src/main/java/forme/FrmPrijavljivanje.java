@@ -179,8 +179,7 @@ public class FrmPrijavljivanje extends javax.swing.JFrame {
     private void prijaviKorisnika() {
         try {
             overiFormu();
-            Kontroler kontroler = new Kontroler();
-            Korisnik korisnik = kontroler.prijaviKorisnika(txtKorisnickoIme.getText().trim(), 
+            Korisnik korisnik = Kontroler.vratiInstancu().prijaviKorisnika(txtKorisnickoIme.getText().trim(), 
                     String.valueOf(txtLozinka.getPassword()));
             
             JOptionPane.showMessageDialog(this, "Dobrodošli, " + korisnik.getKorisnickoIme(), "Uspešno prijavljivanje", 

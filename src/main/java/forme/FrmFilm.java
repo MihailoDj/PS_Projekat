@@ -44,8 +44,6 @@ public class FrmFilm extends javax.swing.JFrame {
         txtNaziv = new javax.swing.JTextField();
         txtDatumIzdanja = new javax.swing.JTextField();
         lblDatumIzdanja = new javax.swing.JLabel();
-        lblProsecnaOcena = new javax.swing.JLabel();
-        txtProsecnaOcena = new javax.swing.JTextField();
         lblReziser = new javax.swing.JLabel();
         lblOpis = new javax.swing.JLabel();
         cbReziser = new javax.swing.JComboBox<>();
@@ -60,8 +58,6 @@ public class FrmFilm extends javax.swing.JFrame {
         lblNaziv.setText("Naziv:");
 
         lblDatumIzdanja.setText("Datum izdanja:");
-
-        lblProsecnaOcena.setText("Prosecna ocena:");
 
         lblReziser.setText("Reziser:");
 
@@ -87,24 +83,25 @@ public class FrmFilm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnDodaj)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblIFilmID, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblDatumIzdanja)
-                                .addComponent(lblProsecnaOcena, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblReziser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(lblOpis, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                                .addComponent(lblDatumIzdanja))
+                            .addGap(13, 13, 13)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtDatumIzdanja, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
                                 .addComponent(txtFilmID, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtNaziv)
-                                .addComponent(txtProsecnaOcena)
-                                .addComponent(cbReziser, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(txtNaziv)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblReziser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblOpis, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbReziser, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -124,19 +121,15 @@ public class FrmFilm extends javax.swing.JFrame {
                     .addComponent(txtDatumIzdanja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblProsecnaOcena)
-                    .addComponent(txtProsecnaOcena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblReziser)
                     .addComponent(cbReziser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblOpis)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(btnDodaj)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -155,11 +148,12 @@ public class FrmFilm extends javax.swing.JFrame {
         
         JOptionPane.showMessageDialog(this,"Unet film: " + film.getNaziv(), "Uspesan unos filma!", JOptionPane.INFORMATION_MESSAGE);
         
+        Kontroler.vratiInstancu().dodajFilm(film);
+        
         txtFilmID.setText(null);
         txtNaziv.setText(null);
         txtDatumIzdanja.setText(null);
         txtOpis.setText(null);
-        txtProsecnaOcena.setText(null);
         cbReziser.setSelectedIndex(0);
     }//GEN-LAST:event_btnDodajActionPerformed
 
@@ -206,13 +200,11 @@ public class FrmFilm extends javax.swing.JFrame {
     private javax.swing.JLabel lblIFilmID;
     private javax.swing.JLabel lblNaziv;
     private javax.swing.JLabel lblOpis;
-    private javax.swing.JLabel lblProsecnaOcena;
     private javax.swing.JLabel lblReziser;
     private javax.swing.JTextField txtDatumIzdanja;
     private javax.swing.JTextField txtFilmID;
     private javax.swing.JTextField txtNaziv;
     private javax.swing.JTextArea txtOpis;
-    private javax.swing.JTextField txtProsecnaOcena;
     // End of variables declaration//GEN-END:variables
 
     private void ucitajCB() {
@@ -221,7 +213,7 @@ public class FrmFilm extends javax.swing.JFrame {
 
     private void popuniCBReziser() {
         cbReziser.removeAllItems();
-        List<Reziser> reziseri = new Kontroler().vratiSveRezisere();
+        List<Reziser> reziseri = Kontroler.vratiInstancu().vratiSveRezisere();
         
         for (Reziser reziser : reziseri) {
             cbReziser.addItem(reziser);

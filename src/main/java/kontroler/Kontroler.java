@@ -22,11 +22,19 @@ public class Kontroler {
     private final RepozitorijumKorisnika repozitorijumKorisnika;
     private final RepozitorijumRezisera repozitorijumRezisera;
     private final RepozitorijumFilmova repozitorijumFilmova;
+    private static Kontroler kontroler;
 
-    public Kontroler() {
-        this.repozitorijumKorisnika = new RepozitorijumKorisnika();
-        this.repozitorijumRezisera = new RepozitorijumRezisera();
-        this.repozitorijumFilmova = new RepozitorijumFilmova();
+    private Kontroler() {
+        repozitorijumKorisnika = new RepozitorijumKorisnika();
+        repozitorijumRezisera = new RepozitorijumRezisera();
+        repozitorijumFilmova = new RepozitorijumFilmova();
+    }
+    
+    public static Kontroler vratiInstancu() {
+        if (kontroler == null)
+            kontroler = new Kontroler();
+        
+        return kontroler;
     }
     
     public Korisnik prijaviKorisnika(String korisnickoIme, String lozinka) throws Exception{

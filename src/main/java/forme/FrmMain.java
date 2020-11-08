@@ -16,6 +16,7 @@ public class FrmMain extends javax.swing.JFrame {
      */
     public FrmMain() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -71,7 +72,7 @@ public class FrmMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDodajActionPerformed
-        // TODO add your handling code here:
+        new FrmFilm().setVisible(true);
     }//GEN-LAST:event_jmiDodajActionPerformed
 
     /**

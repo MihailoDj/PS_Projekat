@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package korisnici;
+package repozitorijumi;
 
 import klase.Korisnik;
 import java.util.ArrayList;

@@ -97,7 +97,7 @@ public class Reziser {
 
     @Override
     public String toString() {
-        return "Reziser{" + "reziserID=" + reziserID + ", ime=" + ime + ", prezime=" + prezime + ", datumRodjenja=" + datumRodjenja + '}';
+        return getIme() + " " + getPrezime();
     }
     
     

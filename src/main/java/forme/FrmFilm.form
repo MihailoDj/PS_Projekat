@@ -23,13 +23,150 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="400" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="btnDodaj" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblIFilmID" alignment="0" min="-2" pref="39" max="-2" attributes="0"/>
+                              <Component id="lblNaziv" min="-2" pref="39" max="-2" attributes="0"/>
+                              <Component id="lblDatumIzdanja" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblProsecnaOcena" max="32767" attributes="0"/>
+                              <Component id="lblReziser" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="lblOpis" alignment="0" min="-2" pref="39" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jScrollPane1" pref="216" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="txtDatumIzdanja" pref="216" max="32767" attributes="0"/>
+                              <Component id="txtFilmID" alignment="1" max="32767" attributes="0"/>
+                              <Component id="txtNaziv" max="32767" attributes="0"/>
+                              <Component id="txtProsecnaOcena" max="32767" attributes="0"/>
+                              <Component id="cbReziser" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace pref="17" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="300" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblIFilmID" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtFilmID" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblNaziv" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtNaziv" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblDatumIzdanja" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtDatumIzdanja" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblProsecnaOcena" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtProsecnaOcena" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblReziser" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbReziser" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblOpis" min="-2" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="154" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <Component id="btnDodaj" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="14" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="lblIFilmID">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ID:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtFilmID">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblNaziv">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Naziv:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtNaziv">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtDatumIzdanja">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblDatumIzdanja">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Datum izdanja:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblProsecnaOcena">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Prosecna ocena:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtProsecnaOcena">
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblReziser">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Reziser:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblOpis">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Opis:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbReziser">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
+      </AuxValues>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextArea" name="txtOpis">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="lineWrap" type="boolean" value="true"/>
+            <Property name="rows" type="int" value="5"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="btnDodaj">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Dodaj film"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDodajActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
 </Form>

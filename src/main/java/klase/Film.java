@@ -29,7 +29,7 @@ public class Film {
         this.naziv = naziv;
         this.datumIzdanja = datumIzdanja;
         this.opis = opis;
-        this.prosecnaOcena = prosecnaOcena;
+        this.prosecnaOcena = 10;
         this.reziser = reziser;
     }
     

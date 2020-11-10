@@ -5,11 +5,16 @@
  */
 package forme;
 
+import forme.komponente.tabele.FilmTableModel;
 import java.awt.Component;
 import java.util.Date;
 import java.util.List;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import klase.Film;
 import klase.Reziser;
 import kontroler.Kontroler;
@@ -83,8 +88,8 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnInformacije)
                 .addContainerGap())
         );
@@ -138,17 +143,15 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
 
     public void popuniTabeluFilmova() {
         List<Film> filmovi = Kontroler.vratiInstancu().vratiSveFilmove();
-        DefaultTableModel dtm = (DefaultTableModel) tblFilmovi.getModel();
+        FilmTableModel ftm = new FilmTableModel(filmovi);
+        tblFilmovi.setModel(ftm);
         
-        for (Film film : filmovi) {
-            Object[] redTabele = new Object[]{
-                film.getFilmID(),
-                film.getNaziv(),
-                film.getDatumIzdanja(),
-                film.getProsecnaOcena(),
-                film.getReziser()
-            };
-            dtm.addRow(redTabele);
-        }
+        List<Reziser> reziseri = Kontroler.vratiInstancu().vratiSveRezisere();
+        JComboBox cbReziseri = new JComboBox(reziseri.toArray());
+        
+        TableColumnModel tcm = tblFilmovi.getColumnModel();
+        TableColumn tcReziser = tcm.getColumn(5);
+        
+        tcReziser.setCellEditor(new DefaultCellEditor(cbReziseri));
     }
 }

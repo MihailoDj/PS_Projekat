@@ -29,6 +29,9 @@ public class FrmFilm extends javax.swing.JDialog {
         setTitle("Forma za rad sa filmovima");
         
         ucitajCB();
+        
+        txtProsecnaOcena.setText(String.valueOf(0));
+        txtProsecnaOcena.setEditable(false);
         btnUkloni.setEnabled(false);
         btnIzmeni.setEnabled(false);
         btnDodaj.setEnabled(true);
@@ -41,6 +44,8 @@ public class FrmFilm extends javax.swing.JDialog {
         setTitle("Forma za rad sa filmovima");
         
         pripremiProzor(film);
+        
+        
         btnUkloni.setEnabled(true);
         btnIzmeni.setEnabled(true);
         btnDodaj.setEnabled(false);
@@ -69,6 +74,8 @@ public class FrmFilm extends javax.swing.JDialog {
         btnDodaj = new javax.swing.JButton();
         btnIzmeni = new javax.swing.JButton();
         btnUkloni = new javax.swing.JButton();
+        lblProsecnaOcena = new javax.swing.JLabel();
+        txtProsecnaOcena = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -87,14 +94,14 @@ public class FrmFilm extends javax.swing.JDialog {
         txtOpis.setRows(5);
         jScrollPane1.setViewportView(txtOpis);
 
-        btnDodaj.setText("Dodaj film");
+        btnDodaj.setText("Dodaj");
         btnDodaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDodajActionPerformed(evt);
             }
         });
 
-        btnIzmeni.setText("Izmeni film");
+        btnIzmeni.setText("Izmeni");
         btnIzmeni.setEnabled(false);
         btnIzmeni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,13 +109,15 @@ public class FrmFilm extends javax.swing.JDialog {
             }
         });
 
-        btnUkloni.setText("Ukloni film");
+        btnUkloni.setText("Ukloni");
         btnUkloni.setEnabled(false);
         btnUkloni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUkloniActionPerformed(evt);
             }
         });
+
+        lblProsecnaOcena.setText("Prosečna ocena:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,30 +127,33 @@ public class FrmFilm extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblReziser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbReziser, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblOpis, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnUkloni)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnIzmeni)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnDodaj))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblIFilmID, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDatumIzdanja))
-                        .addGap(13, 13, 13)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtDatumIzdanja, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                            .addComponent(txtFilmID, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtNaziv)))
-                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblDatumIzdanja)
+                            .addComponent(lblProsecnaOcena))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblReziser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblOpis, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbReziser, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnUkloni)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnIzmeni)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnDodaj)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtProsecnaOcena, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDatumIzdanja, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFilmID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNaziv, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,19 +172,22 @@ public class FrmFilm extends javax.swing.JDialog {
                     .addComponent(txtDatumIzdanja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblProsecnaOcena)
+                    .addComponent(txtProsecnaOcena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblReziser)
                     .addComponent(cbReziser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblOpis)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDodaj)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnUkloni)
-                        .addComponent(btnIzmeni)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUkloni)
+                    .addComponent(btnIzmeni)
+                    .addComponent(btnDodaj))
+                .addContainerGap())
         );
 
         pack();
@@ -241,11 +256,13 @@ public class FrmFilm extends javax.swing.JDialog {
     private javax.swing.JLabel lblIFilmID;
     private javax.swing.JLabel lblNaziv;
     private javax.swing.JLabel lblOpis;
+    private javax.swing.JLabel lblProsecnaOcena;
     private javax.swing.JLabel lblReziser;
     private javax.swing.JTextField txtDatumIzdanja;
     private javax.swing.JTextField txtFilmID;
     private javax.swing.JTextField txtNaziv;
     private javax.swing.JTextArea txtOpis;
+    private javax.swing.JTextField txtProsecnaOcena;
     // End of variables declaration//GEN-END:variables
 
     private void pripremiProzor(Film film) {

@@ -6,6 +6,8 @@
 package forme;
 
 import forme.util.RezimRadaForme;
+import klase.Korisnik;
+import kontroler.PrijavljenKorisnik;
 
 /**
  *
@@ -19,6 +21,10 @@ public class FrmMain extends javax.swing.JFrame {
     public FrmMain() {
         initComponents();
         setLocationRelativeTo(null);
+        
+        Korisnik korisnik = PrijavljenKorisnik.vratiInstancu().vratiPrijavljenogKorisnika();
+        String sistemskaUloga = ((korisnik.isAdmin() == true) ? "admin" : "korisnik");
+        setTitle("Prijavljen " + sistemskaUloga  + ": " + korisnik.toString());
     }
 
     /**

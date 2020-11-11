@@ -42,6 +42,7 @@ public class Kontroler {
         
         for (Korisnik korisnik : korisnici) {
             if (korisnik.getKorisnickoIme().equals(korisnickoIme) && korisnik.getLozinka().equals(lozinka)) {
+                PrijavljenKorisnik.vratiInstancu().podesiPrijavljenogKorisnika(korisnik);
                 return korisnik;
             }
         }

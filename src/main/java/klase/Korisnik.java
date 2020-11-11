@@ -90,7 +90,7 @@ public class Korisnik {
 
     @Override
     public String toString() {
-        return "Korisnik{" + "korisnikID=" + korisnikID + ", korisnickoIme=" + korisnickoIme + ", lozinka=" + lozinka + ", admin=" + admin + '}';
+        return korisnickoIme;
     }
 
     

@@ -100,4 +100,18 @@ public class FilmTableModel extends AbstractTableModel{
     public Class<?> getColumnClass(int columnIndex) {
         return klaseKolona[columnIndex];
     }
+
+    public void dodajFilm(Film film) {
+        filmovi.add(film);
+        fireTableRowsInserted(filmovi.size()-1, filmovi.size()-1);
+    }
+    
+    public Film vratiFilm(int red) {
+        return filmovi.get(red);
+    }
+        
+    public void ukloniFilm(int red) {
+        filmovi.remove(red);
+        fireTableRowsDeleted(red, red);
+    }
 }

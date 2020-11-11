@@ -6,6 +6,7 @@
 package forme;
 
 import forme.komponente.tabele.FilmTableModel;
+import forme.util.RezimRadaForme;
 import java.awt.Component;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +48,8 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblFilmovi = new javax.swing.JTable();
         btnInformacije = new javax.swing.JButton();
+        btnDodaj = new javax.swing.JButton();
+        btnUkloni = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -82,6 +85,20 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
             }
         });
 
+        btnDodaj.setText("Dodaj film");
+        btnDodaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDodajActionPerformed(evt);
+            }
+        });
+
+        btnUkloni.setText("Ukloni film");
+        btnUkloni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUkloniActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,7 +107,10 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnInformacije)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnInformacije, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDodaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnUkloni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -100,7 +120,11 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(31, 31, 31)
+                .addComponent(btnDodaj)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUkloni)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnInformacije)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -109,17 +133,11 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInformacijeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformacijeActionPerformed
-        if (tblFilmovi.getSelectedRow() != -1) {
-            Film film = new Film();
-            film.setFilmID((int)tblFilmovi.getValueAt(tblFilmovi.getSelectedRow(), 0));
-            film.setNaziv((String)tblFilmovi.getValueAt(tblFilmovi.getSelectedRow(), 1));
-            film.setDatumIzdanja((Date) tblFilmovi.getValueAt(tblFilmovi.getSelectedRow(), 2));
-            film.setProsecnaOcena((Double) tblFilmovi.getValueAt(tblFilmovi.getSelectedRow(), 3));
-            film.setReziser((Reziser)tblFilmovi.getValueAt(tblFilmovi.getSelectedRow(), 4));
-            film.setOpis("");
-            
-            FrmFilm frmFilm = new FrmFilm(new FrmMain(), true, film);
-            frmFilm.setVisible(true);
+        int red = tblFilmovi.getSelectedRow();
+        
+        if (red != -1) {
+            Film film = ((FilmTableModel)tblFilmovi.getModel()).vratiFilm(red);
+            new FrmFilm(null, true, RezimRadaForme.FORMA_PRIKAZ, film).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Za prikaz informacija morate izabrati film", 
                     "Greška", JOptionPane.ERROR_MESSAGE);
@@ -127,9 +145,30 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
         
     }//GEN-LAST:event_btnInformacijeActionPerformed
 
+    private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
+        FilmTableModel ftm = (FilmTableModel) tblFilmovi.getModel();
+        ftm.dodajFilm(new Film());
+        
+    }//GEN-LAST:event_btnDodajActionPerformed
+
+    private void btnUkloniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUkloniActionPerformed
+        int red = tblFilmovi.getSelectedRow();
+        
+        if (red != -1) {
+            //TODO da li ste sigurni
+            
+            FilmTableModel ftm = (FilmTableModel) tblFilmovi.getModel();
+            ftm.ukloniFilm(red);
+        } else {
+            JOptionPane.showMessageDialog(this, "Morate izabrati film.", "Greška!", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnUkloniActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDodaj;
     private javax.swing.JButton btnInformacije;
+    private javax.swing.JButton btnUkloni;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblFilmovi;
     // End of variables declaration//GEN-END:variables

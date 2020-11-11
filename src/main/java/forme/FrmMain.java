@@ -5,6 +5,8 @@
  */
 package forme;
 
+import forme.util.RezimRadaForme;
+
 /**
  *
  * @author Mihailo
@@ -81,7 +83,7 @@ public class FrmMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDodajActionPerformed
-        new FrmFilm(this,true).setVisible(true);
+        new FrmFilm(this,true, RezimRadaForme.FORMA_DODAVANJE, null).setVisible(true);
     }//GEN-LAST:event_jmiDodajActionPerformed
 
     private void jmiPrikaziSveFilmoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPrikaziSveFilmoveActionPerformed

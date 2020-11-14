@@ -230,8 +230,14 @@ public class FrmFilm extends javax.swing.JDialog {
         film.setReziser((Reziser)cbReziser.getSelectedItem());
         film.setProsecnaOcena(0);
         
-        Kontroler.vratiInstancu().ukloniFilm(film);
-        JOptionPane.showMessageDialog(this, "Uklonjen film: " + film.getNaziv(), "Info", JOptionPane.INFORMATION_MESSAGE);
+        int provera = JOptionPane.showConfirmDialog(this, "Da li ste sigurni?", "Brisanje filma", 
+                JOptionPane.YES_NO_OPTION);
+        
+        if (provera == JOptionPane.YES_OPTION) {
+            Kontroler.vratiInstancu().ukloniFilm(film);
+            JOptionPane.showMessageDialog(this, "Uklonjen film: " + film.getNaziv(), "Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+      
         this.dispose();
     }//GEN-LAST:event_btnUkloniActionPerformed
 
@@ -245,8 +251,13 @@ public class FrmFilm extends javax.swing.JDialog {
         film.setReziser((Reziser)cbReziser.getSelectedItem());
         film.setProsecnaOcena(0);
         
-        Kontroler.vratiInstancu().izmeniFilm(film);
-        JOptionPane.showMessageDialog(this, "Izmenjen film: " + film.getNaziv(), "Info", JOptionPane.INFORMATION_MESSAGE);
+        int provera = JOptionPane.showConfirmDialog(this, "Da li ste sigurni?", "Izmena filma", 
+                JOptionPane.YES_NO_OPTION);
+        
+        if (provera == JOptionPane.YES_OPTION) {
+            Kontroler.vratiInstancu().izmeniFilm(film);
+            JOptionPane.showMessageDialog(this, "Izmenjen film: " + film.getNaziv(), "Info", JOptionPane.INFORMATION_MESSAGE);
+        }
         this.dispose();
     }//GEN-LAST:event_btnIzmeniActionPerformed
 

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import klase.Film;
 import klase.Reziser;
+import kontroler.Kontroler;
 
 /**
  *

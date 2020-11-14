@@ -139,28 +139,31 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
             Film film = ((FilmTableModel)tblFilmovi.getModel()).vratiFilm(red);
             new FrmFilm(null, true, RezimRadaForme.FORMA_PRIKAZ, film).setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Za prikaz informacija morate izabrati film", 
-                    "Greška", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Za prikaz informacija morate izabrati film.", 
+                    "Greška!", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_btnInformacijeActionPerformed
 
     private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
-        FilmTableModel ftm = (FilmTableModel) tblFilmovi.getModel();
-        ftm.dodajFilm(new Film());
         
+        new FrmFilm(null, true, RezimRadaForme.FORMA_DODAVANJE, null).setVisible(true);
     }//GEN-LAST:event_btnDodajActionPerformed
 
     private void btnUkloniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUkloniActionPerformed
         int red = tblFilmovi.getSelectedRow();
         
         if (red != -1) {
-            //TODO da li ste sigurni
+            int provera = JOptionPane.showConfirmDialog(this, "Da li ste sigurni?", "Brisanje filma",
+                    JOptionPane.YES_NO_OPTION);
             
-            FilmTableModel ftm = (FilmTableModel) tblFilmovi.getModel();
-            ftm.ukloniFilm(red);
+            if (provera == JOptionPane.YES_OPTION) {
+                FilmTableModel ftm = (FilmTableModel) tblFilmovi.getModel();
+                ftm.ukloniFilm(red);
+            }
+            
         } else {
-            JOptionPane.showMessageDialog(this, "Morate izabrati film.", "Greška!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Pre brisanja morate izabrati film.", "Greška!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnUkloniActionPerformed
 

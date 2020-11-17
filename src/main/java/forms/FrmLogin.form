@@ -26,16 +26,16 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="btnPrijavljivanje" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblKorisnickoIme" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblLozinka" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblUsername" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPassword" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtKorisnickoIme" max="32767" attributes="0"/>
-                          <Component id="txtLozinka" pref="175" max="32767" attributes="0"/>
+                          <Component id="txtUsername" max="32767" attributes="0"/>
+                          <Component id="txtPassword" pref="175" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -48,48 +48,48 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblKorisnickoIme" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtKorisnickoIme" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblUsername" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtUsername" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblLozinka" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtLozinka" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPassword" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtPassword" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnPrijavljivanje" min="-2" max="-2" attributes="0"/>
+              <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="20" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="lblKorisnickoIme">
+    <Component class="javax.swing.JLabel" name="lblUsername">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Korisni&#x10d;ko ime"/>
+        <Property name="text" type="java.lang.String" value="Username"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtKorisnickoIme">
+    <Component class="javax.swing.JTextField" name="txtUsername">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtKorisnickoImeActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUsernameActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblLozinka">
+    <Component class="javax.swing.JLabel" name="lblPassword">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Lozinka"/>
+        <Property name="text" type="java.lang.String" value="Password"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="txtLozinka">
+    <Component class="javax.swing.JPasswordField" name="txtPassword">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtLozinkaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPasswordActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnPrijavljivanje">
+    <Component class="javax.swing.JButton" name="btnLogin">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Prijavi se"/>
+        <Property name="text" type="java.lang.String" value="Log in"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrijavljivanjeActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoginActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package forme;
+package forms;
 
-import forme.komponente.tabele.FilmTableModel;
-import forme.util.RezimRadaForme;
+import forms.components.table.MovieTableModel;
+import forms.util.FormMode;
 import java.awt.Component;
 import java.util.Date;
 import java.util.List;
@@ -16,24 +16,24 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import klase.Film;
-import klase.Reziser;
-import kontroler.Kontroler;
+import domain.Movie;
+import domain.Director;
+import controller.Controller;
 
 /**
  *
  * @author Mihailo
  */
-public class FrmPrikazFilmova extends javax.swing.JDialog {
+public class FrmViewMovies extends javax.swing.JDialog {
 
     /**
      * Creates new form FrmPrikazFilmova
      */
-    public FrmPrikazFilmova(java.awt.Frame parent, boolean modal) {
+    public FrmViewMovies(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
-        pripremiProzor();
+        prepareView();
     }
 
     /**
@@ -46,14 +46,14 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblFilmovi = new javax.swing.JTable();
-        btnInformacije = new javax.swing.JButton();
-        btnDodaj = new javax.swing.JButton();
-        btnUkloni = new javax.swing.JButton();
+        tblMovies = new javax.swing.JTable();
+        btnDetails = new javax.swing.JButton();
+        btnAddMovie = new javax.swing.JButton();
+        btnDeleteMovie = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        tblFilmovi.setModel(new javax.swing.table.DefaultTableModel(
+        tblMovies.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -76,26 +76,26 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblFilmovi);
+        jScrollPane1.setViewportView(tblMovies);
 
-        btnInformacije.setText("Informacije");
-        btnInformacije.addActionListener(new java.awt.event.ActionListener() {
+        btnDetails.setText("Details");
+        btnDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInformacijeActionPerformed(evt);
+                btnDetailsActionPerformed(evt);
             }
         });
 
-        btnDodaj.setText("Dodaj film");
-        btnDodaj.addActionListener(new java.awt.event.ActionListener() {
+        btnAddMovie.setText("Add movie");
+        btnAddMovie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDodajActionPerformed(evt);
+                btnAddMovieActionPerformed(evt);
             }
         });
 
-        btnUkloni.setText("Ukloni film");
-        btnUkloni.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteMovie.setText("Delete movie");
+        btnDeleteMovie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUkloniActionPerformed(evt);
+                btnDeleteMovieActionPerformed(evt);
             }
         });
 
@@ -105,12 +105,12 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnInformacije, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDodaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnUkloni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAddMovie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDeleteMovie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -121,79 +121,80 @@ public class FrmPrikazFilmova extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(btnDodaj)
+                .addComponent(btnAddMovie)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnUkloni)
+                .addComponent(btnDeleteMovie)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnInformacije)
+                .addComponent(btnDetails)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInformacijeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformacijeActionPerformed
-        int red = tblFilmovi.getSelectedRow();
+    private void btnDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsActionPerformed
+        int row = tblMovies.getSelectedRow();
         
-        if (red != -1) {
-            Film film = ((FilmTableModel)tblFilmovi.getModel()).vratiFilm(red);
-            new FrmFilm(null, true, RezimRadaForme.FORMA_PRIKAZ, film).setVisible(true);
+        if (row != -1) {
+            Movie movie = ((MovieTableModel)tblMovies.getModel()).getMovie(row);
+            new FrmMovie(null, true, FormMode.FORM_VIEW, movie).setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Za prikaz informacija morate izabrati film.", 
-                    "Greška!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "You need to select a movie from the table.", 
+                    "Error!", JOptionPane.ERROR_MESSAGE);
         }
         
-    }//GEN-LAST:event_btnInformacijeActionPerformed
+    }//GEN-LAST:event_btnDetailsActionPerformed
 
-    private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
+    private void btnAddMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMovieActionPerformed
         
-        new FrmFilm(null, true, RezimRadaForme.FORMA_DODAVANJE, null).setVisible(true);
-    }//GEN-LAST:event_btnDodajActionPerformed
+        new FrmMovie(null, true, FormMode.FORM_ADD, null).setVisible(true);
+    }//GEN-LAST:event_btnAddMovieActionPerformed
 
-    private void btnUkloniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUkloniActionPerformed
-        int red = tblFilmovi.getSelectedRow();
+    private void btnDeleteMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteMovieActionPerformed
+        int row = tblMovies.getSelectedRow();
         
-        if (red != -1) {
-            int provera = JOptionPane.showConfirmDialog(this, "Da li ste sigurni?", "Brisanje filma",
+        if (row != -1) {
+            int check = JOptionPane.showConfirmDialog(this, "Are you sure?", "Delete movie",
                     JOptionPane.YES_NO_OPTION);
             
-            if (provera == JOptionPane.YES_OPTION) {
-                FilmTableModel ftm = (FilmTableModel) tblFilmovi.getModel();
-                ftm.ukloniFilm(red);
+            if (check == JOptionPane.YES_OPTION) {
+                MovieTableModel mtm = (MovieTableModel) tblMovies.getModel();
+                mtm.removeMovie(row);
             }
             
         } else {
-            JOptionPane.showMessageDialog(this, "Pre brisanja morate izabrati film.", "Greška!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "You need to select a movie from the table.",
+                    "Error!", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnUkloniActionPerformed
+    }//GEN-LAST:event_btnDeleteMovieActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDodaj;
-    private javax.swing.JButton btnInformacije;
-    private javax.swing.JButton btnUkloni;
+    private javax.swing.JButton btnAddMovie;
+    private javax.swing.JButton btnDeleteMovie;
+    private javax.swing.JButton btnDetails;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblFilmovi;
+    private javax.swing.JTable tblMovies;
     // End of variables declaration//GEN-END:variables
 
-    private void pripremiProzor() {
-        setTitle("Prikaz filmova");
+    private void prepareView() {
+        setTitle("View movies");
         setLocationRelativeTo(null);
         
-        popuniTabeluFilmova();
+        fillMoviesTable();
     }
 
-    public void popuniTabeluFilmova() {
-        List<Film> filmovi = Kontroler.vratiInstancu().vratiSveFilmove();
-        FilmTableModel ftm = new FilmTableModel(filmovi);
-        tblFilmovi.setModel(ftm);
+    public void fillMoviesTable() {
+        List<Movie> movies = Controller.getInstance().getAllMovies();
+        MovieTableModel mtm = new MovieTableModel(movies);
+        tblMovies.setModel(mtm);
         
-        List<Reziser> reziseri = Kontroler.vratiInstancu().vratiSveRezisere();
-        JComboBox cbReziseri = new JComboBox(reziseri.toArray());
+        List<Director> directors = Controller.getInstance().getAllDirectors();
+        JComboBox cbDirectors = new JComboBox(directors.toArray());
         
-        TableColumnModel tcm = tblFilmovi.getColumnModel();
-        TableColumn tcReziser = tcm.getColumn(5);
+        TableColumnModel tcm = tblMovies.getColumnModel();
+        TableColumn tcDirector = tcm.getColumn(5);
         
-        tcReziser.setCellEditor(new DefaultCellEditor(cbReziseri));
+        tcDirector.setCellEditor(new DefaultCellEditor(cbDirectors));
     }
 }

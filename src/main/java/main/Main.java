@@ -5,7 +5,7 @@
  */
 package main;
 
-import forme.FrmPrijavljivanje;
+import forms.FrmLogin;
 
 /**
  *
@@ -13,6 +13,6 @@ import forme.FrmPrijavljivanje;
  */
 public class Main {
     public static void main(String[] args) {
-        new FrmPrijavljivanje().setVisible(true);
+        new FrmLogin().setVisible(true);
     }
 }

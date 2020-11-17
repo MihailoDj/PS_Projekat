@@ -3,28 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package forme;
+package forms;
 
-import java.awt.event.KeyEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import klase.Korisnik;
-import kontroler.Kontroler;
+import domain.User;
+import controller.Controller;
 
 /**
  *
  * @author Mihailo
  */
-public class FrmPrijavljivanje extends javax.swing.JFrame {
+public class FrmLogin extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmPrijavljivanje
      */
-    public FrmPrijavljivanje() {
+    public FrmLogin() {
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Prijavljivanje na sistem");
+        setTitle("Log in form");
     }
 
     /**
@@ -36,34 +33,34 @@ public class FrmPrijavljivanje extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblKorisnickoIme = new javax.swing.JLabel();
-        txtKorisnickoIme = new javax.swing.JTextField();
-        lblLozinka = new javax.swing.JLabel();
-        txtLozinka = new javax.swing.JPasswordField();
-        btnPrijavljivanje = new javax.swing.JButton();
+        lblUsername = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JTextField();
+        lblPassword = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
+        btnLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblKorisnickoIme.setText("Korisničko ime");
+        lblUsername.setText("Username");
 
-        txtKorisnickoIme.addActionListener(new java.awt.event.ActionListener() {
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtKorisnickoImeActionPerformed(evt);
+                txtUsernameActionPerformed(evt);
             }
         });
 
-        lblLozinka.setText("Lozinka");
+        lblPassword.setText("Password");
 
-        txtLozinka.addActionListener(new java.awt.event.ActionListener() {
+        txtPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLozinkaActionPerformed(evt);
+                txtPasswordActionPerformed(evt);
             }
         });
 
-        btnPrijavljivanje.setText("Prijavi se");
-        btnPrijavljivanje.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setText("Log in");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPrijavljivanjeActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
 
@@ -74,15 +71,15 @@ public class FrmPrijavljivanje extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnPrijavljivanje)
+                    .addComponent(btnLogin)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblKorisnickoIme)
-                            .addComponent(lblLozinka))
+                            .addComponent(lblUsername)
+                            .addComponent(lblPassword))
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtKorisnickoIme)
-                            .addComponent(txtLozinka, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))))
+                            .addComponent(txtUsername)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -90,31 +87,31 @@ public class FrmPrijavljivanje extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblKorisnickoIme)
-                    .addComponent(txtKorisnickoIme, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblUsername)
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblLozinka)
-                    .addComponent(txtLozinka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblPassword)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnPrijavljivanje)
+                .addComponent(btnLogin)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtKorisnickoImeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKorisnickoImeActionPerformed
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtKorisnickoImeActionPerformed
+    }//GEN-LAST:event_txtUsernameActionPerformed
 
-    private void txtLozinkaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLozinkaActionPerformed
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtLozinkaActionPerformed
+    }//GEN-LAST:event_txtPasswordActionPerformed
 
-    private void btnPrijavljivanjeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrijavljivanjeActionPerformed
-        prijaviKorisnika();
-    }//GEN-LAST:event_btnPrijavljivanjeActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        login();
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,62 +130,63 @@ public class FrmPrijavljivanje extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmPrijavljivanje.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmPrijavljivanje.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmPrijavljivanje.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmPrijavljivanje.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmPrijavljivanje().setVisible(true);
+                new FrmLogin().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnPrijavljivanje;
-    private javax.swing.JLabel lblKorisnickoIme;
-    private javax.swing.JLabel lblLozinka;
-    private javax.swing.JTextField txtKorisnickoIme;
-    private javax.swing.JPasswordField txtLozinka;
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblUsername;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
-    private void overiFormu() throws Exception{
-        String korisnickoIme = txtKorisnickoIme.getText().trim();
-        String lozinka = String.valueOf(txtLozinka.getPassword());
-        String greska = "";
+    private void validateForm() throws Exception{
+        String username = txtUsername.getText().trim();
+        String password = String.valueOf(txtPassword.getPassword());
+        String error = "";
         
-        if (korisnickoIme.isEmpty()) {
-            greska += "Unesite korisničko ime!\n";
+        if (username.isEmpty()) {
+            error += "Enter your username!\n";
         }
         
-        if (lozinka.isEmpty()) {
-            greska += "Unesite lozinku!\n";
+        if (password.isEmpty()) {
+            error += "Enter your password!\n";
         }
         
-        if (!greska.isEmpty()) {
-            throw new Exception(greska);
+        if (!error.isEmpty()) {
+            throw new Exception(error);
         }
     }
 
-    private void prijaviKorisnika() {
+    private void login() {
         try {
-            overiFormu();
-            Korisnik korisnik = Kontroler.vratiInstancu().prijaviKorisnika(txtKorisnickoIme.getText().trim(), 
-                    String.valueOf(txtLozinka.getPassword()));
+            validateForm();
+            User user = Controller.getInstance().login(txtUsername.getText().trim(), 
+                    String.valueOf(txtPassword.getPassword()));
             
-            JOptionPane.showMessageDialog(this, "Dobrodošli, " + korisnik.getKorisnickoIme(), "Uspešno prijavljivanje", 
+            JOptionPane.showMessageDialog(this, "Welcome, " + user, "Log in successful!", 
                     JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
             new FrmMain().setVisible(true);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Greška!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

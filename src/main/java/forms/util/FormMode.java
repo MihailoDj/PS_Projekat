@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package forme.util;
+package forms.util;
 
 /**
  *
  * @author Mihailo
  */
-public enum RezimRadaForme {
-    FORMA_DODAVANJE, FORMA_PRIKAZ, FORMA_IZMENA
+public enum FormMode {
+    FORM_ADD, FORM_VIEW, FORM_EDIT
 }

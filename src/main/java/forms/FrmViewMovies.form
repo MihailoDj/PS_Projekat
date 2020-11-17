@@ -25,12 +25,12 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="598" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="589" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btnInformacije" max="32767" attributes="0"/>
-                  <Component id="btnDodaj" max="32767" attributes="0"/>
-                  <Component id="btnUkloni" max="32767" attributes="0"/>
+                  <Component id="btnDetails" max="32767" attributes="0"/>
+                  <Component id="btnAddMovie" max="32767" attributes="0"/>
+                  <Component id="btnDeleteMovie" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -45,11 +45,11 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-              <Component id="btnDodaj" min="-2" max="-2" attributes="0"/>
+              <Component id="btnAddMovie" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="btnUkloni" min="-2" max="-2" attributes="0"/>
+              <Component id="btnDeleteMovie" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="btnInformacije" min="-2" max="-2" attributes="0"/>
+              <Component id="btnDetails" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -63,7 +63,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tblFilmovi">
+        <Component class="javax.swing.JTable" name="tblMovies">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="0">
@@ -78,28 +78,28 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btnInformacije">
+    <Component class="javax.swing.JButton" name="btnDetails">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Informacije"/>
+        <Property name="text" type="java.lang.String" value="Details"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInformacijeActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDetailsActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnDodaj">
+    <Component class="javax.swing.JButton" name="btnAddMovie">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Dodaj film"/>
+        <Property name="text" type="java.lang.String" value="Add movie"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDodajActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddMovieActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnUkloni">
+    <Component class="javax.swing.JButton" name="btnDeleteMovie">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ukloni film"/>
+        <Property name="text" type="java.lang.String" value="Delete movie"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUkloniActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteMovieActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

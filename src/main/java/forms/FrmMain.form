@@ -4,25 +4,25 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBarMain">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="jMenuFilm">
+        <Menu class="javax.swing.JMenu" name="jmMovie">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Film"/>
+            <Property name="text" type="java.lang.String" value="Movie"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jmiDodaj">
+            <MenuItem class="javax.swing.JMenuItem" name="jmiNewMovie">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Dodaj"/>
+                <Property name="text" type="java.lang.String" value="New"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiDodajActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiNewMovieActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jmiPrikaziSveFilmove">
+            <MenuItem class="javax.swing.JMenuItem" name="jmiViewAllMovies">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Prika&#x17e;i sve"/>
+                <Property name="text" type="java.lang.String" value="View all"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiPrikaziSveFilmoveActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiViewAllMoviesActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

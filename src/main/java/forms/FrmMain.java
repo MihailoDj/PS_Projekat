@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package forme;
+package forms;
 
-import forme.util.RezimRadaForme;
-import klase.Korisnik;
-import kontroler.PrijavljenKorisnik;
+import forms.util.FormMode;
+import domain.User;
+import controller.LoggedInUser;
 
 /**
  *
@@ -22,9 +22,9 @@ public class FrmMain extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         
-        Korisnik korisnik = PrijavljenKorisnik.vratiInstancu().vratiPrijavljenogKorisnika();
-        String sistemskaUloga = ((korisnik.isAdmin() == true) ? "admin" : "korisnik");
-        setTitle("Prijavljen " + sistemskaUloga  + ": " + korisnik.toString());
+        User user = LoggedInUser.getInstance().getLoggedInUser();
+        String systemRole = ((user.isAdmin() == true) ? "admin" : "user");
+        setTitle("Logged in " + systemRole  + ": " + user.toString());
     }
 
     /**
@@ -37,33 +37,33 @@ public class FrmMain extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuBarMain = new javax.swing.JMenuBar();
-        jMenuFilm = new javax.swing.JMenu();
-        jmiDodaj = new javax.swing.JMenuItem();
-        jmiPrikaziSveFilmove = new javax.swing.JMenuItem();
+        jmMovie = new javax.swing.JMenu();
+        jmiNewMovie = new javax.swing.JMenuItem();
+        jmiViewAllMovies = new javax.swing.JMenuItem();
         jMenuAbout = new javax.swing.JMenu();
         jmiAboutSoftware = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMenuFilm.setText("Film");
+        jmMovie.setText("Movie");
 
-        jmiDodaj.setText("Dodaj");
-        jmiDodaj.addActionListener(new java.awt.event.ActionListener() {
+        jmiNewMovie.setText("New");
+        jmiNewMovie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiDodajActionPerformed(evt);
+                jmiNewMovieActionPerformed(evt);
             }
         });
-        jMenuFilm.add(jmiDodaj);
+        jmMovie.add(jmiNewMovie);
 
-        jmiPrikaziSveFilmove.setText("Prikaži sve");
-        jmiPrikaziSveFilmove.addActionListener(new java.awt.event.ActionListener() {
+        jmiViewAllMovies.setText("View all");
+        jmiViewAllMovies.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiPrikaziSveFilmoveActionPerformed(evt);
+                jmiViewAllMoviesActionPerformed(evt);
             }
         });
-        jMenuFilm.add(jmiPrikaziSveFilmove);
+        jmMovie.add(jmiViewAllMovies);
 
-        jMenuBarMain.add(jMenuFilm);
+        jMenuBarMain.add(jmMovie);
 
         jMenuAbout.setText("About");
 
@@ -88,13 +88,13 @@ public class FrmMain extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jmiDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDodajActionPerformed
-        new FrmFilm(this,true, RezimRadaForme.FORMA_DODAVANJE, null).setVisible(true);
-    }//GEN-LAST:event_jmiDodajActionPerformed
+    private void jmiNewMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiNewMovieActionPerformed
+        new FrmMovie(this,true, FormMode.FORM_ADD, null).setVisible(true);
+    }//GEN-LAST:event_jmiNewMovieActionPerformed
 
-    private void jmiPrikaziSveFilmoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPrikaziSveFilmoveActionPerformed
-        new FrmPrikazFilmova(this, true).setVisible(true);
-    }//GEN-LAST:event_jmiPrikaziSveFilmoveActionPerformed
+    private void jmiViewAllMoviesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiViewAllMoviesActionPerformed
+        new FrmViewMovies(this, true).setVisible(true);
+    }//GEN-LAST:event_jmiViewAllMoviesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,9 +134,9 @@ public class FrmMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenuAbout;
     private javax.swing.JMenuBar jMenuBarMain;
-    private javax.swing.JMenu jMenuFilm;
+    private javax.swing.JMenu jmMovie;
     private javax.swing.JMenuItem jmiAboutSoftware;
-    private javax.swing.JMenuItem jmiDodaj;
-    private javax.swing.JMenuItem jmiPrikaziSveFilmove;
+    private javax.swing.JMenuItem jmiNewMovie;
+    private javax.swing.JMenuItem jmiViewAllMovies;
     // End of variables declaration//GEN-END:variables
 }

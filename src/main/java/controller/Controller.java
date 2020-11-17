@@ -13,19 +13,21 @@ import domain.Director;
 import repository.MovieRepository;
 import repository.UserRepository;
 import repository.DirectorRepository;
+import repository.Repository;
+import repository.db.impl.DbUserRepository;
 
 /**
  *
  * @author Mihailo
  */
 public class Controller {
-    private final UserRepository userRepository;
+    private final Repository userRepository;
     private final DirectorRepository directorRepository;
     private final MovieRepository movieRepository;
     private static Controller controller;
 
     private Controller() {
-        userRepository = new UserRepository();
+        userRepository = new DbUserRepository();
         directorRepository = new DirectorRepository();
         movieRepository = new MovieRepository();
     }

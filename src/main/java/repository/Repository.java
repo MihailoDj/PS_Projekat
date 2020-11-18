@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface Repository<T> {
     List<T> getAll() throws Exception;
+    void add(T obj) throws Exception;
 }

@@ -14,6 +14,8 @@ import repository.MovieRepository;
 import repository.UserRepository;
 import repository.DirectorRepository;
 import repository.Repository;
+import repository.db.impl.DbDirectorRepository;
+import repository.db.impl.DbMovieRepository;
 import repository.db.impl.DbUserRepository;
 
 /**
@@ -22,14 +24,14 @@ import repository.db.impl.DbUserRepository;
  */
 public class Controller {
     private final Repository userRepository;
-    private final DirectorRepository directorRepository;
-    private final MovieRepository movieRepository;
+    private final Repository directorRepository;
+    private final Repository movieRepository;
     private static Controller controller;
 
     private Controller() {
         userRepository = new DbUserRepository();
-        directorRepository = new DirectorRepository();
-        movieRepository = new MovieRepository();
+        directorRepository = new DbDirectorRepository();
+        movieRepository = new DbMovieRepository();
     }
     
     public static Controller getInstance() {
@@ -52,23 +54,23 @@ public class Controller {
         throw new Exception("User doesn't exist.");
     }
     
-    public List<Director> getAllDirectors() {
+    public List<Director> getAllDirectors() throws Exception {
         return directorRepository.getAll();
     }
     
-    public void addMovie(Movie movie) {
-        movieRepository.addMovie(movie);
+    public void addMovie(Movie movie) throws Exception {
+        movieRepository.add(movie);
     }
     
-    public List<Movie> getAllMovies() {
+    public List<Movie> getAllMovies() throws Exception {
         return movieRepository.getAll();
     }
     
     public void removeMovie(Movie movie) {
-        movieRepository.removeMovie(movie);
+        //movieRepository.removeMovie(movie);
     }
 
     public void updateMovie(Movie movie) {
-        movieRepository.updateMovie(movie);
+        //movieRepository.updateMovie(movie);
     }
 }

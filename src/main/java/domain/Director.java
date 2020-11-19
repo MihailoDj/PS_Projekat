@@ -5,7 +5,7 @@
  */
 package domain;
 
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -16,13 +16,13 @@ public class Director {
     private int directorID;
     private String firstName;
     private String lastName;
-    private GregorianCalendar dateOfBirth;
+    private LocalDate dateOfBirth;
     
     public Director() {
         
     }
 
-    public Director(int directorID, String firstName, String lastName, GregorianCalendar dateOfBirth) {
+    public Director(int directorID, String firstName, String lastName, LocalDate dateOfBirth) {
         this.directorID = directorID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -53,11 +53,11 @@ public class Director {
         this.lastName = lastName;
     }
 
-    public GregorianCalendar getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(GregorianCalendar dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

@@ -7,18 +7,17 @@ package forms;
 
 import forms.components.table.MovieTableModel;
 import forms.util.FormMode;
-import java.awt.Component;
-import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import domain.Movie;
 import domain.Director;
 import controller.Controller;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -185,16 +184,20 @@ public class FrmViewMovies extends javax.swing.JDialog {
     }
 
     public void fillMoviesTable() {
-        List<Movie> movies = Controller.getInstance().getAllMovies();
-        MovieTableModel mtm = new MovieTableModel(movies);
-        tblMovies.setModel(mtm);
-        
-        List<Director> directors = Controller.getInstance().getAllDirectors();
-        JComboBox cbDirectors = new JComboBox(directors.toArray());
-        
-        TableColumnModel tcm = tblMovies.getColumnModel();
-        TableColumn tcDirector = tcm.getColumn(5);
-        
-        tcDirector.setCellEditor(new DefaultCellEditor(cbDirectors));
+        try {
+            List<Movie> movies = Controller.getInstance().getAllMovies();
+            MovieTableModel mtm = new MovieTableModel(movies);
+            tblMovies.setModel(mtm);
+            
+            List<Director> directors = Controller.getInstance().getAllDirectors();
+            JComboBox cbDirectors = new JComboBox(directors.toArray());
+            
+            TableColumnModel tcm = tblMovies.getColumnModel();
+            TableColumn tcDirector = tcm.getColumn(5);
+            
+            tcDirector.setCellEditor(new DefaultCellEditor(cbDirectors));
+        } catch (Exception ex) {
+            Logger.getLogger(FrmViewMovies.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -5,7 +5,9 @@
  */
 package domain;
 
-import java.util.GregorianCalendar;
+
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 
@@ -16,7 +18,7 @@ import java.util.Objects;
 public class Movie {
     private int movieID;
     private String name;
-    private GregorianCalendar releaseDate;
+    private LocalDate releaseDate;
     private String description;
     private double score;
     private Director director;
@@ -25,7 +27,7 @@ public class Movie {
         
     }
 
-    public Movie(int movieID, String name, GregorianCalendar releaseDate, String description, double score, Director director) {
+    public Movie(int movieID, String name, LocalDate releaseDate, String description, double score, Director director) {
         this.movieID = movieID;
         this.name = name;
         this.releaseDate = releaseDate;
@@ -50,11 +52,11 @@ public class Movie {
         this.name = name;
     }
 
-    public GregorianCalendar getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(GregorianCalendar releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 

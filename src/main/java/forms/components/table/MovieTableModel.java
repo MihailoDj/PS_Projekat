@@ -5,13 +5,11 @@
  */
 package forms.components.table;
 
-import java.util.Date;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import domain.Movie;
 import domain.Director;
-import controller.Controller;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 /**
  *
@@ -30,7 +28,7 @@ public class MovieTableModel extends AbstractTableModel{
     private final Class[] columnClasses = {
         Integer.class,
         String.class,
-        Date.class,
+        LocalDate.class,
         String.class,
         Double.class,
         Director.class
@@ -77,7 +75,7 @@ public class MovieTableModel extends AbstractTableModel{
                 movie.setName(String.valueOf(value));
                 break;
             case 2:
-                movie.setReleaseDate((GregorianCalendar) value);
+                movie.setReleaseDate((LocalDate)value);
                 break;
             case 3:
                 movie.setDescription(String.valueOf(value));

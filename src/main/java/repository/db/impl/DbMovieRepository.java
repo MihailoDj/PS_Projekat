@@ -8,15 +8,13 @@ package repository.db.impl;
 import domain.Director;
 import domain.Movie;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,7 +44,7 @@ public class DbMovieRepository implements DbRepository<Movie>{
                         setDirectorID(rs.getInt("directorID"));
                         setFirstName(rs.getString("firstname"));
                         setLastName(rs.getString("lastname"));
-                        setDateOfBirth(new GregorianCalendar());
+                        setDateOfBirth(rs.getObject("dateofbirth", LocalDate.class));
                     }
                 };
                 
@@ -54,7 +52,7 @@ public class DbMovieRepository implements DbRepository<Movie>{
                     {
                         setMovieID(rs.getInt("movieID"));
                         setName(rs.getString("name"));
-                        setReleaseDate(new GregorianCalendar());
+                        setReleaseDate(rs.getObject("releaseDate", LocalDate.class));
                         setDescription(rs.getString("description"));
                         setScore(rs.getDouble("score"));
                         setDirector(director);

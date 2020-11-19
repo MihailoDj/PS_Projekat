@@ -6,14 +6,12 @@
 package repository.db.impl;
 
 import domain.Director;
-import domain.Movie;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +41,7 @@ public class DbDirectorRepository implements DbRepository<Director>{
                         setDirectorID(rs.getInt("directorID"));
                         setFirstName(rs.getString("firstname"));
                         setLastName(rs.getString("lastname"));
-                        setDateOfBirth(new GregorianCalendar());
+                        setDateOfBirth(rs.getObject("dateofbirth", LocalDate.class));
                     }
                 };
                 

@@ -39,6 +39,7 @@ public class MovieRepository {
                 m.setReleaseDate(movie.getReleaseDate());
                 m.setDescription(movie.getDescription());
                 m.setDirector(movie.getDirector());
+                m.setScore(movie.getScore());
             }
         }
     }

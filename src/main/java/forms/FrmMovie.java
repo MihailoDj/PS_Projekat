@@ -5,15 +5,15 @@
  */
 package forms;
 
-import com.sun.source.util.TaskEvent;
 import forms.util.FormMode;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import domain.Movie;
 import domain.Director;
 import controller.Controller;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,7 +30,12 @@ public class FrmMovie extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         setTitle("Movie form");
         
-        prepareView(mode, movie);
+        try {
+            prepareView(mode, movie);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMovie.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "There was an error", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -206,13 +211,18 @@ public class FrmMovie extends javax.swing.JDialog {
         
         movie.setMovieID(Integer.parseInt(txtMovieID.getText().trim()));
         movie.setName(txtName.getText().trim());
-        movie.setReleaseDate(new GregorianCalendar());
+        movie.setReleaseDate(LocalDate.now());
         movie.setDescription(txtDescription.getText().trim());
         movie.setDirector((Director)cbDirector.getSelectedItem());
         
         JOptionPane.showMessageDialog(this,"Added movie: " + movie.getName(), "Success!", JOptionPane.INFORMATION_MESSAGE);
         
-        Controller.getInstance().addMovie(movie);
+        try {
+            Controller.getInstance().addMovie(movie);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMovie.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Movie not saved. Try again.", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
         
         txtMovieID.setText(null);
         txtName.setText(null);
@@ -226,7 +236,7 @@ public class FrmMovie extends javax.swing.JDialog {
         
         movie.setMovieID(Integer.parseInt(txtMovieID.getText().trim()));
         movie.setName(txtName.getText().trim());
-        movie.setReleaseDate(new GregorianCalendar());
+        movie.setReleaseDate(LocalDate.now());
         movie.setDescription(txtDescription.getText().trim());
         movie.setDirector((Director)cbDirector.getSelectedItem());
         movie.setScore(0);
@@ -243,14 +253,16 @@ public class FrmMovie extends javax.swing.JDialog {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        Movie movie = new Movie();
-        
-        movie.setMovieID(Integer.parseInt(txtMovieID.getText().trim()));
-        movie.setName(txtName.getText().trim());
-        movie.setReleaseDate(new GregorianCalendar());
-        movie.setDescription(txtDescription.getText().trim());
-        movie.setDirector((Director)cbDirector.getSelectedItem());
-        movie.setScore(0);
+        Movie movie = new Movie() {
+            {
+                setMovieID(Integer.parseInt(txtMovieID.getText().trim()));
+                setName(txtName.getText().trim());
+                setReleaseDate(LocalDate.now());
+                setDescription(txtDescription.getText().trim());
+                setDirector((Director)cbDirector.getSelectedItem());
+                setScore(0);
+            }
+        };
         
         int check = JOptionPane.showConfirmDialog(this, "Are you sure?", "Update movie", 
                 JOptionPane.YES_NO_OPTION);
@@ -303,12 +315,12 @@ public class FrmMovie extends javax.swing.JDialog {
     private javax.swing.JTextField txtScore;
     // End of variables declaration//GEN-END:variables
 
-    private void prepareView(FormMode mode, Movie movie) {
+    private void prepareView(FormMode mode, Movie movie)throws Exception{
         fillCB();
         setUpComponents(mode, movie);
     }
     
-    private void fillCB() {
+    private void fillCB() throws Exception{
         cbDirector.removeAllItems();
         List<Director> directors = Controller.getInstance().getAllDirectors();
         

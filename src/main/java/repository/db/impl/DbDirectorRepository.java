@@ -25,7 +25,7 @@ import repository.db.DbRepository;
 public class DbDirectorRepository implements DbRepository<Director>{
 
     @Override
-    public List<Director> getAll() throws Exception {
+    public List<Director> selectAll() throws Exception {
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             List<Director> directors = new ArrayList<Director>();
@@ -56,7 +56,27 @@ public class DbDirectorRepository implements DbRepository<Director>{
     }
 
     @Override
-    public void add(Director obj) throws Exception {
+    public void insert(Director obj) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(Director obj) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(Director obj) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Director select(Director obj) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteAll() throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

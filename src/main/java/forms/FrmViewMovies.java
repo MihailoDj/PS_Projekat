@@ -185,11 +185,11 @@ public class FrmViewMovies extends javax.swing.JDialog {
 
     public void fillMoviesTable() {
         try {
-            List<Movie> movies = Controller.getInstance().getAllMovies();
+            List<Movie> movies = Controller.getInstance().selectAllMovies();
             MovieTableModel mtm = new MovieTableModel(movies);
             tblMovies.setModel(mtm);
             
-            List<Director> directors = Controller.getInstance().getAllDirectors();
+            List<Director> directors = Controller.getInstance().selectAllDirectors();
             JComboBox cbDirectors = new JComboBox(directors.toArray());
             
             TableColumnModel tcm = tblMovies.getColumnModel();
@@ -198,6 +198,7 @@ public class FrmViewMovies extends javax.swing.JDialog {
             tcDirector.setCellEditor(new DefaultCellEditor(cbDirectors));
         } catch (Exception ex) {
             Logger.getLogger(FrmViewMovies.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Unable to load table.", "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

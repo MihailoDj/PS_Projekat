@@ -6,13 +6,9 @@
 package controller;
 
 import java.util.List;
-import javax.swing.JOptionPane;
 import domain.Movie;
 import domain.User;
 import domain.Director;
-import repository.MovieRepository;
-import repository.UserRepository;
-import repository.DirectorRepository;
 import repository.Repository;
 import repository.db.impl.DbDirectorRepository;
 import repository.db.impl.DbMovieRepository;
@@ -42,35 +38,37 @@ public class Controller {
     }
     
     public User login(String username, String password) throws Exception{
-        List<User> users = userRepository.getAll();
+        User user = (User)userRepository.select(new User(0, username, password, false));
         
-        for (User user : users) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+        if (!user.equals(null)) {
+            if(password.equals(user.getPassword())) {
                 LoggedInUser.getInstance().setLoggedInUser(user);
                 return user;
+            } else {
+                throw new Exception("Incorrect password.");
             }
         }
         
         throw new Exception("User doesn't exist.");
     }
     
-    public List<Director> getAllDirectors() throws Exception {
-        return directorRepository.getAll();
+    public List<Director> selectAllDirectors() throws Exception {
+        return directorRepository.selectAll();
     }
     
-    public void addMovie(Movie movie) throws Exception {
-        movieRepository.add(movie);
+    public void insertMovie(Movie movie) throws Exception {
+        movieRepository.insert(movie);
     }
     
-    public List<Movie> getAllMovies() throws Exception {
-        return movieRepository.getAll();
+    public List<Movie> selectAllMovies() throws Exception {
+        return movieRepository.selectAll();
     }
     
-    public void removeMovie(Movie movie) {
-        //movieRepository.removeMovie(movie);
+    public void deleteMovie(Movie movie) throws Exception {
+        movieRepository.delete(movie);
     }
 
-    public void updateMovie(Movie movie) {
-        //movieRepository.updateMovie(movie);
+    public void updateMovie(Movie movie) throws Exception {
+        movieRepository.update(movie);
     }
 }

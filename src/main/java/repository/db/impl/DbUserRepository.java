@@ -24,7 +24,7 @@ import repository.db.DbRepository;
 public class DbUserRepository implements DbRepository<User>{
 
     @Override
-    public List<User> getAll() throws Exception{
+    public List<User> selectAll() throws Exception{
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             List<User> users = new ArrayList<User>();
@@ -53,8 +53,47 @@ public class DbUserRepository implements DbRepository<User>{
     }
 
     @Override
-    public void add(User obj) throws Exception {
+    public void insert(User obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(User obj) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteAll() throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(User obj) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public User select(User user) throws Exception {
+        try {
+            Connection connection = DbConnectionFactory.getInstance().getConnection();
+            
+            String sql = "SELECT * FROM user WHERE username=\"" + user.getUsername() +"\";";
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            User u = new User();
+            
+            while(rs.next()) {
+                u.setUserID(rs.getInt("userID"));
+                u.setUsername(rs.getString("username"));
+                u.setPassword(rs.getString("password"));
+                u.setAdmin(rs.getBoolean("admin"));
+            }
+            
+            return u;
+        } catch (SQLException ex) {
+            Logger.getLogger(DbUserRepository.class.getName()).log(Level.SEVERE, null, ex);
+            throw new Exception("Connection error!");
+        }
     }
     
 }

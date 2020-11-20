@@ -28,7 +28,7 @@ import repository.db.DbRepository;
 public class DbMovieRepository implements DbRepository<Movie>{
 
     @Override
-    public List<Movie> getAll() throws Exception {
+    public List<Movie> selectAll() throws Exception {
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             List<Movie> movies = new ArrayList<Movie>();
@@ -62,7 +62,9 @@ public class DbMovieRepository implements DbRepository<Movie>{
                 movies.add(movie);
             }
             
+            statement.close();
             rs.close();
+            
             return movies;
         } catch (SQLException ex) {
             Logger.getLogger(DbUserRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,25 +73,69 @@ public class DbMovieRepository implements DbRepository<Movie>{
     }
 
     @Override
-    public void add(Movie movie) throws Exception {
+    public void insert(Movie movie) throws Exception {
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
+            
             String sql = "INSERT INTO movie VALUES(?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, movie.getMovieID());
             statement.setString(2, movie.getName());
-            statement.setDate(3, (java.sql.Date) new Date());
-            statement.setString(4, movie.getDescription());
-            statement.setDouble(5, movie.getScore());
+            statement.setObject(3, movie.getReleaseDate(), java.sql.Types.DATE);
+            statement.setDouble(4, movie.getScore());
+            statement.setString(5, movie.getDescription());
             statement.setInt(6, movie.getDirector().getDirectorID());
             
             statement.executeUpdate();
-            statement.close();
             
+            statement.close();
         } catch(SQLException e) {
             throw new Exception("Error!");
         }
         
+    }
+
+    @Override
+    public void delete(Movie movie) throws Exception {
+        Connection connection = DbConnectionFactory.getInstance().getConnection();
+        String sql = "DELETE FROM movie WHERE movieID=" + movie.getMovieID();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.executeUpdate();
+        
+        statement.close();
+    }
+
+    @Override
+    public void update(Movie movie) throws Exception {
+        try {
+            Connection connection = DbConnectionFactory.getInstance().getConnection();
+            String sql = "UPDATE movie SET movieID=?, name=?, releasedate=?, score=?, description=?, directorID=? "
+                    + "WHERE movieID=" + movie.getMovieID();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            
+            statement.setInt(1, movie.getMovieID());
+            statement.setString(2, movie.getName());
+            statement.setObject(3, movie.getReleaseDate(), java.sql.Types.DATE);
+            statement.setDouble(4, movie.getScore());
+            statement.setString(5, movie.getDescription());
+            statement.setInt(6, movie.getDirector().getDirectorID());
+            
+            statement.executeUpdate();
+        
+        statement.close();
+        } catch(Exception ex) {
+            throw new Exception("Error!");
+        }
+    }
+
+    @Override
+    public Movie select(Movie obj) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteAll() throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

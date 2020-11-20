@@ -13,6 +13,10 @@ import java.util.List;
  * @param <T>
  */
 public interface Repository<T> {
-    List<T> getAll() throws Exception;
-    void add(T obj) throws Exception;
+    public void insert(T obj) throws Exception;
+    public void delete(T obj) throws Exception;
+    public void deleteAll() throws Exception;
+    public void update(T obj) throws Exception;
+    public T select(T obj) throws Exception;
+    public List<T> selectAll() throws Exception;
 }

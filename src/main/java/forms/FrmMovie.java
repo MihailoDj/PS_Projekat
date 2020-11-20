@@ -248,8 +248,12 @@ public class FrmMovie extends javax.swing.JDialog {
                 JOptionPane.YES_NO_OPTION);
         
         if (check == JOptionPane.YES_OPTION) {
-            Controller.getInstance().updateMovie(movie);
-            JOptionPane.showMessageDialog(this, "Updated movie: " + movie.getName(), "Info", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                Controller.getInstance().updateMovie(movie);
+                JOptionPane.showMessageDialog(this, "Updated movie: " + movie.getName(), "Info", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                Logger.getLogger(FrmMovie.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         this.dispose();
     }//GEN-LAST:event_btnUpdateActionPerformed
@@ -289,8 +293,12 @@ public class FrmMovie extends javax.swing.JDialog {
             JOptionPane.YES_NO_OPTION);
 
         if (check == JOptionPane.YES_OPTION) {
-            Controller.getInstance().removeMovie(movie);
-            JOptionPane.showMessageDialog(this, "Deleted movie: " + movie.getName(), "Info", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                Controller.getInstance().deleteMovie(movie);
+                JOptionPane.showMessageDialog(this, "Deleted movie: " + movie.getName(), "Info", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                Logger.getLogger(FrmMovie.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         this.dispose();
@@ -312,7 +320,7 @@ public class FrmMovie extends javax.swing.JDialog {
         JOptionPane.showMessageDialog(this,"Added movie: " + movie.getName(), "Success!", JOptionPane.INFORMATION_MESSAGE);
 
         try {
-            Controller.getInstance().addMovie(movie);
+            Controller.getInstance().insertMovie(movie);
         } catch (Exception ex) {
             Logger.getLogger(FrmMovie.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Movie not saved. Try again.", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -358,7 +366,7 @@ public class FrmMovie extends javax.swing.JDialog {
     
     private void fillCB() throws Exception{
         cbDirector.removeAllItems();
-        List<Director> directors = Controller.getInstance().getAllDirectors();
+        List<Director> directors = Controller.getInstance().selectAllDirectors();
         
         for (Director director : directors) {
             cbDirector.addItem(director);

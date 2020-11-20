@@ -7,9 +7,14 @@
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
-            <groupId>group.id</groupId>
-            <artifactId>artifact.id</artifactId>
-            <version>1.0</version>
+            <groupId>datepicker</groupId>
+            <artifactId>datepicker</artifactId>
+            <version>11.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>jdbc_driver</groupId>
+            <artifactId>jdbc_driver</artifactId>
+            <version>8.0.2.2</version>
         </dependency>
     </dependencies>
     <properties>

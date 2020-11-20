@@ -5,12 +5,16 @@
  */
 package forms;
 
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 import forms.util.FormMode;
 import java.util.List;
 import javax.swing.JOptionPane;
 import domain.Movie;
 import domain.Director;
 import controller.Controller;
+import java.awt.Dimension;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +24,7 @@ import java.util.logging.Logger;
  * @author Mihailo
  */
 public class FrmMovie extends javax.swing.JDialog {
-
+    private DatePicker datePicker;
     /**
      * Creates new form FrmFilm
      */
@@ -51,7 +55,6 @@ public class FrmMovie extends javax.swing.JDialog {
         txtMovieID = new javax.swing.JTextField();
         lblName = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
-        txtReleaseDate = new javax.swing.JTextField();
         lblReleaseDate = new javax.swing.JLabel();
         lblDirector = new javax.swing.JLabel();
         lblDescription = new javax.swing.JLabel();
@@ -64,24 +67,42 @@ public class FrmMovie extends javax.swing.JDialog {
         lblScore = new javax.swing.JLabel();
         txtScore = new javax.swing.JTextField();
         btnEnableChanges = new javax.swing.JButton();
-        btnCanel = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
+        jPanelDatePicker = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         lblMoveID.setText("ID:");
 
         lblName.setText("Name:");
 
-        lblReleaseDate.setText("Release date:");
+        txtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameActionPerformed(evt);
+            }
+        });
+
+        lblReleaseDate.setText("Rel. date:");
 
         lblDirector.setText("Director:");
 
         lblDescription.setText("Description:");
 
+        cbDirector.setMaximumSize(new java.awt.Dimension(64, 22));
+        cbDirector.setPreferredSize(new java.awt.Dimension(64, 22));
+
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(50, 20));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(200, 80));
+
         txtDescription.setColumns(20);
         txtDescription.setLineWrap(true);
         txtDescription.setRows(5);
+        txtDescription.setMaximumSize(new java.awt.Dimension(70, 20));
+        txtDescription.setMinimumSize(new java.awt.Dimension(70, 20));
+        txtDescription.setPreferredSize(new java.awt.Dimension(64, 84));
         jScrollPane1.setViewportView(txtDescription);
+        txtDescription.getAccessibleContext().setAccessibleParent(this);
 
         btnAdd.setText("Add");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -115,149 +136,108 @@ public class FrmMovie extends javax.swing.JDialog {
             }
         });
 
-        btnCanel.setText("Cancel");
-        btnCanel.addActionListener(new java.awt.event.ActionListener() {
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCanelActionPerformed(evt);
+                btnCancelActionPerformed(evt);
             }
         });
+
+        jPanelDatePicker.setPreferredSize(new java.awt.Dimension(64, 25));
+        jPanelDatePicker.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(btnUpdate)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCanel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEnableChanges)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDelete)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAdd))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblReleaseDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblScore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblMoveID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMovieID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
-                            .addComponent(txtName, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtReleaseDate, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtScore, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblDirector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
+                        .addComponent(lblDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbDirector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))))
-                .addContainerGap())
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblScore, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblDirector, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblReleaseDate, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtScore, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(cbDirector, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanelDatePicker, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(btnUpdate)
+                            .addGap(6, 6, 6)
+                            .addComponent(btnCancel)
+                            .addGap(6, 6, 6)
+                            .addComponent(btnEnableChanges)
+                            .addGap(6, 6, 6)
+                            .addComponent(btnDelete)
+                            .addGap(6, 6, 6)
+                            .addComponent(btnAdd)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblMoveID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtMovieID, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMoveID)
-                    .addComponent(txtMovieID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblName)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblReleaseDate)
-                    .addComponent(txtReleaseDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblScore)
-                    .addComponent(txtScore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDirector)
-                    .addComponent(cbDirector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblDescription)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
+                        .addContainerGap(45, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtMovieID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblMoveID))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblName))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanelDatePicker, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblReleaseDate)
+                        .addGap(26, 26, 26)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtScore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblScore))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDelete)
+                    .addComponent(cbDirector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDirector))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDescription))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdate)
-                    .addComponent(btnAdd)
+                    .addComponent(btnCancel)
                     .addComponent(btnEnableChanges)
-                    .addComponent(btnCanel))
-                .addContainerGap())
+                    .addComponent(btnDelete)
+                    .addComponent(btnAdd))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        //odradi validaciju polja prilikom unosa
-        
-        Movie movie = new Movie();
-        
-        movie.setMovieID(Integer.parseInt(txtMovieID.getText().trim()));
-        movie.setName(txtName.getText().trim());
-        movie.setReleaseDate(LocalDate.now());
-        movie.setDescription(txtDescription.getText().trim());
-        movie.setDirector((Director)cbDirector.getSelectedItem());
-        
-        JOptionPane.showMessageDialog(this,"Added movie: " + movie.getName(), "Success!", JOptionPane.INFORMATION_MESSAGE);
-        
-        try {
-            Controller.getInstance().addMovie(movie);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMovie.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Movie not saved. Try again.", "Error!", JOptionPane.ERROR_MESSAGE);
-        }
-        
-        txtMovieID.setText(null);
-        txtName.setText(null);
-        txtReleaseDate.setText(null);
-        txtDescription.setText(null);
-        cbDirector.setSelectedIndex(0);
-    }//GEN-LAST:event_btnAddActionPerformed
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        Movie movie = new Movie();
-        
-        movie.setMovieID(Integer.parseInt(txtMovieID.getText().trim()));
-        movie.setName(txtName.getText().trim());
-        movie.setReleaseDate(LocalDate.now());
-        movie.setDescription(txtDescription.getText().trim());
-        movie.setDirector((Director)cbDirector.getSelectedItem());
-        movie.setScore(0);
-        
-        int check = JOptionPane.showConfirmDialog(this, "Are you sure?", "Delete movie", 
-                JOptionPane.YES_NO_OPTION);
-        
-        if (check == JOptionPane.YES_OPTION) {
-            Controller.getInstance().removeMovie(movie);
-            JOptionPane.showMessageDialog(this, "Deleted movie: " + movie.getName(), "Info", JOptionPane.INFORMATION_MESSAGE);
-        }
-      
-        this.dispose();
-    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         Movie movie = new Movie() {
             {
                 setMovieID(Integer.parseInt(txtMovieID.getText().trim()));
                 setName(txtName.getText().trim());
-                setReleaseDate(LocalDate.now());
+                setReleaseDate(datePicker.getDate());
                 setDescription(txtDescription.getText().trim());
                 setDirector((Director)cbDirector.getSelectedItem());
                 setScore(0);
@@ -274,33 +254,90 @@ public class FrmMovie extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void btnCanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCanelActionPerformed
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         dispose();
-    }//GEN-LAST:event_btnCanelActionPerformed
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnEnableChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnableChangesActionPerformed
         btnAdd.setEnabled(false);
         btnDelete.setEnabled(false);
-        btnCanel.setEnabled(true);
+        btnCancel.setEnabled(true);
         btnEnableChanges.setEnabled(true);
         btnUpdate.setEnabled(true);
 
         txtMovieID.setEditable(true);
         txtName.setEditable(true);
-        txtReleaseDate.setEditable(true);
+        datePicker.setEnabled(true);
         txtScore.setEditable(false);
         txtDescription.setEditable(true);
         cbDirector.setEnabled(true);
     }//GEN-LAST:event_btnEnableChangesActionPerformed
 
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        Movie movie = new Movie() {
+            {
+                setMovieID(Integer.parseInt(txtMovieID.getText().trim()));
+                setName(txtName.getText().trim());
+                setReleaseDate(datePicker.getDate());
+                setDescription(txtDescription.getText().trim());
+                setDirector((Director)cbDirector.getSelectedItem());
+                setScore(0);
+            }
+        };
+
+        int check = JOptionPane.showConfirmDialog(this, "Are you sure?", "Delete movie",
+            JOptionPane.YES_NO_OPTION);
+
+        if (check == JOptionPane.YES_OPTION) {
+            Controller.getInstance().removeMovie(movie);
+            JOptionPane.showMessageDialog(this, "Deleted movie: " + movie.getName(), "Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        this.dispose();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        //odradi validaciju polja prilikom unosa
+
+        Movie movie = new Movie() {
+            {
+                setMovieID(Integer.parseInt(txtMovieID.getText().trim()));
+                setName(txtName.getText().trim());
+                setReleaseDate(datePicker.getDate());
+                setDescription(txtDescription.getText().trim());
+                setDirector((Director)cbDirector.getSelectedItem());
+            }
+        };
+
+        JOptionPane.showMessageDialog(this,"Added movie: " + movie.getName(), "Success!", JOptionPane.INFORMATION_MESSAGE);
+
+        try {
+            Controller.getInstance().addMovie(movie);
+        } catch (Exception ex) {
+            Logger.getLogger(FrmMovie.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Movie not saved. Try again.", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
+
+        txtMovieID.setText(null);
+        txtName.setText(null);
+        datePicker.setDateToToday();
+        txtDescription.setText(null);
+        cbDirector.setSelectedIndex(0);
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNameActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnCanel;
+    private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEnableChanges;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<Object> cbDirector;
+    private javax.swing.JPanel jPanelDatePicker;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDescription;
     private javax.swing.JLabel lblDirector;
@@ -311,7 +348,6 @@ public class FrmMovie extends javax.swing.JDialog {
     private javax.swing.JTextArea txtDescription;
     private javax.swing.JTextField txtMovieID;
     private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtReleaseDate;
     private javax.swing.JTextField txtScore;
     // End of variables declaration//GEN-END:variables
 
@@ -330,11 +366,18 @@ public class FrmMovie extends javax.swing.JDialog {
     }    
 
     private void setUpComponents(FormMode mode, Movie movie) {
+        DatePickerSettings dateSettings = new DatePickerSettings();
+        dateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
+        datePicker = new DatePicker(dateSettings);
+        datePicker.setDateToToday();
+        datePicker.setPreferredSize(new Dimension(330, 25));
+        jPanelDatePicker.add(datePicker);
+        
         switch(mode) {
             case FORM_ADD:
                 btnAdd.setEnabled(true);
                 btnDelete.setEnabled(false);
-                btnCanel.setEnabled(true);
+                btnCancel.setEnabled(true);
                 btnEnableChanges.setEnabled(false);
                 btnUpdate.setEnabled(false);
                 
@@ -344,20 +387,20 @@ public class FrmMovie extends javax.swing.JDialog {
             case FORM_VIEW:
                 btnAdd.setEnabled(false);
                 btnDelete.setEnabled(true);
-                btnCanel.setEnabled(true);
+                btnCancel.setEnabled(true);
                 btnEnableChanges.setEnabled(true);
                 btnUpdate.setEnabled(false);
                 
                 txtMovieID.setText(String.valueOf(movie.getMovieID()));
                 txtName.setText(movie.getName());
-                txtReleaseDate.setText(String.valueOf(movie.getReleaseDate()));
+                datePicker.setDate(movie.getReleaseDate());
                 txtScore.setText(String.valueOf(movie.getScore()));
                 txtDescription.setText(movie.getDescription());
                 cbDirector.setSelectedItem(movie.getDirector());
                 
                 txtMovieID.setEditable(false);
                 txtName.setEditable(false);
-                txtReleaseDate.setEditable(false);
+                datePicker.setEnabled(false);
                 txtScore.setEditable(false);
                 txtDescription.setEditable(false);
                 cbDirector.setEnabled(false);

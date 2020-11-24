@@ -3,21 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package forms;
+package view.form;
 
-import forms.components.table.MovieTableModel;
-import forms.util.FormMode;
-import java.util.List;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import domain.Movie;
-import domain.Director;
-import controller.Controller;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JTable;
 
 /**
  *
@@ -31,8 +21,6 @@ public class FrmViewMovies extends javax.swing.JDialog {
     public FrmViewMovies(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        prepareView();
     }
 
     /**
@@ -78,25 +66,10 @@ public class FrmViewMovies extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblMovies);
 
         btnDetails.setText("Details");
-        btnDetails.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDetailsActionPerformed(evt);
-            }
-        });
 
         btnAddMovie.setText("Add movie");
-        btnAddMovie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddMovieActionPerformed(evt);
-            }
-        });
 
         btnDeleteMovie.setText("Delete movie");
-        btnDeleteMovie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteMovieActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -131,42 +104,6 @@ public class FrmViewMovies extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsActionPerformed
-        int row = tblMovies.getSelectedRow();
-        
-        if (row != -1) {
-            Movie movie = ((MovieTableModel)tblMovies.getModel()).getMovie(row);
-            new FrmMovie(null, true, FormMode.FORM_VIEW, movie).setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "You need to select a movie from the table.", 
-                    "Error!", JOptionPane.ERROR_MESSAGE);
-        }
-        
-    }//GEN-LAST:event_btnDetailsActionPerformed
-
-    private void btnAddMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddMovieActionPerformed
-        
-        new FrmMovie(null, true, FormMode.FORM_ADD, null).setVisible(true);
-    }//GEN-LAST:event_btnAddMovieActionPerformed
-
-    private void btnDeleteMovieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteMovieActionPerformed
-        int row = tblMovies.getSelectedRow();
-        
-        if (row != -1) {
-            int check = JOptionPane.showConfirmDialog(this, "Are you sure?", "Delete movie",
-                    JOptionPane.YES_NO_OPTION);
-            
-            if (check == JOptionPane.YES_OPTION) {
-                MovieTableModel mtm = (MovieTableModel) tblMovies.getModel();
-                mtm.removeMovie(row);
-            }
-            
-        } else {
-            JOptionPane.showMessageDialog(this, "You need to select a movie from the table.",
-                    "Error!", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnDeleteMovieActionPerformed
-
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMovie;
@@ -176,29 +113,15 @@ public class FrmViewMovies extends javax.swing.JDialog {
     private javax.swing.JTable tblMovies;
     // End of variables declaration//GEN-END:variables
 
-    private void prepareView() {
-        setTitle("View movies");
-        setLocationRelativeTo(null);
-        
-        fillMoviesTable();
+   public JButton getBtnDetails() {
+        return btnDetails;
     }
 
-    public void fillMoviesTable() {
-        try {
-            List<Movie> movies = Controller.getInstance().selectAllMovies();
-            MovieTableModel mtm = new MovieTableModel(movies);
-            tblMovies.setModel(mtm);
-            
-            List<Director> directors = Controller.getInstance().selectAllDirectors();
-            JComboBox cbDirectors = new JComboBox(directors.toArray());
-            
-            TableColumnModel tcm = tblMovies.getColumnModel();
-            TableColumn tcDirector = tcm.getColumn(5);
-            
-            tcDirector.setCellEditor(new DefaultCellEditor(cbDirectors));
-        } catch (Exception ex) {
-            Logger.getLogger(FrmViewMovies.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Unable to load table.", "Error!", JOptionPane.ERROR_MESSAGE);
-        }
+    public JTable getTblMovies() {
+        return tblMovies;
+    }
+
+    public void getBtnDetailsAddActionListener(ActionListener actionListener) {
+        btnDetails.addActionListener(actionListener);
     }
 }

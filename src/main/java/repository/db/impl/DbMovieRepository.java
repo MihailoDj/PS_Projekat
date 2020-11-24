@@ -14,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -122,7 +121,6 @@ public class DbMovieRepository implements DbRepository<Movie>{
             
             statement.executeUpdate();
         
-        statement.close();
         } catch(Exception ex) {
             throw new Exception("Error!");
         }

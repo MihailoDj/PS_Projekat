@@ -3,21 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package forms;
+package view.form;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
-import forms.util.FormMode;
-import java.util.List;
-import javax.swing.JOptionPane;
-import domain.Movie;
-import domain.Director;
-import controller.Controller;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  *
@@ -26,20 +25,21 @@ import java.util.logging.Logger;
 public class FrmMovie extends javax.swing.JDialog {
     private DatePicker datePicker;
     /**
-     * Creates new form FrmFilm
+     * Creates new form FrmMovie
      */
-    public FrmMovie(java.awt.Frame parent, boolean modal, FormMode mode, Movie movie) {
+    public FrmMovie(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        setLocationRelativeTo(null);
-        setTitle("Movie form");
         
-        try {
-            prepareView(mode, movie);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMovie.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "There was an error", "Error!", JOptionPane.ERROR_MESSAGE);
-        }
+        
+        //naci bolje mesto za ovaj kod
+        DatePickerSettings dateSettings = new DatePickerSettings();
+        dateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
+        datePicker = new DatePicker(dateSettings);
+        datePicker.setDateToToday();
+        datePicker.setPreferredSize(new Dimension(330, 25));
+        jPanelDatePicker.add(datePicker);
+        
     }
 
     /**
@@ -51,7 +51,7 @@ public class FrmMovie extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblMoveID = new javax.swing.JLabel();
+        lblMovieID = new javax.swing.JLabel();
         txtMovieID = new javax.swing.JTextField();
         lblName = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
@@ -73,15 +73,9 @@ public class FrmMovie extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        lblMoveID.setText("ID:");
+        lblMovieID.setText("ID:");
 
         lblName.setText("Name:");
-
-        txtName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
-            }
-        });
 
         lblReleaseDate.setText("Rel. date:");
 
@@ -105,43 +99,18 @@ public class FrmMovie extends javax.swing.JDialog {
         txtDescription.getAccessibleContext().setAccessibleParent(this);
 
         btnAdd.setText("Add");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
-            }
-        });
 
         btnUpdate.setText("Update");
         btnUpdate.setEnabled(false);
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
 
         btnDelete.setText("Delete");
         btnDelete.setEnabled(false);
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
 
         lblScore.setText("Score:");
 
         btnEnableChanges.setText("Enable changes");
-        btnEnableChanges.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnableChangesActionPerformed(evt);
-            }
-        });
 
         btnCancel.setText("Cancel");
-        btnCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelActionPerformed(evt);
-            }
-        });
 
         jPanelDatePicker.setPreferredSize(new java.awt.Dimension(64, 25));
         jPanelDatePicker.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -183,7 +152,7 @@ public class FrmMovie extends javax.swing.JDialog {
                             .addGap(6, 6, 6)
                             .addComponent(btnAdd)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblMoveID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblMovieID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(txtMovieID, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19))
@@ -196,7 +165,7 @@ public class FrmMovie extends javax.swing.JDialog {
                         .addContainerGap(45, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtMovieID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMoveID))
+                            .addComponent(lblMovieID))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,111 +201,6 @@ public class FrmMovie extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        Movie movie = new Movie() {
-            {
-                setMovieID(Integer.parseInt(txtMovieID.getText().trim()));
-                setName(txtName.getText().trim());
-                setReleaseDate(datePicker.getDate());
-                setDescription(txtDescription.getText().trim());
-                setDirector((Director)cbDirector.getSelectedItem());
-                setScore(0);
-            }
-        };
-        
-        int check = JOptionPane.showConfirmDialog(this, "Are you sure?", "Update movie", 
-                JOptionPane.YES_NO_OPTION);
-        
-        if (check == JOptionPane.YES_OPTION) {
-            try {
-                Controller.getInstance().updateMovie(movie);
-                JOptionPane.showMessageDialog(this, "Updated movie: " + movie.getName(), "Info", JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception ex) {
-                Logger.getLogger(FrmMovie.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        this.dispose();
-    }//GEN-LAST:event_btnUpdateActionPerformed
-
-    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnCancelActionPerformed
-
-    private void btnEnableChangesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnableChangesActionPerformed
-        btnAdd.setEnabled(false);
-        btnDelete.setEnabled(false);
-        btnCancel.setEnabled(true);
-        btnEnableChanges.setEnabled(true);
-        btnUpdate.setEnabled(true);
-
-        txtMovieID.setEditable(true);
-        txtName.setEditable(true);
-        datePicker.setEnabled(true);
-        txtScore.setEditable(false);
-        txtDescription.setEditable(true);
-        cbDirector.setEnabled(true);
-    }//GEN-LAST:event_btnEnableChangesActionPerformed
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        Movie movie = new Movie() {
-            {
-                setMovieID(Integer.parseInt(txtMovieID.getText().trim()));
-                setName(txtName.getText().trim());
-                setReleaseDate(datePicker.getDate());
-                setDescription(txtDescription.getText().trim());
-                setDirector((Director)cbDirector.getSelectedItem());
-                setScore(0);
-            }
-        };
-
-        int check = JOptionPane.showConfirmDialog(this, "Are you sure?", "Delete movie",
-            JOptionPane.YES_NO_OPTION);
-
-        if (check == JOptionPane.YES_OPTION) {
-            try {
-                Controller.getInstance().deleteMovie(movie);
-                JOptionPane.showMessageDialog(this, "Deleted movie: " + movie.getName(), "Info", JOptionPane.INFORMATION_MESSAGE);
-            } catch (Exception ex) {
-                Logger.getLogger(FrmMovie.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        this.dispose();
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        //odradi validaciju polja prilikom unosa
-
-        Movie movie = new Movie() {
-            {
-                setMovieID(Integer.parseInt(txtMovieID.getText().trim()));
-                setName(txtName.getText().trim());
-                setReleaseDate(datePicker.getDate());
-                setDescription(txtDescription.getText().trim());
-                setDirector((Director)cbDirector.getSelectedItem());
-            }
-        };
-
-        JOptionPane.showMessageDialog(this,"Added movie: " + movie.getName(), "Success!", JOptionPane.INFORMATION_MESSAGE);
-
-        try {
-            Controller.getInstance().insertMovie(movie);
-        } catch (Exception ex) {
-            Logger.getLogger(FrmMovie.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Movie not saved. Try again.", "Error!", JOptionPane.ERROR_MESSAGE);
-        }
-
-        txtMovieID.setText(null);
-        txtName.setText(null);
-        datePicker.setDateToToday();
-        txtDescription.setText(null);
-        cbDirector.setSelectedIndex(0);
-    }//GEN-LAST:event_btnAddActionPerformed
-
-    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNameActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -349,7 +213,7 @@ public class FrmMovie extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDescription;
     private javax.swing.JLabel lblDirector;
-    private javax.swing.JLabel lblMoveID;
+    private javax.swing.JLabel lblMovieID;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblReleaseDate;
     private javax.swing.JLabel lblScore;
@@ -359,62 +223,99 @@ public class FrmMovie extends javax.swing.JDialog {
     private javax.swing.JTextField txtScore;
     // End of variables declaration//GEN-END:variables
 
-    private void prepareView(FormMode mode, Movie movie)throws Exception{
-        fillCB();
-        setUpComponents(mode, movie);
+    public JButton getBtnCancel() {
+        return btnCancel;
+    }
+
+    public JButton getBtnDelete() {
+        return btnDelete;
+    }
+
+    public JButton getBtnUpdate() {
+        return btnUpdate;
+    }
+
+    public JButton getBtnEnableChanges() {
+        return btnEnableChanges;
+    }
+
+    public JButton getBtnAdd() {
+        return btnAdd;
+    }
+
+    public JComboBox<Object> getCbDirector() {
+        return cbDirector;
+    }
+
+    public JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public JLabel getLblDescription() {
+        return lblDescription;
+    }
+
+    public JLabel getLblMovieId() {
+        return lblMovieID;
+    }
+
+    public JLabel getLblDirector() {
+        return lblDirector;
+    }
+
+    public JLabel getLblName() {
+        return lblName;
+    }
+
+    public JTextArea getTxtDescription() {
+        return txtDescription;
+    }
+
+    public JTextField getTxtMovieID() {
+        return txtMovieID;
+    }
+
+    public JTextField getTxtName() {
+        return txtName;
+    }
+
+    public JLabel getLblReleaseDate() {
+        return lblReleaseDate;
     }
     
-    private void fillCB() throws Exception{
-        cbDirector.removeAllItems();
-        List<Director> directors = Controller.getInstance().selectAllDirectors();
-        
-        for (Director director : directors) {
-            cbDirector.addItem(director);
-        }
-    }    
+    public DatePicker getReleaseDate() {
+        return datePicker;
+    }
+    
+    public JLabel getLblScore() {
+        return lblScore;
+    }
+    
+    public JTextField getTxtScore() {
+        return txtScore;
+    }
+    
+    public JPanel getJPanelDatePicker() {
+        return jPanelDatePicker;
+    }
+    
+    public void addBtnAddActionListener(ActionListener actionListener) {
+        btnAdd.addActionListener(actionListener);
+    }
 
-    private void setUpComponents(FormMode mode, Movie movie) {
-        DatePickerSettings dateSettings = new DatePickerSettings();
-        dateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
-        datePicker = new DatePicker(dateSettings);
-        datePicker.setDateToToday();
-        datePicker.setPreferredSize(new Dimension(330, 25));
-        jPanelDatePicker.add(datePicker);
-        
-        switch(mode) {
-            case FORM_ADD:
-                btnAdd.setEnabled(true);
-                btnDelete.setEnabled(false);
-                btnCancel.setEnabled(true);
-                btnEnableChanges.setEnabled(false);
-                btnUpdate.setEnabled(false);
-                
-                txtScore.setText(String.valueOf(0));
-                txtScore.setEditable(false);
-                break;
-            case FORM_VIEW:
-                btnAdd.setEnabled(false);
-                btnDelete.setEnabled(true);
-                btnCancel.setEnabled(true);
-                btnEnableChanges.setEnabled(true);
-                btnUpdate.setEnabled(false);
-                
-                txtMovieID.setText(String.valueOf(movie.getMovieID()));
-                txtName.setText(movie.getName());
-                datePicker.setDate(movie.getReleaseDate());
-                txtScore.setText(String.valueOf(movie.getScore()));
-                txtDescription.setText(movie.getDescription());
-                cbDirector.setSelectedItem(movie.getDirector());
-                
-                txtMovieID.setEditable(false);
-                txtName.setEditable(false);
-                datePicker.setEnabled(false);
-                txtScore.setEditable(false);
-                txtDescription.setEditable(false);
-                cbDirector.setEnabled(false);
-                break;
-            case FORM_EDIT:
-                break;
-        }
+    public void addBtnEnableChangesActionListener(ActionListener actionListener) {
+        btnEnableChanges.addActionListener(actionListener);
+    }
+
+    public void addBtnCancelActionListener(ActionListener actionListener) {
+        btnCancel.addActionListener(actionListener);
+    }
+
+    public void addBtnDeleteActionListener(ActionListener actionListener) {
+        btnDelete.addActionListener(actionListener);
+    }
+
+    public void addBtnUpdateActionListener(ActionListener actionListener) {
+          btnUpdate.addActionListener(actionListener);
     }
 }

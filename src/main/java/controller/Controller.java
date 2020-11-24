@@ -10,6 +10,7 @@ import domain.Movie;
 import domain.User;
 import domain.Director;
 import repository.Repository;
+import repository.db.DbRepository;
 import repository.db.impl.DbDirectorRepository;
 import repository.db.impl.DbMovieRepository;
 import repository.db.impl.DbUserRepository;
@@ -42,7 +43,6 @@ public class Controller {
         
         if (!user.equals(null)) {
             if(password.equals(user.getPassword())) {
-                LoggedInUser.getInstance().setLoggedInUser(user);
                 return user;
             } else {
                 throw new Exception("Incorrect password.");
@@ -52,23 +52,61 @@ public class Controller {
         throw new Exception("User doesn't exist.");
     }
     
-    public List<Director> selectAllDirectors() throws Exception {
+    public List<Director> selectAllDirectors() throws Exception{
         return directorRepository.selectAll();
     }
     
     public void insertMovie(Movie movie) throws Exception {
-        movieRepository.insert(movie);
+        ((DbRepository)movieRepository).connect();
+        
+        try{
+            movieRepository.insert(movie);
+            ((DbRepository)movieRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)movieRepository).rollback();
+            throw e;
+        }
     }
     
     public List<Movie> selectAllMovies() throws Exception {
-        return movieRepository.selectAll();
+        List<Movie> movies=null;
+        ((DbRepository)movieRepository).connect();
+        
+        try{
+            movies = movieRepository.selectAll();
+            ((DbRepository)movieRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)movieRepository).rollback();
+            throw e;
+        }
+        return movies;
     }
     
     public void deleteMovie(Movie movie) throws Exception {
-        movieRepository.delete(movie);
+        ((DbRepository)movieRepository).connect();
+        
+        try{
+            movieRepository.delete(movie);
+            ((DbRepository)movieRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)movieRepository).rollback();
+            throw e;
+        }
     }
 
     public void updateMovie(Movie movie) throws Exception {
-        movieRepository.update(movie);
+        ((DbRepository)movieRepository).connect();
+        
+        try{
+            ((DbRepository)movieRepository).update(movie);
+            ((DbRepository)movieRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)movieRepository).rollback();
+            throw e;
+        }
     }
 }

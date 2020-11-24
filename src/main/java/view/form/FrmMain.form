@@ -13,17 +13,11 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="New"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiNewMovieActionPerformed"/>
-              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jmiViewAllMovies">
               <Properties>
                 <Property name="text" type="java.lang.String" value="View all"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiViewAllMoviesActionPerformed"/>
-              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package forms.util;
+package view.constant;
 
 /**
  *
  * @author Mihailo
  */
-public enum FormMode {
-    FORM_ADD, FORM_VIEW, FORM_EDIT
+public class Constants {
+    public static final String PARAM_MOVIE="MOVIE";
+    public static final String FORM_ALL_MOVIES="FORM_ALL_MOVIES";
 }

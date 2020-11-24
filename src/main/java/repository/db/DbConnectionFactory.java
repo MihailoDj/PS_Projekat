@@ -32,6 +32,7 @@ public class DbConnectionFactory {
             String username = "root";
             String password = "";
             connection = DriverManager.getConnection(url, username, password);
+            connection.setAutoCommit(false);
         }
         return connection;
     }

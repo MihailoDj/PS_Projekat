@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package forms.components.table;
+package view.form.component.table;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -113,5 +113,9 @@ public class MovieTableModel extends AbstractTableModel{
     public void removeMovie(int row) {
         movies.remove(row);
         fireTableRowsDeleted(row, row);
+    }
+    
+    public Movie getMovieAt(int row) {
+        return movies.get(row);
     }
 }

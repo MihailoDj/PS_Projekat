@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
-
-import view.coordinator.MainCoordinator;
-import view.form.FrmLogin;
+package view.form.util;
 
 /**
  *
  * @author Mihailo
  */
-public class Main {
-    public static void main(String[] args) {
-        MainCoordinator.getInstance().openLoginForm();
-    }
+public enum FormMode {
+    FORM_ADD, FORM_VIEW, FORM_EDIT
 }

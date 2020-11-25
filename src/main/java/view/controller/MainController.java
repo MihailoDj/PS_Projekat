@@ -5,6 +5,8 @@
  */
 package view.controller;
 
+import domain.User;
+import view.constant.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmMain;
 
@@ -21,6 +23,12 @@ public class MainController {
     }
 
     public void openForm() {
+        frmMain.setTitle("Main form");
+        frmMain.setLocationRelativeTo(null);
+        
+        User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
+        frmMain.getLblCurrentUser().setText("Current user: " + user.getUsername());
+        
         frmMain.setVisible(true);
     }
 

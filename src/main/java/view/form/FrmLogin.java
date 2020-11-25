@@ -19,8 +19,6 @@ public class FrmLogin extends javax.swing.JFrame {
      */
     public FrmLogin() {
         initComponents();
-        setLocationRelativeTo(null);
-        setTitle("Log in form");
     }
 
     /**

@@ -66,19 +66,18 @@ public class Controller {
             e.printStackTrace();
             ((DbRepository)movieRepository).rollback();
             throw e;
+        } finally {
+            ((DbRepository)movieRepository).disconnect();
         }
     }
     
     public List<Movie> selectAllMovies() throws Exception {
         List<Movie> movies=null;
-        ((DbRepository)movieRepository).connect();
         
         try{
             movies = movieRepository.selectAll();
-            ((DbRepository)movieRepository).commit();
         }catch(Exception e){
             e.printStackTrace();
-            ((DbRepository)movieRepository).rollback();
             throw e;
         }
         return movies;
@@ -94,6 +93,8 @@ public class Controller {
             e.printStackTrace();
             ((DbRepository)movieRepository).rollback();
             throw e;
+        } finally {
+            ((DbRepository)movieRepository).disconnect();
         }
     }
 

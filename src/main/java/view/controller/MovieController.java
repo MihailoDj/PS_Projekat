@@ -130,8 +130,9 @@ public class MovieController {
     }
 
     public void openForm(FormMode formMode) {
-        frmMovie.setLocationRelativeTo(MainCoordinator.getInstance().getMainContoller().getFrmMain());
+        frmMovie.setTitle("Movie form");
         prepareView(formMode);
+        frmMovie.setLocationRelativeTo(MainCoordinator.getInstance().getMainContoller().getFrmMain());
         frmMovie.setVisible(true);
     }
 

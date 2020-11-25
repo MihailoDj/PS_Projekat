@@ -10,6 +10,7 @@ import domain.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import view.constant.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmLogin;
 
@@ -27,6 +28,8 @@ public class LoginController {
 
     public void openForm() {
         frmLogin.setVisible(true);
+        frmLogin.setLocationRelativeTo(null);
+        frmLogin.setTitle("Login form");
     }
 
     private void addActionListener() {
@@ -50,6 +53,7 @@ public class LoginController {
                     
                     frmLogin.dispose();
 
+                    MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, user);
                     MainCoordinator.getInstance().openMainForm();
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(frmLogin, e.getMessage(), "Login error", JOptionPane.ERROR_MESSAGE);

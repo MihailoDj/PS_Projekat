@@ -10,6 +10,7 @@ package view.constant;
  * @author Mihailo
  */
 public class Constants {
-    public static final String PARAM_MOVIE="MOVIE";
-    public static final String FORM_ALL_MOVIES="FORM_ALL_MOVIES";
+    public static final String PARAM_MOVIE = "MOVIE";
+    public static final String FORM_ALL_MOVIES = "FORM_ALL_MOVIES";
+    public static final String CURRENT_USER = "CURRENT_USER";
 }

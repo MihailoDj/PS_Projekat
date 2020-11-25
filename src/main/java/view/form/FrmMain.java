@@ -6,6 +6,7 @@
 package view.form;
 
 import java.awt.event.ActionListener;
+import javax.swing.JLabel;
 
 /**
  *
@@ -17,9 +18,7 @@ public class FrmMain extends javax.swing.JFrame {
      * Creates new form FrmMain
      */
     public FrmMain() {
-        super("Main form");
         initComponents();
-        setLocationRelativeTo(null);
     }
 
     /**
@@ -31,6 +30,7 @@ public class FrmMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblCurrentUser = new javax.swing.JLabel();
         jMenuBarMain = new javax.swing.JMenuBar();
         jmMovie = new javax.swing.JMenu();
         jmiNewMovie = new javax.swing.JMenuItem();
@@ -63,11 +63,17 @@ public class FrmMain extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 613, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblCurrentUser)
+                .addContainerGap(607, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 401, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(lblCurrentUser)
+                .addContainerGap(377, Short.MAX_VALUE))
         );
 
         pack();
@@ -80,6 +86,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiAboutSoftware;
     private javax.swing.JMenuItem jmiNewMovie;
     private javax.swing.JMenuItem jmiViewAllMovies;
+    private javax.swing.JLabel lblCurrentUser;
     // End of variables declaration//GEN-END:variables
 
     public void jmiNewMovieAddActionListener(ActionListener actionListener) {
@@ -88,5 +95,9 @@ public class FrmMain extends javax.swing.JFrame {
 
     public void jmiViewAllMoviesActionListener(ActionListener actionListener) {
         jmiViewAllMovies.addActionListener(actionListener);
+    }
+    
+    public JLabel getLblCurrentUser () {
+        return lblCurrentUser;
     }
 }

@@ -27,10 +27,11 @@ public class DbConnectionFactory {
     }
     
     public Connection getConnection() throws Exception{
-        if (connection == null) {
+        if (connection == null || connection.isClosed()) {
             String url = "jdbc:mysql://localhost:3306/psdb";
             String username = "root";
             String password = "";
+            
             connection = DriverManager.getConnection(url, username, password);
             connection.setAutoCommit(false);
         }

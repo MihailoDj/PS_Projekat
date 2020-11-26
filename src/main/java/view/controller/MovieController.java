@@ -38,12 +38,11 @@ public class MovieController {
             public void actionPerformed(ActionEvent e) {
                 add();
             }
-
+            
             private void add() {
                 try {
                     Movie movie = new Movie() {
                         {
-                            setMovieID(Integer.parseInt(frmMovie.getTxtMovieID().getText().trim()));
                             setName(frmMovie.getTxtName().getText().trim());
                             setDescription(frmMovie.getTxtDescription().getText().trim());
                             setScore(Double.parseDouble(frmMovie.getTxtScore().getText()));
@@ -53,7 +52,7 @@ public class MovieController {
                     };
                     
                     Controller.getInstance().insertMovie(movie);
-                    JOptionPane.showMessageDialog(frmMovie, "Movie successfully saves");
+                    JOptionPane.showMessageDialog(frmMovie, "Movie successfully saved!");
                     frmMovie.dispose();
                 } catch (Exception ex) {
                     Logger.getLogger(FrmMovie.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,7 +60,7 @@ public class MovieController {
                 }
             }
         });
-
+        
         frmMovie.addBtnEnableChangesActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -155,16 +154,19 @@ public class MovieController {
     private void setupComponents(FormMode formMode) {
         switch (formMode) {
             case FORM_ADD:
+                frmMovie.getTxtMovieID().setText("auto");
+                frmMovie.getTxtScore().setText(String.valueOf(0));
+                
                 frmMovie.getBtnCancel().setEnabled(true);
                 frmMovie.getBtnDelete().setEnabled(false);
                 frmMovie.getBtnUpdate().setEnabled(false);
                 frmMovie.getBtnEnableChanges().setEnabled(false);
                 frmMovie.getBtnAdd().setEnabled(true);
 
-                frmMovie.getTxtMovieID().setEditable(true);
+                frmMovie.getTxtMovieID().setEditable(false);
                 frmMovie.getTxtName().setEditable(true);
                 frmMovie.getTxtDescription().setEditable(true);
-                frmMovie.getTxtScore().setEditable(true);
+                frmMovie.getTxtScore().setEditable(false);
                 frmMovie.getCbDirector().setEnabled(true);
                 frmMovie.getReleaseDate().setEnabled(true);
                 break;
@@ -200,7 +202,7 @@ public class MovieController {
                 frmMovie.getTxtMovieID().setEditable(false);
                 frmMovie.getTxtName().setEditable(true);
                 frmMovie.getTxtDescription().setEditable(true);
-                frmMovie.getTxtScore().setEditable(true);
+                frmMovie.getTxtScore().setEditable(false);
                 frmMovie.getCbDirector().setEnabled(true);
                 frmMovie.getReleaseDate().setEnabled(true);
                 break;

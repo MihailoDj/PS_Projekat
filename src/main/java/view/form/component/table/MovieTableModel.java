@@ -100,20 +100,6 @@ public class MovieTableModel extends AbstractTableModel{
     public Class<?> getColumnClass(int columnIndex) {
         return columnClasses[columnIndex];
     }
-
-    public void addMovie(Movie movie) {
-        movies.add(movie);
-        fireTableRowsInserted(movies.size()-1, movies.size()-1);
-    }
-    
-    public Movie getMovie(int row) {
-        return movies.get(row);
-    }
-        
-    public void removeMovie(int row) {
-        movies.remove(row);
-        fireTableRowsDeleted(row, row);
-    }
     
     public Movie getMovieAt(int row) {
         return movies.get(row);

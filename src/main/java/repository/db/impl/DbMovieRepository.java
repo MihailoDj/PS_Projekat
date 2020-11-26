@@ -76,20 +76,19 @@ public class DbMovieRepository implements DbRepository<Movie>{
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             
-            String sql = "INSERT INTO movie VALUES(?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO movie (name, releasedate, score, description, directorid) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, movie.getMovieID());
-            statement.setString(2, movie.getName());
-            statement.setObject(3, movie.getReleaseDate(), java.sql.Types.DATE);
-            statement.setDouble(4, movie.getScore());
-            statement.setString(5, movie.getDescription());
-            statement.setInt(6, movie.getDirector().getDirectorID());
+            statement.setString(1, movie.getName());
+            statement.setObject(2, movie.getReleaseDate(), java.sql.Types.DATE);
+            statement.setDouble(3, movie.getScore());
+            statement.setString(4, movie.getDescription());
+            statement.setInt(5, movie.getDirector().getDirectorID());
             
             statement.executeUpdate();
             
             statement.close();
         } catch(SQLException e) {
-            throw new Exception("Error!");
+            throw new Exception("Error inserting movie!");
         }
         
     }
@@ -122,7 +121,7 @@ public class DbMovieRepository implements DbRepository<Movie>{
             statement.executeUpdate();
         
         } catch(Exception ex) {
-            throw new Exception("Error!");
+            throw new Exception("Error updating movie!");
         }
     }
 

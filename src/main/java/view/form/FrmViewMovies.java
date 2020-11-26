@@ -77,7 +77,7 @@ public class FrmViewMovies extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -113,8 +113,16 @@ public class FrmViewMovies extends javax.swing.JDialog {
     private javax.swing.JTable tblMovies;
     // End of variables declaration//GEN-END:variables
 
-   public JButton getBtnDetails() {
+    public JButton getBtnDetails() {
         return btnDetails;
+    }
+    
+    public JButton getBtnAddMovie() {
+        return btnAddMovie;
+    }
+    
+    public JButton getBtnDeleteMovie() {
+        return btnDeleteMovie;
     }
 
     public JTable getTblMovies() {
@@ -123,5 +131,13 @@ public class FrmViewMovies extends javax.swing.JDialog {
 
     public void getBtnDetailsAddActionListener(ActionListener actionListener) {
         btnDetails.addActionListener(actionListener);
+    }
+    
+    public void getBtnAddMovieAddActionListener(ActionListener actionListener) {
+        btnAddMovie.addActionListener(actionListener);
+    }
+    
+    public void getBtnDeleteAddActionListener(ActionListener actionListener) {
+        btnDeleteMovie.addActionListener(actionListener);
     }
 }

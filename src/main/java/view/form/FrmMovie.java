@@ -24,22 +24,14 @@ import javax.swing.JTextField;
  */
 public class FrmMovie extends javax.swing.JDialog {
     private DatePicker datePicker;
+    
     /**
      * Creates new form FrmMovie
      */
     public FrmMovie(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        
-        //naci bolje mesto za ovaj kod
-        DatePickerSettings dateSettings = new DatePickerSettings();
-        dateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
-        datePicker = new DatePicker(dateSettings);
-        datePicker.setDateToToday();
-        datePicker.setPreferredSize(new Dimension(330, 25));
-        jPanelDatePicker.add(datePicker);
-        
+        initDatePicker();
     }
 
     /**
@@ -317,5 +309,14 @@ public class FrmMovie extends javax.swing.JDialog {
 
     public void addBtnUpdateActionListener(ActionListener actionListener) {
           btnUpdate.addActionListener(actionListener);
+    }
+
+    private void initDatePicker() {
+        DatePickerSettings dateSettings = new DatePickerSettings();
+        dateSettings.setFirstDayOfWeek(DayOfWeek.MONDAY);
+        datePicker = new DatePicker(dateSettings);
+        datePicker.setDateToToday();
+        datePicker.setPreferredSize(new Dimension(330, 25));
+        jPanelDatePicker.add(datePicker);
     }
 }

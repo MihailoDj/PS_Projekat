@@ -27,7 +27,8 @@ public class MainController {
         frmMain.setLocationRelativeTo(null);
         
         User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
-        frmMain.getLblCurrentUser().setText("Current user: " + user.getUsername());
+        String systemRole = (user.isAdmin()) ? "administrator" : "user";
+        frmMain.getLblCurrentUser().setText("Current " + systemRole + ": " + user.getUsername());
         
         frmMain.setVisible(true);
     }

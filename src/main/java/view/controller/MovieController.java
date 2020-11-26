@@ -41,6 +41,7 @@ public class MovieController {
             
             private void add() {
                 try {
+                    validateForm();
                     Movie movie = new Movie() {
                         {
                             setName(frmMovie.getTxtName().getText().trim());
@@ -110,20 +111,24 @@ public class MovieController {
             }
 
             private void update() {
-                int check = JOptionPane.showConfirmDialog(frmMovie, "Are you sure you want to update this movie?", 
+                try {
+                    validateForm();
+                    int check = JOptionPane.showConfirmDialog(frmMovie, "Are you sure you want to update this movie?", 
                         "Confirm operation", JOptionPane.YES_NO_OPTION);
                 
-                if(check == JOptionPane.YES_OPTION){
-                    Movie movie = makeMovieFromForm();
-                    try {
+                    if(check == JOptionPane.YES_OPTION){
+                        
+                        Movie movie = makeMovieFromForm();
                         Controller.getInstance().updateMovie(movie);
                         JOptionPane.showMessageDialog(frmMovie, "Movie updated successfully!\n", "Update movie", JOptionPane.INFORMATION_MESSAGE);
                         frmMovie.dispose();
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(frmMovie, "Error updating movie!\n" + ex.getMessage(), "Update movie", JOptionPane.ERROR_MESSAGE);
-                        Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                } catch (Exception ex) {
+                    Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(frmMovie, ex.getMessage(), "Update movie", JOptionPane.ERROR_MESSAGE);
+
                 }
+                
             }
         });
     }
@@ -222,5 +227,12 @@ public class MovieController {
         };
         
         return movie;
+    }
+    
+    public void validateForm() throws Exception{
+        if (frmMovie.getTxtName().getText().trim().isEmpty() || frmMovie.getTxtName() == null 
+                || frmMovie.getReleaseDate().getDate() == null) {
+            throw new Exception("Invalid input");
+        }
     }
 }

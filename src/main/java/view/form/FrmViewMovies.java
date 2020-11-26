@@ -39,6 +39,7 @@ public class FrmViewMovies extends javax.swing.JDialog {
         btnDeleteMovie = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         tblMovies.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

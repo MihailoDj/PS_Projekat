@@ -39,6 +39,7 @@ public class FrmLogin extends javax.swing.JFrame {
         lblPasswordError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         lblUsername.setText("Username");
 

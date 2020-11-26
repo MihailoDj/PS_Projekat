@@ -126,7 +126,7 @@ public class ViewAllMoviesController {
     }
     
     public void setUpTableColumns() throws Exception {
-        List<Director> directors = directors = Controller.getInstance().selectAllDirectors();
+        List<Director> directors = Controller.getInstance().selectAllDirectors();
         JComboBox cbDirector = new JComboBox(directors.toArray());
 
         TableColumnModel tcm = frmViewMovies.getTblMovies().getColumnModel();

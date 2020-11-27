@@ -6,6 +6,7 @@
 package view.controller;
 
 import domain.User;
+import javax.swing.JFrame;
 import view.constant.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmMain;
@@ -31,6 +32,7 @@ public class MainController {
         frmMain.getLblCurrentUser().setText("Current " + systemRole + ": " + user.getUsername());
         
         frmMain.setVisible(true);
+        frmMain.setExtendedState( JFrame.MAXIMIZED_BOTH);
     }
 
     private void addActionListener() {

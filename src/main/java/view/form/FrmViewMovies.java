@@ -8,6 +8,9 @@ package view.form;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelListener;
+import view.form.component.table.MovieTableModel;
 
 /**
  *
@@ -67,10 +70,12 @@ public class FrmViewMovies extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblMovies);
 
         btnDetails.setText("Details");
+        btnDetails.setEnabled(false);
 
         btnAddMovie.setText("Add movie");
 
         btnDeleteMovie.setText("Delete movie");
+        btnDeleteMovie.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,7 +83,7 @@ public class FrmViewMovies extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -89,7 +94,7 @@ public class FrmViewMovies extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -141,4 +146,14 @@ public class FrmViewMovies extends javax.swing.JDialog {
     public void getBtnDeleteAddActionListener(ActionListener actionListener) {
         btnDeleteMovie.addActionListener(actionListener);
     }
+    
+    public void getTableViewMoviesAddListSelectionListener(ListSelectionListener listSelectionListener) {
+        tblMovies.getSelectionModel().addListSelectionListener(listSelectionListener);
+    }
+    
+    /*
+    public void getTableViewMoviesAddTableModelListener(TableModelListener tableModelListener) {
+        ((MovieTableModel)getTblMovies().getModel()).addTableModelListener(tableModelListener);
+    }
+    */
 }

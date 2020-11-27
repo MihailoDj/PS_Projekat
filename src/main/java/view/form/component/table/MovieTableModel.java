@@ -5,11 +5,15 @@
  */
 package view.form.component.table;
 
+import controller.Controller;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import domain.Movie;
 import domain.Director;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -70,19 +74,27 @@ public class MovieTableModel extends AbstractTableModel{
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         Movie movie = movies.get(rowIndex);
         
-        switch(columnIndex) {
-            case 1:
-                movie.setName(String.valueOf(value));
-                break;
-            case 2:
-                movie.setReleaseDate((LocalDate)value);
-                break;
-            case 3:
-                movie.setDescription(String.valueOf(value));
-                break;
-            case 5:
-                movie.setDirector((Director) value);
-                break;
+        try{
+            switch(columnIndex) {
+                case 1:
+                    movie.setName(String.valueOf(value));
+                    break;
+                case 2:
+                    movie.setReleaseDate((LocalDate)value);
+                    break;
+                case 3:
+                    movie.setDescription(String.valueOf(value));
+                    break;
+                case 5:
+                    movie.setDirector((Director) value);
+                    break;
+            }
+
+            Controller.getInstance().updateMovie(movie);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MovieTableModel.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Invalid input", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

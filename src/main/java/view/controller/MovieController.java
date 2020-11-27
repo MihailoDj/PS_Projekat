@@ -57,7 +57,7 @@ public class MovieController {
                     frmMovie.dispose();
                 } catch (Exception ex) {
                     Logger.getLogger(FrmMovie.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(frmMovie, ex.getMessage());
+                    JOptionPane.showMessageDialog(frmMovie, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -87,8 +87,8 @@ public class MovieController {
             }
 
             private void delete() {
-                int check = JOptionPane.showConfirmDialog(frmMovie, "Are you sure you want to delete this movie?", 
-                        "Confirm operation", JOptionPane.YES_NO_OPTION);
+                int check = JOptionPane.showConfirmDialog(frmMovie, "Are you sure?", 
+                        "Delete movie", JOptionPane.YES_NO_OPTION);
                 
                 if (check == JOptionPane.YES_OPTION) {
                     Movie movie = makeMovieFromForm();
@@ -97,7 +97,7 @@ public class MovieController {
                         JOptionPane.showMessageDialog(frmMovie, "Movie deleted successfully!\n", "Delete movie", JOptionPane.INFORMATION_MESSAGE);
                         frmMovie.dispose();
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(frmMovie, "Error deleting movie!\n" + ex.getMessage(), "Delete movie", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(frmMovie, ex.getMessage(), "Delete movie", JOptionPane.ERROR_MESSAGE);
                         Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -113,8 +113,8 @@ public class MovieController {
             private void update() {
                 try {
                     validateForm();
-                    int check = JOptionPane.showConfirmDialog(frmMovie, "Are you sure you want to update this movie?", 
-                        "Confirm operation", JOptionPane.YES_NO_OPTION);
+                    int check = JOptionPane.showConfirmDialog(frmMovie, "Are you sure?", 
+                        "Update movie", JOptionPane.YES_NO_OPTION);
                 
                     if(check == JOptionPane.YES_OPTION){
                         
@@ -125,7 +125,7 @@ public class MovieController {
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(frmMovie, ex.getMessage(), "Update movie", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frmMovie, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
                 }
                 

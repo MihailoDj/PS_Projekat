@@ -35,6 +35,8 @@ public class FrmMain extends javax.swing.JFrame {
         jmMovie = new javax.swing.JMenu();
         jmiNewMovie = new javax.swing.JMenuItem();
         jmiViewAllMovies = new javax.swing.JMenuItem();
+        jmDirector = new javax.swing.JMenu();
+        jmiNewDirector = new javax.swing.JMenuItem();
         jMenuAbout = new javax.swing.JMenu();
         jmiAboutSoftware = new javax.swing.JMenuItem();
 
@@ -49,6 +51,13 @@ public class FrmMain extends javax.swing.JFrame {
         jmMovie.add(jmiViewAllMovies);
 
         jMenuBarMain.add(jmMovie);
+
+        jmDirector.setText("Director");
+
+        jmiNewDirector.setText("New");
+        jmDirector.add(jmiNewDirector);
+
+        jMenuBarMain.add(jmDirector);
 
         jMenuAbout.setText("About");
 
@@ -82,8 +91,10 @@ public class FrmMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenuAbout;
     private javax.swing.JMenuBar jMenuBarMain;
+    private javax.swing.JMenu jmDirector;
     private javax.swing.JMenu jmMovie;
     private javax.swing.JMenuItem jmiAboutSoftware;
+    private javax.swing.JMenuItem jmiNewDirector;
     private javax.swing.JMenuItem jmiNewMovie;
     private javax.swing.JMenuItem jmiViewAllMovies;
     private javax.swing.JLabel lblCurrentUser;
@@ -95,6 +106,10 @@ public class FrmMain extends javax.swing.JFrame {
 
     public void jmiViewAllMoviesActionListener(ActionListener actionListener) {
         jmiViewAllMovies.addActionListener(actionListener);
+    }
+    
+    public void jmiNewDirectorAddActionListener(ActionListener actionListener) {
+        jmiNewDirector.addActionListener(actionListener);
     }
     
     public JLabel getLblCurrentUser () {

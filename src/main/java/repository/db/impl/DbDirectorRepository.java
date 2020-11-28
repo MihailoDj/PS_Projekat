@@ -7,6 +7,7 @@ package repository.db.impl;
 
 import domain.Director;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -51,23 +52,57 @@ public class DbDirectorRepository implements DbRepository<Director>{
             return directors;
         } catch (SQLException ex) {
             Logger.getLogger(DbUserRepository.class.getName()).log(Level.SEVERE, null, ex);
-            throw new Exception("Connection error!");
+            throw new Exception("Error loading directors!");
         }
     }
 
     @Override
-    public void insert(Director obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void insert(Director director) throws Exception {
+        try {
+            Connection connection = DbConnectionFactory.getInstance().getConnection();
+            
+            String sql = "INSERT INTO director (firstname, lastname, dateofbirth) VALUES(?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, director.getFirstName());
+            statement.setString(2, director.getLastName());
+            statement.setObject(3, director.getDateOfBirth(), java.sql.Types.DATE);
+            
+            statement.executeUpdate();
+            
+            statement.close();
+        } catch(SQLException e) {
+            throw new Exception("Error inserting director!");
+        }
     }
 
     @Override
-    public void delete(Director obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Director director) throws Exception {
+        Connection connection = DbConnectionFactory.getInstance().getConnection();
+        String sql = "DELETE FROM director WHERE directorID=" + director.getDirectorID();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.executeUpdate();
+        
+        statement.close();
     }
 
     @Override
-    public void update(Director obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(Director director) throws Exception {
+        try {
+            Connection connection = DbConnectionFactory.getInstance().getConnection();
+            String sql = "UPDATE director SET directorID=?, firstname=?, lastname=?, dateofbirth=? "
+                    + "WHERE directorID=" + director.getDirectorID();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            
+            statement.setInt(1, director.getDirectorID());
+            statement.setString(2, director.getFirstName());
+            statement.setString(3, director.getLastName());
+            statement.setObject(4, director.getDateOfBirth(), java.sql.Types.DATE);
+            
+            statement.executeUpdate();
+        
+        } catch(Exception ex) {
+            throw new Exception("Error updating director!");
+        }
     }
 
     @Override

@@ -6,6 +6,8 @@
 package view.controller;
 
 import domain.User;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import view.constant.Constants;
 import view.coordinator.MainCoordinator;
@@ -54,6 +56,16 @@ public class MainController {
 
             private void jmiProductShowAllActionPerformed(java.awt.event.ActionEvent evt) {
                 MainCoordinator.getInstance().openViewAllMoviesForm();
+            }
+        });
+        frmMain.jmiNewDirectorAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                jmiNewDirectorActionPerformed(evt);
+            }
+            
+            private void jmiNewDirectorActionPerformed(ActionEvent evt) {
+                MainCoordinator.getInstance().openDirectorForm();
             }
         });
     }

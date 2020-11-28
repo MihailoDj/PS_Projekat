@@ -48,7 +48,7 @@ public class ViewAllMoviesController {
     /*
     private void addTableModelListener() {
         
-        frmViewMovies.getTblMovies().getModel().addTableModelListener(new TableModelListener() {
+        frmViewMovies.getTableViewMoviesAddTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
                 if (e.getType() == TableModelEvent.UPDATE) {

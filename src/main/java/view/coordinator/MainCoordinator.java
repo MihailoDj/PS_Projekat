@@ -7,10 +7,12 @@ package view.coordinator;
 
 import java.util.HashMap;
 import java.util.Map;
+import view.controller.DirectorController;
 import view.controller.LoginController;
 import view.controller.MainController;
 import view.controller.MovieController;
 import view.controller.ViewAllMoviesController;
+import view.form.FrmDirector;
 import view.form.FrmLogin;
 import view.form.FrmMain;
 import view.form.FrmMovie;
@@ -63,6 +65,11 @@ public class MainCoordinator {
         FrmMovie movieDetails = new FrmMovie(mainController.getFrmMain(), true);
         MovieController movieController = new MovieController(movieDetails);
         movieController.openForm(FormMode.FORM_VIEW);
+    }
+    
+    public void openDirectorForm() {
+        DirectorController directorControlled = new DirectorController(new FrmDirector(mainController.getFrmMain(), true));
+        directorControlled.openForm(FormMode.FORM_ADD);
     }
     
     public MainController getMainContoller() {

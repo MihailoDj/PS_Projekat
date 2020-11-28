@@ -153,7 +153,7 @@ public class FrmViewMovies extends javax.swing.JDialog {
     
     /*
     public void getTableViewMoviesAddTableModelListener(TableModelListener tableModelListener) {
-        ((MovieTableModel)getTblMovies().getModel()).addTableModelListener(tableModelListener);
+        tblMovies.getModel().addTableModelListener(tableModelListener);
     }
     */
 }

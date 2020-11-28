@@ -56,6 +56,18 @@ public class Controller {
         return directorRepository.selectAll();
     }
     
+    public List<Movie> selectAllMovies() throws Exception {
+        List<Movie> movies=null;
+        
+        try{
+            movies = movieRepository.selectAll();
+        }catch(Exception e){
+            e.printStackTrace();
+            throw e;
+        }
+        return movies;
+    }
+    
     public void insertMovie(Movie movie) throws Exception {
         ((DbRepository)movieRepository).connect();
         
@@ -69,18 +81,6 @@ public class Controller {
         } finally {
             ((DbRepository)movieRepository).disconnect();
         }
-    }
-    
-    public List<Movie> selectAllMovies() throws Exception {
-        List<Movie> movies=null;
-        
-        try{
-            movies = movieRepository.selectAll();
-        }catch(Exception e){
-            e.printStackTrace();
-            throw e;
-        }
-        return movies;
     }
     
     public void deleteMovie(Movie movie) throws Exception {
@@ -107,6 +107,49 @@ public class Controller {
         }catch(Exception e){
             e.printStackTrace();
             ((DbRepository)movieRepository).rollback();
+            throw e;
+        }
+    }
+    
+    public void insertDirector(Director director) throws Exception {
+        ((DbRepository)directorRepository).connect();
+        
+        try{
+            directorRepository.insert(director);
+            ((DbRepository)directorRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)directorRepository).rollback();
+            throw e;
+        } finally {
+            ((DbRepository)directorRepository).disconnect();
+        }
+    }
+    
+    public void deleteDirector(Director director) throws Exception {
+        ((DbRepository)directorRepository).connect();
+        
+        try{
+            directorRepository.delete(director);
+            ((DbRepository)directorRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)directorRepository).rollback();
+            throw e;
+        } finally {
+            ((DbRepository)directorRepository).disconnect();
+        }
+    }
+
+    public void updateDirector(Director director) throws Exception {
+        ((DbRepository)directorRepository).connect();
+        
+        try{
+            ((DbRepository)directorRepository).update(director);
+            ((DbRepository)directorRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)directorRepository).rollback();
             throw e;
         }
     }

@@ -6,6 +6,7 @@
 package view.form;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 
 /**
@@ -141,5 +142,10 @@ public class FrmLogin extends javax.swing.JFrame {
 
     public void setLblPasswordError(JLabel lblPasswordError) {
         this.lblPasswordError = lblPasswordError;
+    }
+    
+    public void loginAddKeyPressedListener(KeyListener keyListener) {
+        txtPassword.addKeyListener(keyListener);
+        txtUsername.addKeyListener(keyListener);
     }
 }

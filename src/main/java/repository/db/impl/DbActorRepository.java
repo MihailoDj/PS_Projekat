@@ -5,13 +5,12 @@
  */
 package repository.db.impl;
 
-import domain.Director;
+import domain.Actor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -23,62 +22,61 @@ import repository.db.DbRepository;
  *
  * @author Mihailo
  */
-public class DbDirectorRepository implements DbRepository<Director>{
-
+public class DbActorRepository implements DbRepository<Actor>{
     @Override
-    public List<Director> selectAll() throws Exception {
+    public List<Actor> selectAll() throws Exception {
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
-            List<Director> directors = new ArrayList<Director>();
+            List<Actor> actors = new ArrayList<Actor>();
             
             String sql = 
-                    "SELECT * FROM director";
+                    "SELECT * FROM actor";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             
             while(rs.next()) {
-                Director director = new Director(){
+                Actor actor = new Actor(){
                     {
-                        setDirectorID(rs.getInt("directorID"));
+                        setActorID(rs.getInt("actorID"));
                         setFirstName(rs.getString("firstname"));
                         setLastName(rs.getString("lastname"));
-                        setDateOfBirth(rs.getObject("dateofbirth", LocalDate.class));
+                        setBiography(rs.getString("biography"));
                     }
                 };
                 
-                directors.add(director);
+                actors.add(actor);
             }
             
-            return directors;
+            return actors;
         } catch (SQLException ex) {
-            Logger.getLogger(DbDirectorRepository.class.getName()).log(Level.SEVERE, null, ex);
-            throw new Exception("Error loading directors!");
+            Logger.getLogger(DbActorRepository.class.getName()).log(Level.SEVERE, null, ex);
+            throw new Exception("Error loading actors!");
         }
     }
 
     @Override
-    public void insert(Director director) throws Exception {
+    public void insert(Actor actor) throws Exception {
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             
-            String sql = "INSERT INTO director (firstname, lastname, dateofbirth) VALUES(?, ?, ?)";
+            String sql = "INSERT INTO actor (firstname, lastname, biography) VALUES(?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, director.getFirstName());
-            statement.setString(2, director.getLastName());
-            statement.setObject(3, director.getDateOfBirth(), java.sql.Types.DATE);
+            statement.setString(1, actor.getFirstName());
+            statement.setString(2, actor.getLastName());
+            statement.setString(3, actor.getBiography());
             
             statement.executeUpdate();
             
             statement.close();
         } catch(SQLException e) {
-            throw new Exception("Error inserting director!");
+            throw new Exception("Error inserting actor!");
         }
     }
 
     @Override
-    public void delete(Director director) throws Exception {
+    public void delete(Actor actor) throws Exception {
         Connection connection = DbConnectionFactory.getInstance().getConnection();
-        String sql = "DELETE FROM director WHERE directorID=" + director.getDirectorID();
+        String sql = "DELETE FROM actor WHERE actorID=" + actor.getActorID();
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.executeUpdate();
         
@@ -86,27 +84,27 @@ public class DbDirectorRepository implements DbRepository<Director>{
     }
 
     @Override
-    public void update(Director director) throws Exception {
+    public void update(Actor actor) throws Exception {
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
-            String sql = "UPDATE director SET directorID=?, firstname=?, lastname=?, dateofbirth=? "
-                    + "WHERE directorID=" + director.getDirectorID();
+            String sql = "UPDATE actor SET actorID=?, firstname=?, lastname=?, biography=? "
+                    + "WHERE actorID=" + actor.getActorID();
             PreparedStatement statement = connection.prepareStatement(sql);
             
-            statement.setInt(1, director.getDirectorID());
-            statement.setString(2, director.getFirstName());
-            statement.setString(3, director.getLastName());
-            statement.setObject(4, director.getDateOfBirth(), java.sql.Types.DATE);
+            statement.setInt(1, actor.getActorID());
+            statement.setString(2, actor.getFirstName());
+            statement.setString(3, actor.getLastName());
+            statement.setString(4, actor.getBiography());
             
             statement.executeUpdate();
         
         } catch(Exception ex) {
-            throw new Exception("Error updating director!");
+            throw new Exception("Error updating actor!");
         }
     }
 
     @Override
-    public Director select(Director obj) throws Exception {
+    public Actor select(Actor actor) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -114,5 +112,4 @@ public class DbDirectorRepository implements DbRepository<Director>{
     public void deleteAll() throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

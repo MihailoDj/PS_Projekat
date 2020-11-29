@@ -38,6 +38,9 @@ public class FrmMain extends javax.swing.JFrame {
         jmDirector = new javax.swing.JMenu();
         jmiNewDirector = new javax.swing.JMenuItem();
         jmiViewAllDirectors = new javax.swing.JMenuItem();
+        jmActor = new javax.swing.JMenu();
+        jmiNewActor = new javax.swing.JMenuItem();
+        jmiViewAllActors = new javax.swing.JMenuItem();
         jMenuAbout = new javax.swing.JMenu();
         jmiAboutSoftware = new javax.swing.JMenuItem();
 
@@ -62,6 +65,16 @@ public class FrmMain extends javax.swing.JFrame {
         jmDirector.add(jmiViewAllDirectors);
 
         jMenuBarMain.add(jmDirector);
+
+        jmActor.setText("Actor");
+
+        jmiNewActor.setText("New");
+        jmActor.add(jmiNewActor);
+
+        jmiViewAllActors.setText("View all");
+        jmActor.add(jmiViewAllActors);
+
+        jMenuBarMain.add(jmActor);
 
         jMenuAbout.setText("About");
 
@@ -95,11 +108,14 @@ public class FrmMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenuAbout;
     private javax.swing.JMenuBar jMenuBarMain;
+    private javax.swing.JMenu jmActor;
     private javax.swing.JMenu jmDirector;
     private javax.swing.JMenu jmMovie;
     private javax.swing.JMenuItem jmiAboutSoftware;
+    private javax.swing.JMenuItem jmiNewActor;
     private javax.swing.JMenuItem jmiNewDirector;
     private javax.swing.JMenuItem jmiNewMovie;
+    private javax.swing.JMenuItem jmiViewAllActors;
     private javax.swing.JMenuItem jmiViewAllDirectors;
     private javax.swing.JMenuItem jmiViewAllMovies;
     private javax.swing.JLabel lblCurrentUser;
@@ -119,6 +135,14 @@ public class FrmMain extends javax.swing.JFrame {
     
     public void jmiViewAllDirectorsActionListener(ActionListener actionListener) {
         jmiViewAllDirectors.addActionListener(actionListener);
+    }
+    
+    public void jmiNewActorAddActionListener(ActionListener actionListener) {
+        jmiNewActor.addActionListener(actionListener);
+    }
+    
+    public void jmiViewAllActorsActionListener(ActionListener actionListener) {
+        jmiViewAllActors.addActionListener(actionListener);
     }
     
     public JLabel getLblCurrentUser () {

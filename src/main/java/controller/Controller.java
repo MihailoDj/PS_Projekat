@@ -5,12 +5,14 @@
  */
 package controller;
 
+import domain.Actor;
 import java.util.List;
 import domain.Movie;
 import domain.User;
 import domain.Director;
 import repository.Repository;
 import repository.db.DbRepository;
+import repository.db.impl.DbActorRepository;
 import repository.db.impl.DbDirectorRepository;
 import repository.db.impl.DbMovieRepository;
 import repository.db.impl.DbUserRepository;
@@ -23,12 +25,14 @@ public class Controller {
     private final Repository userRepository;
     private final Repository directorRepository;
     private final Repository movieRepository;
+    private final Repository actorRepository;
     private static Controller controller;
 
     private Controller() {
         userRepository = new DbUserRepository();
         directorRepository = new DbDirectorRepository();
         movieRepository = new DbMovieRepository();
+        actorRepository = new DbActorRepository();
     }
     
     public static Controller getInstance() {
@@ -53,11 +57,20 @@ public class Controller {
     }
     
     public List<Director> selectAllDirectors() throws Exception{
-        return directorRepository.selectAll();
+        List<Director> directors = null;
+        
+        try {
+            directors = directorRepository.selectAll();
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        
+        return directors;
     }
     
     public List<Movie> selectAllMovies() throws Exception {
-        List<Movie> movies=null;
+        List<Movie> movies = null;
         
         try{
             movies = movieRepository.selectAll();
@@ -65,7 +78,21 @@ public class Controller {
             e.printStackTrace();
             throw e;
         }
+        
         return movies;
+    }
+    
+    public List<Actor> selectAllActors() throws Exception{
+        List<Actor> actors = null;
+        
+        try {
+            actors = actorRepository.selectAll();
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        
+        return actors;
     }
     
     public void insertMovie(Movie movie) throws Exception {
@@ -150,6 +177,49 @@ public class Controller {
         }catch(Exception e){
             e.printStackTrace();
             ((DbRepository)directorRepository).rollback();
+            throw e;
+        }
+    }
+    
+    public void insertActor(Actor actor) throws Exception {
+        ((DbRepository)actorRepository).connect();
+        
+        try{
+            actorRepository.insert(actor);
+            ((DbRepository)actorRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)actorRepository).rollback();
+            throw e;
+        } finally {
+            ((DbRepository)actorRepository).disconnect();
+        }
+    }
+    
+    public void deleteActor(Actor actor) throws Exception {
+        ((DbRepository)actorRepository).connect();
+        
+        try{
+            actorRepository.delete(actor);
+            ((DbRepository)actorRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)actorRepository).rollback();
+            throw e;
+        } finally {
+            ((DbRepository)actorRepository).disconnect();
+        }
+    }
+
+    public void updateActor(Actor actor) throws Exception {
+        ((DbRepository)actorRepository).connect();
+        
+        try{
+            ((DbRepository)actorRepository).update(actor);
+            ((DbRepository)actorRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)actorRepository).rollback();
             throw e;
         }
     }

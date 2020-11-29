@@ -78,6 +78,26 @@ public class MainController {
                 MainCoordinator.getInstance().openViewAllDirectorsForm();
             }
         });
+        frmMain.jmiNewActorAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                jmiNewActorActionPerformed(evt);
+            }
+            
+            private void jmiNewActorActionPerformed(ActionEvent evt) {
+                MainCoordinator.getInstance().openActorForm();
+            }
+        });
+        frmMain.jmiViewAllActorsActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                jmiViewAllActorsActionPerformed(evt);
+            }
+            
+            private void jmiViewAllActorsActionPerformed(ActionEvent evt) {
+                MainCoordinator.getInstance().openViewAllActorsForm();
+            }
+        });
     }
     
     public FrmMain getFrmMain() {

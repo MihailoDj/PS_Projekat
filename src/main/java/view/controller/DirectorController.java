@@ -166,7 +166,7 @@ public class DirectorController {
                 Director director = (Director) MainCoordinator.getInstance().getParam(Constants.PARAM_DIRECTOR);
                 frmDirector.getTxtDirectorID().setText(director.getDirectorID() + "");
                 frmDirector.getTxtDirectorFirstName().setText(director.getFirstName());
-                frmDirector.getTxtDirectorLastName().setText(director.getFirstName());
+                frmDirector.getTxtDirectorLastName().setText(director.getLastName());
                 frmDirector.getDateOfBirth().setDate(director.getDateOfBirth());
                 break;
             case FORM_EDIT:

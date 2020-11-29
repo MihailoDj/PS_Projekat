@@ -37,6 +37,7 @@ public class FrmMain extends javax.swing.JFrame {
         jmiViewAllMovies = new javax.swing.JMenuItem();
         jmDirector = new javax.swing.JMenu();
         jmiNewDirector = new javax.swing.JMenuItem();
+        jmiViewAllDirectors = new javax.swing.JMenuItem();
         jMenuAbout = new javax.swing.JMenu();
         jmiAboutSoftware = new javax.swing.JMenuItem();
 
@@ -56,6 +57,9 @@ public class FrmMain extends javax.swing.JFrame {
 
         jmiNewDirector.setText("New");
         jmDirector.add(jmiNewDirector);
+
+        jmiViewAllDirectors.setText("View all");
+        jmDirector.add(jmiViewAllDirectors);
 
         jMenuBarMain.add(jmDirector);
 
@@ -96,6 +100,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiAboutSoftware;
     private javax.swing.JMenuItem jmiNewDirector;
     private javax.swing.JMenuItem jmiNewMovie;
+    private javax.swing.JMenuItem jmiViewAllDirectors;
     private javax.swing.JMenuItem jmiViewAllMovies;
     private javax.swing.JLabel lblCurrentUser;
     // End of variables declaration//GEN-END:variables
@@ -110,6 +115,10 @@ public class FrmMain extends javax.swing.JFrame {
     
     public void jmiNewDirectorAddActionListener(ActionListener actionListener) {
         jmiNewDirector.addActionListener(actionListener);
+    }
+    
+    public void jmiViewAllDirectorsActionListener(ActionListener actionListener) {
+        jmiViewAllDirectors.addActionListener(actionListener);
     }
     
     public JLabel getLblCurrentUser () {

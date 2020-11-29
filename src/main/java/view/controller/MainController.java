@@ -68,6 +68,16 @@ public class MainController {
                 MainCoordinator.getInstance().openDirectorForm();
             }
         });
+        frmMain.jmiViewAllDirectorsActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                jmiViewAllDirectorsActionPerformed(evt);
+            }
+            
+            private void jmiViewAllDirectorsActionPerformed(ActionEvent evt) {
+                MainCoordinator.getInstance().openViewAllDirectorsForm();
+            }
+        });
     }
     
     public FrmMain getFrmMain() {

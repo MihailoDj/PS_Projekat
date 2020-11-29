@@ -11,11 +11,13 @@ import view.controller.DirectorController;
 import view.controller.LoginController;
 import view.controller.MainController;
 import view.controller.MovieController;
+import view.controller.ViewAllDirectorsController;
 import view.controller.ViewAllMoviesController;
 import view.form.FrmDirector;
 import view.form.FrmLogin;
 import view.form.FrmMain;
 import view.form.FrmMovie;
+import view.form.FrmViewDirectors;
 import view.form.FrmViewMovies;
 import view.form.util.FormMode;
 
@@ -70,6 +72,19 @@ public class MainCoordinator {
     public void openDirectorForm() {
         DirectorController directorControlled = new DirectorController(new FrmDirector(mainController.getFrmMain(), true));
         directorControlled.openForm(FormMode.FORM_ADD);
+    }
+    
+    public void openViewAllDirectorsForm() {
+        FrmViewDirectors form = new FrmViewDirectors(mainController.getFrmMain(), true);
+        
+        ViewAllDirectorsController viewAllDirectorsController = new ViewAllDirectorsController(form);
+        viewAllDirectorsController.openForm();
+    }
+    
+    public void openDirectorDetailsForm() {
+        FrmDirector directorDetails = new FrmDirector(mainController.getFrmMain(), true);
+        DirectorController directorController = new DirectorController(directorDetails);
+        directorController.openForm(FormMode.FORM_VIEW);
     }
     
     public MainController getMainContoller() {

@@ -14,12 +14,12 @@ import javax.swing.event.ListSelectionListener;
  *
  * @author Mihailo
  */
-public class FrmViewDirectors extends javax.swing.JDialog {
+public class FrmViewActors extends javax.swing.JDialog {
 
     /**
-     * Creates new form FrmViewDirectors
+     * Creates new form FrmViewActors
      */
-    public FrmViewDirectors(java.awt.Frame parent, boolean modal) {
+    public FrmViewActors(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -33,27 +33,32 @@ public class FrmViewDirectors extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnDeleteDirector = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblDirectors = new javax.swing.JTable();
         btnDetails = new javax.swing.JButton();
-        btnAddDirector = new javax.swing.JButton();
+        btnAddActor = new javax.swing.JButton();
+        btnDeleteActor = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblActors = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        btnDeleteDirector.setText("Delete director");
-        btnDeleteDirector.setEnabled(false);
+        btnDetails.setText("Details");
+        btnDetails.setEnabled(false);
 
-        tblDirectors.setModel(new javax.swing.table.DefaultTableModel(
+        btnAddActor.setText("Add actor");
+
+        btnDeleteActor.setText("Delete actor");
+        btnDeleteActor.setEnabled(false);
+
+        tblActors.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "First name", "Last name", "Date of birth"
+                "ID", "First name", "Last name", "Biography"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -67,12 +72,7 @@ public class FrmViewDirectors extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblDirectors);
-
-        btnDetails.setText("Details");
-        btnDetails.setEnabled(false);
-
-        btnAddDirector.setText("Add director");
+        jScrollPane1.setViewportView(tblActors);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,12 +80,12 @@ public class FrmViewDirectors extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAddDirector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnDeleteDirector, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAddActor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnDeleteActor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -96,9 +96,9 @@ public class FrmViewDirectors extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(btnAddDirector)
+                .addComponent(btnAddActor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnDeleteDirector)
+                .addComponent(btnDeleteActor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnDetails)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -108,42 +108,42 @@ public class FrmViewDirectors extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddDirector;
-    private javax.swing.JButton btnDeleteDirector;
+    private javax.swing.JButton btnAddActor;
+    private javax.swing.JButton btnDeleteActor;
     private javax.swing.JButton btnDetails;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblDirectors;
+    private javax.swing.JTable tblActors;
     // End of variables declaration//GEN-END:variables
     
     public JButton getBtnDetails() {
         return btnDetails;
     }
     
-    public JButton getBtnAddDirector() {
-        return btnAddDirector;
+    public JButton getBtnAddActor() {
+        return btnAddActor;
     }
     
-    public JButton getBtnDeleteDirector() {
-        return btnDeleteDirector;
+    public JButton getBtnDeleteActor() {
+        return btnDeleteActor;
     }
 
-    public JTable getTblDirectors() {
-        return tblDirectors;
+    public JTable getTblActors() {
+        return tblActors;
     }
 
     public void getBtnDetailsAddActionListener(ActionListener actionListener) {
         btnDetails.addActionListener(actionListener);
     }
     
-    public void getBtnAddDirectorAddActionListener(ActionListener actionListener) {
-        btnAddDirector.addActionListener(actionListener);
+    public void getBtnAddActorAddActionListener(ActionListener actionListener) {
+        btnAddActor.addActionListener(actionListener);
     }
     
-    public void getBtnDeleteDirectorAddActionListener(ActionListener actionListener) {
-        btnDeleteDirector.addActionListener(actionListener);
+    public void getBtnDeleteActorAddActionListener(ActionListener actionListener) {
+        btnDeleteActor.addActionListener(actionListener);
     }
     
-    public void getTableViewDirectorsAddListSelectionListener(ListSelectionListener listSelectionListener) {
-        tblDirectors.getSelectionModel().addListSelectionListener(listSelectionListener);
+    public void getTableViewActorsAddListSelectionListener(ListSelectionListener listSelectionListener) {
+        tblActors.getSelectionModel().addListSelectionListener(listSelectionListener);
     }
 }

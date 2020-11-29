@@ -39,7 +39,7 @@ public class ViewAllDirectorsController {
     }
     
     private void addListSelectionListener() {
-        frmViewDirectors.getTableViewMoviesAddListSelectionListener(new ListSelectionListener() {
+        frmViewDirectors.getTableViewDirectorsAddListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (frmViewDirectors.getTblDirectors().getSelectedRow() != -1)

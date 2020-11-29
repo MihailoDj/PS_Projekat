@@ -12,6 +12,7 @@ import view.controller.DirectorController;
 import view.controller.LoginController;
 import view.controller.MainController;
 import view.controller.MovieController;
+import view.controller.ViewAllActorsController;
 import view.controller.ViewAllDirectorsController;
 import view.controller.ViewAllMoviesController;
 import view.form.FrmActor;
@@ -19,6 +20,7 @@ import view.form.FrmDirector;
 import view.form.FrmLogin;
 import view.form.FrmMain;
 import view.form.FrmMovie;
+import view.form.FrmViewActors;
 import view.form.FrmViewDirectors;
 import view.form.FrmViewMovies;
 import view.form.util.FormMode;
@@ -95,10 +97,16 @@ public class MainCoordinator {
     }
     
     public void openViewAllActorsForm() {
-        //FrmViewActors form = new FrmViewActors(mainController.getFrmMain(), true);
+        FrmViewActors form = new FrmViewActors(mainController.getFrmMain(), true);
         
-        //ViewAllActorsController viewAllActorsController = new ViewAllActorsController(form);
-        //viewAllActorsController.openForm();
+        ViewAllActorsController viewAllActorsController = new ViewAllActorsController(form);
+        viewAllActorsController.openForm();
+    }
+    
+    public void openActorDetailsForm() {
+        FrmActor actorDetails = new FrmActor(mainController.getFrmMain(), true);
+        ActorController actorController = new ActorController(actorDetails);
+        actorController.openForm(FormMode.FORM_VIEW);
     }
     
     public MainController getMainContoller() {

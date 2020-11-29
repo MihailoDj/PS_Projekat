@@ -23,7 +23,7 @@ public class ActorTableModel extends AbstractTableModel{
         "ID", 
         "First name", 
         "Last name", 
-        "Date of birth"
+        "Biography"
     };
     private final Class[] columnClasses = {
         Integer.class,

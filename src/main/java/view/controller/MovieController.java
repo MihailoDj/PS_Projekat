@@ -9,8 +9,11 @@ import controller.Controller;
 import domain.Actor;
 import domain.Director;
 import domain.Movie;
+import domain.Role;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,12 +22,11 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import view.constant.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmMovie;
-import view.form.component.table.ActorTableModel;
+import view.form.component.table.RoleTableModel;
 import view.form.util.FormMode;
 
 /**
@@ -33,16 +35,22 @@ import view.form.util.FormMode;
  */
 public class MovieController {
     private final FrmMovie frmMovie;
-    private List<Actor> movieActors;
+    private List<Role> roles;
 
     public MovieController(FrmMovie frmMovie) {
         this.frmMovie = frmMovie;
-        movieActors = new ArrayList<Actor>();
+        roles = new ArrayList<Role>();
         addActionListeners();
         addListSelectionListener();
     }
 
     private void addActionListeners() {
+        frmMovie.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {
+                fillTblRoles(roles);
+            }
+        });
         frmMovie.addBtnAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -144,30 +152,37 @@ public class MovieController {
         frmMovie.addBtnAddActorActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Actor actor = (Actor)frmMovie.getCbActors().getSelectedItem();
-                movieActors.add(actor);
-                fillTblActors(movieActors);
+                Role role = new Role() {
+                    {
+                        setRoleName(frmMovie.getTxtRoleName().getText().trim());
+                        setActor((Actor)frmMovie.getCbActors().getSelectedItem());
+                    }
+                };
+                
+                roles.add(role);
+                fillTblRoles(roles);
             }
         });
         frmMovie.addBtnRemoveActorActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selRow = frmMovie.getTblMovieActors().getSelectedRow();
-                Actor actor = ((ActorTableModel)frmMovie.getTblMovieActors().getModel()).getActorAt(selRow);
-                movieActors.remove(actor);
-                fillTblActors(movieActors);
+                int selRow = frmMovie.getTblRoles().getSelectedRow();
+                Role role = ((RoleTableModel)frmMovie.getTblRoles().getModel()).getRoleAt(selRow);
+                
+                roles.remove(role);
+                fillTblRoles(roles);
             }
         });
     }
     
     private void addListSelectionListener() {
-        frmMovie.getTableActorsAddListSelectionListener(new ListSelectionListener() {
+        frmMovie.getTableRolesAddListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (frmMovie.getTblMovieActors().getSelectedRow() != -1)
-                    enableRemoveActorButton();
+                if (frmMovie.getTblRoles().getSelectedRow() != -1)
+                    frmMovie.getBtnRemoveActor().setEnabled(true);
                 else
-                    disableRemoveActorButton();
+                    frmMovie.getBtnRemoveActor().setEnabled(false);
             }
         });
     }
@@ -298,13 +313,13 @@ public class MovieController {
 
     }
     
-    private void fillTblActors(List<Actor> movieActors) {
+    private void fillTblRoles(List<Role> roles) {
         
         try {
-            ActorTableModel atm = new ActorTableModel(movieActors);
-            frmMovie.getTblMovieActors().setModel(atm);
+            RoleTableModel rtm = new RoleTableModel(roles);
+            frmMovie.getTblRoles().setModel(rtm);
             
-            setUpActorTableColumns();
+            setUpRoleTableColumns();
             
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(frmMovie, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -312,24 +327,16 @@ public class MovieController {
         }
     }
     
-    public void setUpActorTableColumns() throws Exception {
-        TableColumnModel tcm = frmMovie.getTblMovieActors().getColumnModel();
+    public void setUpRoleTableColumns() throws Exception {
+        TableColumnModel tcm = frmMovie.getTblRoles().getColumnModel();
         
-        frmMovie.getTblMovieActors().setAutoCreateRowSorter(true);
-        frmMovie.getTblMovieActors().getTableHeader().setResizingAllowed(false);
+        frmMovie.getTblRoles().setAutoCreateRowSorter(true);
+        frmMovie.getTblRoles().getTableHeader().setResizingAllowed(false);
 
-        frmMovie.getTblMovieActors().setRowHeight(15);
+        frmMovie.getTblRoles().setRowHeight(20);
         tcm.getColumn(0).setPreferredWidth(15);
-        tcm.getColumn(1).setPreferredWidth(50);
-        tcm.getColumn(2).setPreferredWidth(50);
-        tcm.getColumn(3).setPreferredWidth(50);
-    }
-    
-    public void enableRemoveActorButton() {
-        frmMovie.getBtnRemoveActor().setEnabled(true);
-    }
-    
-    public void disableRemoveActorButton() {
-        frmMovie.getBtnRemoveActor().setEnabled(false);
+        tcm.getColumn(1).setPreferredWidth(100);
+        tcm.getColumn(2).setPreferredWidth(100);
+        tcm.getColumn(3).setPreferredWidth(100);
     }
 }

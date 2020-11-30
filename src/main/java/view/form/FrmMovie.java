@@ -68,7 +68,7 @@ public class FrmMovie extends javax.swing.JDialog {
         jPanelDatePicker = new javax.swing.JPanel();
         jPanelActors = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblMovieActors = new javax.swing.JTable();
+        tblRoles = new javax.swing.JTable();
         btnRemoveActor = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         cbActors = new javax.swing.JComboBox<>();
@@ -137,12 +137,12 @@ public class FrmMovie extends javax.swing.JDialog {
         jPanelDatePicker.setPreferredSize(new java.awt.Dimension(64, 25));
         jPanelDatePicker.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        tblMovieActors.setModel(new javax.swing.table.DefaultTableModel(
+        tblRoles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "First name", "Last name", "Biography"
+                "ID", "First name", "Last name", "Role name"
             }
         ) {
             Class[] types = new Class [] {
@@ -160,7 +160,7 @@ public class FrmMovie extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tblMovieActors);
+        jScrollPane2.setViewportView(tblRoles);
 
         btnRemoveActor.setText("Remove");
         btnRemoveActor.setEnabled(false);
@@ -485,9 +485,9 @@ public class FrmMovie extends javax.swing.JDialog {
     private javax.swing.JLabel lblReleaseDate;
     private javax.swing.JLabel lblRoleName;
     private javax.swing.JLabel lblScore;
-    private javax.swing.JTable tblMovieActors;
     private javax.swing.JTable tblMovieGenre;
     private javax.swing.JTable tblProductionCompanies;
+    private javax.swing.JTable tblRoles;
     private javax.swing.JTextArea txtDescription;
     private javax.swing.JTextField txtMovieID;
     private javax.swing.JTextField txtName;
@@ -650,8 +650,8 @@ public class FrmMovie extends javax.swing.JDialog {
         return cbProductionCompanies;
     }
 
-    public JTable getTblMovieActors() {
-        return tblMovieActors;
+    public JTable getTblRoles() {
+        return tblRoles;
     }
 
     public JTable getTblMovieGenre() {
@@ -662,8 +662,12 @@ public class FrmMovie extends javax.swing.JDialog {
         return tblProductionCompanies;
     }
     
-    public void getTableActorsAddListSelectionListener(ListSelectionListener lsl) {
-        tblMovieActors.getSelectionModel().addListSelectionListener(lsl);
+    public void getTableRolesAddListSelectionListener(ListSelectionListener lsl) {
+        tblRoles.getSelectionModel().addListSelectionListener(lsl);
+    }
+    
+    public JTextField getTxtRoleName() {
+        return txtRoleName;
     }
     
     private void initDatePicker() {

@@ -11,6 +11,8 @@ import domain.Director;
 import domain.Genre;
 import domain.Movie;
 import domain.MovieGenre;
+import domain.Production;
+import domain.ProductionCompany;
 import domain.Role;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +31,7 @@ import view.constant.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmMovie;
 import view.form.component.table.MovieGenreTableModel;
+import view.form.component.table.ProductionTableModel;
 import view.form.component.table.RoleTableModel;
 import view.form.util.FormMode;
 
@@ -40,6 +43,7 @@ public class MovieController {
     private final FrmMovie frmMovie;
     private List<Role> roles;
     private List<MovieGenre> movieGenres;
+    private List<Production> productionCompanies;
 
     public MovieController(FrmMovie frmMovie) {
         this.frmMovie = frmMovie;
@@ -53,6 +57,7 @@ public class MovieController {
             public void windowActivated(WindowEvent e) {
                 fillTblRoles(roles);
                 fillTblMovieGenres(movieGenres);
+                fillTblProduction(productionCompanies);
             }
         });
         frmMovie.addBtnAddActionListener(new ActionListener() {
@@ -200,6 +205,29 @@ public class MovieController {
                 fillTblMovieGenres(movieGenres);
             }
         });
+        frmMovie.addBtnAddProductionCompanyActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Production productionCompany = new Production() {
+                    {
+                        setProductionCompany((ProductionCompany)frmMovie.getCbProductionCompanies().getSelectedItem());
+                    }
+                };
+                
+                productionCompanies.add(productionCompany);
+                fillTblProduction(productionCompanies);
+            }
+        });
+        frmMovie.addBtnRemoveProductionCompanyActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selRow = frmMovie.getTblProduction().getSelectedRow();
+                Production productionCompany = ((ProductionTableModel)frmMovie.getTblProduction().getModel()).getProductionAt(selRow);
+                
+                productionCompanies.remove(productionCompany);
+                fillTblProduction(productionCompanies);
+            }
+        });
     }
     
     private void addListSelectionListener() {
@@ -221,6 +249,15 @@ public class MovieController {
                     frmMovie.getBtnRemoveGenre().setEnabled(false);
             }
         });
+        frmMovie.getTableProductionAddListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (frmMovie.getTblProduction().getSelectedRow() != -1)
+                    frmMovie.getBtnRemoveProductionCompany().setEnabled(true);
+                else
+                    frmMovie.getBtnRemoveProductionCompany().setEnabled(false);
+            }
+        });
     }
 
     public void openForm(FormMode formMode) {
@@ -238,20 +275,13 @@ public class MovieController {
         setupComponents(formMode);
     }
     
-    private void fillCbDirector() {
-        try {
-            frmMovie.getCbDirector().removeAllItems();
-            List<Director> directors = Controller.getInstance().selectAllDirectors();
-            frmMovie.getCbDirector().setModel(new DefaultComboBoxModel<>(directors.toArray()));
-        } catch (Exception ex) {
-            Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(frmMovie, "Error loading components", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
-
     private void setupComponents(FormMode formMode) {
         switch (formMode) {
             case FORM_ADD:
+                roles = new ArrayList<Role>();
+                movieGenres = new ArrayList<MovieGenre>();
+                productionCompanies = new ArrayList<Production>();
+                
                 frmMovie.getTxtMovieID().setText("auto");
                 frmMovie.getTxtScore().setText(String.valueOf(0));
                 
@@ -267,10 +297,6 @@ public class MovieController {
                 frmMovie.getTxtScore().setEditable(false);
                 frmMovie.getCbDirector().setEnabled(true);
                 frmMovie.getReleaseDate().setEnabled(true);
-                 
-                roles = new ArrayList<Role>();
-                movieGenres = new ArrayList<MovieGenre>();
-                
                 break;
             case FORM_VIEW:
                 frmMovie.getBtnCancel().setEnabled(true);
@@ -332,6 +358,17 @@ public class MovieController {
             throw new Exception("Invalid input");
         }
     }
+    
+    private void fillCbDirector() {
+        try {
+            frmMovie.getCbDirector().removeAllItems();
+            List<Director> directors = Controller.getInstance().selectAllDirectors();
+            frmMovie.getCbDirector().setModel(new DefaultComboBoxModel<>(directors.toArray()));
+        } catch (Exception ex) {
+            Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(frmMovie, "Error loading components", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
 
     private void fillCbActors() {
         try {
@@ -356,7 +393,14 @@ public class MovieController {
     }
 
     private void fillCbProductionCompanies() {
-
+        try {
+            frmMovie.getCbProductionCompanies().removeAllItems();
+            List<ProductionCompany> productionCompanies = Controller.getInstance().selectAllProductionCompanies();
+            frmMovie.getCbProductionCompanies().setModel(new DefaultComboBoxModel<>(productionCompanies.toArray()));
+        } catch (Exception ex) {
+            Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(frmMovie, "Error loading production companies", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     
     private void fillTblRoles(List<Role> roles) {
@@ -372,6 +416,24 @@ public class MovieController {
         frmMovie.getTblMovieGenre().setModel(mgtm);
 
         setUpMovieGenreTableColumns();
+    }
+    
+    private void fillTblProduction(List<Production> productionCompanies) {
+        ProductionTableModel pctm = new ProductionTableModel(productionCompanies);
+        frmMovie.getTblProduction().setModel(pctm);
+        
+        setUpProductionTableColumns();
+    }
+    
+    private void setUpProductionTableColumns() {
+        TableColumnModel tcm = frmMovie.getTblProduction().getColumnModel();
+        
+        frmMovie.getTblProduction().setAutoCreateRowSorter(true);
+        frmMovie.getTblProduction().getTableHeader().setResizingAllowed(false);
+
+        frmMovie.getTblProduction().setRowHeight(20);
+        tcm.getColumn(0).setPreferredWidth(15);
+        tcm.getColumn(1).setPreferredWidth(300);
     }
     
     public void setUpRoleTableColumns(){

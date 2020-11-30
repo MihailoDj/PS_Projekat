@@ -10,10 +10,12 @@ import java.util.List;
 import domain.Movie;
 import domain.User;
 import domain.Director;
+import domain.Genre;
 import repository.Repository;
 import repository.db.DbRepository;
 import repository.db.impl.DbActorRepository;
 import repository.db.impl.DbDirectorRepository;
+import repository.db.impl.DbGenreRepository;
 import repository.db.impl.DbMovieRepository;
 import repository.db.impl.DbUserRepository;
 
@@ -26,6 +28,7 @@ public class Controller {
     private final Repository directorRepository;
     private final Repository movieRepository;
     private final Repository actorRepository;
+    private final Repository genreRepository;
     private static Controller controller;
 
     private Controller() {
@@ -33,6 +36,7 @@ public class Controller {
         directorRepository = new DbDirectorRepository();
         movieRepository = new DbMovieRepository();
         actorRepository = new DbActorRepository();
+        genreRepository = new DbGenreRepository();
     }
     
     public static Controller getInstance() {
@@ -93,6 +97,19 @@ public class Controller {
         }
         
         return actors;
+    }
+    
+    public List<Genre> selectAllGenres() throws Exception{
+        List<Genre> genres = null;
+        
+        try {
+            genres = genreRepository.selectAll();
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        
+        return genres;
     }
     
     public void insertMovie(Movie movie) throws Exception {

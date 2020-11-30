@@ -8,7 +8,9 @@ package view.controller;
 import controller.Controller;
 import domain.Actor;
 import domain.Director;
+import domain.Genre;
 import domain.Movie;
+import domain.MovieGenre;
 import domain.Role;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +28,7 @@ import javax.swing.table.TableColumnModel;
 import view.constant.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmMovie;
+import view.form.component.table.MovieGenreTableModel;
 import view.form.component.table.RoleTableModel;
 import view.form.util.FormMode;
 
@@ -36,10 +39,10 @@ import view.form.util.FormMode;
 public class MovieController {
     private final FrmMovie frmMovie;
     private List<Role> roles;
+    private List<MovieGenre> movieGenres;
 
     public MovieController(FrmMovie frmMovie) {
         this.frmMovie = frmMovie;
-        roles = new ArrayList<Role>();
         addActionListeners();
         addListSelectionListener();
     }
@@ -49,6 +52,7 @@ public class MovieController {
             @Override
             public void windowActivated(WindowEvent e) {
                 fillTblRoles(roles);
+                fillTblMovieGenres(movieGenres);
             }
         });
         frmMovie.addBtnAddActionListener(new ActionListener() {
@@ -173,6 +177,29 @@ public class MovieController {
                 fillTblRoles(roles);
             }
         });
+        frmMovie.addBtnAddGenreActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MovieGenre movieGenre = new MovieGenre() {
+                    {
+                        setGenre((Genre)frmMovie.getCbGenres().getSelectedItem());
+                    }
+                };
+                
+                movieGenres.add(movieGenre);
+                fillTblMovieGenres(movieGenres);
+            }
+        });
+        frmMovie.addBtnRemoveGenreActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selRow = frmMovie.getTblMovieGenre().getSelectedRow();
+                MovieGenre movieGenre = ((MovieGenreTableModel)frmMovie.getTblMovieGenre().getModel()).getMovieGenreAt(selRow);
+                
+                movieGenres.remove(movieGenre);
+                fillTblMovieGenres(movieGenres);
+            }
+        });
     }
     
     private void addListSelectionListener() {
@@ -183,6 +210,15 @@ public class MovieController {
                     frmMovie.getBtnRemoveActor().setEnabled(true);
                 else
                     frmMovie.getBtnRemoveActor().setEnabled(false);
+            }
+        });
+        frmMovie.getTableMovieGenresAddListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (frmMovie.getTblMovieGenre().getSelectedRow() != -1)
+                    frmMovie.getBtnRemoveGenre().setEnabled(true);
+                else
+                    frmMovie.getBtnRemoveGenre().setEnabled(false);
             }
         });
     }
@@ -231,6 +267,9 @@ public class MovieController {
                 frmMovie.getTxtScore().setEditable(false);
                 frmMovie.getCbDirector().setEnabled(true);
                 frmMovie.getReleaseDate().setEnabled(true);
+                 
+                roles = new ArrayList<Role>();
+                movieGenres = new ArrayList<MovieGenre>();
                 
                 break;
             case FORM_VIEW:
@@ -301,12 +340,19 @@ public class MovieController {
             frmMovie.getCbActors().setModel(new DefaultComboBoxModel<>(actors.toArray()));
         } catch (Exception ex) {
             Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(frmMovie, "Error loading components", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(frmMovie, "Error loading actors", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     private void fillCbGenres() {
-
+        try {
+            frmMovie.getCbGenres().removeAllItems();
+            List<Genre> genres = Controller.getInstance().selectAllGenres();
+            frmMovie.getCbGenres().setModel(new DefaultComboBoxModel<>(genres.toArray()));
+        } catch (Exception ex) {
+            Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(frmMovie, "Error loading genres", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     private void fillCbProductionCompanies() {
@@ -314,20 +360,21 @@ public class MovieController {
     }
     
     private void fillTblRoles(List<Role> roles) {
+        RoleTableModel rtm = new RoleTableModel(roles);
+        frmMovie.getTblRoles().setModel(rtm);
+
+        setUpRoleTableColumns();
         
-        try {
-            RoleTableModel rtm = new RoleTableModel(roles);
-            frmMovie.getTblRoles().setModel(rtm);
-            
-            setUpRoleTableColumns();
-            
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(frmMovie, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
-    public void setUpRoleTableColumns() throws Exception {
+    private void fillTblMovieGenres(List<MovieGenre> movieGenres) {
+        MovieGenreTableModel mgtm = new MovieGenreTableModel(movieGenres);
+        frmMovie.getTblMovieGenre().setModel(mgtm);
+
+        setUpMovieGenreTableColumns();
+    }
+    
+    public void setUpRoleTableColumns(){
         TableColumnModel tcm = frmMovie.getTblRoles().getColumnModel();
         
         frmMovie.getTblRoles().setAutoCreateRowSorter(true);
@@ -338,5 +385,16 @@ public class MovieController {
         tcm.getColumn(1).setPreferredWidth(100);
         tcm.getColumn(2).setPreferredWidth(100);
         tcm.getColumn(3).setPreferredWidth(100);
+    }
+    
+    public void setUpMovieGenreTableColumns() {
+        TableColumnModel tcm = frmMovie.getTblMovieGenre().getColumnModel();
+        
+        frmMovie.getTblMovieGenre().setAutoCreateRowSorter(true);
+        frmMovie.getTblMovieGenre().getTableHeader().setResizingAllowed(false);
+
+        frmMovie.getTblMovieGenre().setRowHeight(20);
+        tcm.getColumn(0).setPreferredWidth(15);
+        tcm.getColumn(1).setPreferredWidth(300);
     }
 }

@@ -5,7 +5,7 @@
  */
 package view.form.component.table;
 
-import domain.Role;
+import domain.MovieGenre;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -13,32 +13,27 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Mihailo
  */
-public class RoleTableModel extends AbstractTableModel{
-    private final List<Role> roles;
+public class MovieGenreTableModel extends AbstractTableModel{
+    private final List<MovieGenre> movieGenres;
     private final String[] columnNames = {
-        "ID", 
-        "First name", 
-        "Last name", 
-        "Role name"
+        "ID",
+        "Genre name"
     };
     private final Class[] columnClasses = {
         Integer.class,
-        String.class,
-        String.class,
-        String.class,
         String.class
     };
     
-    public RoleTableModel(List<Role> roles) {
-        this.roles = roles;
+    public MovieGenreTableModel(List<MovieGenre> movieGenres) {
+        this.movieGenres = movieGenres;
     }
 
     @Override
     public int getRowCount() {
-        if (roles == null) 
+        if (movieGenres == null) 
             return 0;
          else 
-            return roles.size();
+            return movieGenres.size();
     }
 
     @Override
@@ -48,13 +43,11 @@ public class RoleTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Role role = roles.get(rowIndex);
+        MovieGenre movieGenre = movieGenres.get(rowIndex);
         
         switch(columnIndex) {
-            case 0: return role.getActor().getActorID();
-            case 1: return role.getActor().getFirstName();
-            case 2: return role.getActor().getLastName();
-            case 3: return role.getRoleName();
+            case 0: return movieGenre.getGenre().getGenreID();
+            case 1: return movieGenre.getGenre().getName();
             default: return "N/A";
         }
     }
@@ -69,7 +62,7 @@ public class RoleTableModel extends AbstractTableModel{
         return columnClasses[columnIndex];
     }
     
-    public Role getRoleAt(int row) {
-        return roles.get(row);
+    public MovieGenre getMovieGenreAt(int row) {
+        return movieGenres.get(row);
     }
 }

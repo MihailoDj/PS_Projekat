@@ -41,9 +41,7 @@ import view.form.util.FormMode;
  */
 public class MovieController {
     private final FrmMovie frmMovie;
-    private List<Role> roles;
-    private List<MovieGenre> movieGenres;
-    private List<Production> productionCompanies;
+    private Movie movie;
 
     public MovieController(FrmMovie frmMovie) {
         this.frmMovie = frmMovie;
@@ -55,9 +53,9 @@ public class MovieController {
         frmMovie.addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent e) {
-                fillTblRoles(roles);
-                fillTblMovieGenres(movieGenres);
-                fillTblProduction(productionCompanies);
+                fillTblRoles(movie.getRoles());
+                fillTblMovieGenres(movie.getMovieGenres());
+                fillTblProduction(movie.getProductions());
             }
         });
         frmMovie.addBtnAddActionListener(new ActionListener() {
@@ -69,13 +67,22 @@ public class MovieController {
             private void add() {
                 try {
                     validateForm();
+                    
+                    List<Role> roles = ((RoleTableModel)frmMovie.getTblRoles().getModel()).getAll();
+                    List<MovieGenre> movieGenres = ((MovieGenreTableModel)frmMovie.getTblMovieGenre().getModel()).getAll();
+                    List<Production> productions = ((ProductionTableModel)frmMovie.getTblProduction().getModel()).getAll();
+                    
                     Movie movie = new Movie() {
                         {
+                            setMovieID(0);
                             setName(frmMovie.getTxtName().getText().trim());
                             setDescription(frmMovie.getTxtDescription().getText().trim());
                             setScore(Double.parseDouble(frmMovie.getTxtScore().getText()));
                             setDirector((Director) frmMovie.getCbDirector().getSelectedItem());
                             setReleaseDate(frmMovie.getReleaseDate().getDate());
+                            setRoles(roles);
+                            setMovieGenres(movieGenres);
+                            setProductions(productions);
                         }
                     };
                     
@@ -168,8 +175,8 @@ public class MovieController {
                     }
                 };
                 
-                roles.add(role);
-                fillTblRoles(roles);
+                movie.getRoles().add(role);
+                fillTblRoles(movie.getRoles());
             }
         });
         frmMovie.addBtnRemoveActorActionListener(new ActionListener() {
@@ -178,8 +185,8 @@ public class MovieController {
                 int selRow = frmMovie.getTblRoles().getSelectedRow();
                 Role role = ((RoleTableModel)frmMovie.getTblRoles().getModel()).getRoleAt(selRow);
                 
-                roles.remove(role);
-                fillTblRoles(roles);
+                movie.getRoles().remove(role);
+                fillTblRoles(movie.getRoles());
             }
         });
         frmMovie.addBtnAddGenreActionListener(new ActionListener() {
@@ -191,8 +198,8 @@ public class MovieController {
                     }
                 };
                 
-                movieGenres.add(movieGenre);
-                fillTblMovieGenres(movieGenres);
+                movie.getMovieGenres().add(movieGenre);
+                fillTblMovieGenres(movie.getMovieGenres());
             }
         });
         frmMovie.addBtnRemoveGenreActionListener(new ActionListener() {
@@ -201,8 +208,8 @@ public class MovieController {
                 int selRow = frmMovie.getTblMovieGenre().getSelectedRow();
                 MovieGenre movieGenre = ((MovieGenreTableModel)frmMovie.getTblMovieGenre().getModel()).getMovieGenreAt(selRow);
                 
-                movieGenres.remove(movieGenre);
-                fillTblMovieGenres(movieGenres);
+                movie.getMovieGenres().remove(movieGenre);
+                fillTblMovieGenres(movie.getMovieGenres());
             }
         });
         frmMovie.addBtnAddProductionCompanyActionListener(new ActionListener() {
@@ -214,8 +221,8 @@ public class MovieController {
                     }
                 };
                 
-                productionCompanies.add(productionCompany);
-                fillTblProduction(productionCompanies);
+                movie.getProductions().add(productionCompany);
+                fillTblProduction(movie.getProductions());
             }
         });
         frmMovie.addBtnRemoveProductionCompanyActionListener(new ActionListener() {
@@ -224,8 +231,8 @@ public class MovieController {
                 int selRow = frmMovie.getTblProduction().getSelectedRow();
                 Production productionCompany = ((ProductionTableModel)frmMovie.getTblProduction().getModel()).getProductionAt(selRow);
                 
-                productionCompanies.remove(productionCompany);
-                fillTblProduction(productionCompanies);
+                movie.getProductions().remove(productionCompany);
+                fillTblProduction(movie.getProductions());
             }
         });
     }
@@ -268,19 +275,17 @@ public class MovieController {
     }
 
     private void prepareView(FormMode formMode) {
+        fillCbDirector();
         fillCbActors();
         fillCbGenres();
         fillCbProductionCompanies();
-        fillCbDirector();
         setupComponents(formMode);
     }
     
     private void setupComponents(FormMode formMode) {
         switch (formMode) {
             case FORM_ADD:
-                roles = new ArrayList<Role>();
-                movieGenres = new ArrayList<MovieGenre>();
-                productionCompanies = new ArrayList<Production>();
+                movie = new Movie();
                 
                 frmMovie.getTxtMovieID().setText("auto");
                 frmMovie.getTxtScore().setText(String.valueOf(0));
@@ -299,6 +304,24 @@ public class MovieController {
                 frmMovie.getReleaseDate().setEnabled(true);
                 break;
             case FORM_VIEW:
+                movie = (Movie) MainCoordinator.getInstance().getParam(Constants.PARAM_MOVIE);
+                
+                frmMovie.getTxtMovieID().setText(movie.getMovieID() + "");
+                frmMovie.getTxtName().setText(movie.getName());
+                frmMovie.getTxtDescription().setText(movie.getDescription());
+                frmMovie.getTxtScore().setText(String.valueOf(movie.getScore()));
+                frmMovie.getReleaseDate().setDate(movie.getReleaseDate());
+                frmMovie.getCbDirector().getModel().setSelectedItem(movie.getDirector());
+                
+                RoleTableModel rtm = new RoleTableModel(movie.getRoles());
+                frmMovie.getTblRoles().setModel(rtm);
+                
+                MovieGenreTableModel mgtm = new MovieGenreTableModel(movie.getMovieGenres());
+                frmMovie.getTblMovieGenre().setModel(mgtm);
+                
+                ProductionTableModel ptm = new ProductionTableModel(movie.getProductions());
+                frmMovie.getTblProduction().setModel(ptm);
+                
                 frmMovie.getBtnCancel().setEnabled(true);
                 frmMovie.getBtnDelete().setEnabled(true);
                 frmMovie.getBtnUpdate().setEnabled(false);
@@ -311,14 +334,7 @@ public class MovieController {
                 frmMovie.getTxtScore().setEditable(false);
                 frmMovie.getCbDirector().setEnabled(false);
                 frmMovie.getReleaseDate().setEnabled(false);
-
-                Movie movie = (Movie) MainCoordinator.getInstance().getParam(Constants.PARAM_MOVIE);
-                frmMovie.getTxtMovieID().setText(movie.getMovieID() + "");
-                frmMovie.getTxtName().setText(movie.getName());
-                frmMovie.getTxtDescription().setText(movie.getDescription());
-                frmMovie.getTxtScore().setText(String.valueOf(movie.getScore()));
-                frmMovie.getReleaseDate().setDate(movie.getReleaseDate());
-                frmMovie.getCbDirector().setSelectedItem(movie.getDirector());
+                
                 break;
             case FORM_EDIT:
                 frmMovie.getBtnCancel().setEnabled(true);
@@ -366,7 +382,7 @@ public class MovieController {
             frmMovie.getCbDirector().setModel(new DefaultComboBoxModel<>(directors.toArray()));
         } catch (Exception ex) {
             Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(frmMovie, "Error loading components", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(frmMovie, "Error loading directors", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

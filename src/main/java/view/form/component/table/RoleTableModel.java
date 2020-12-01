@@ -72,4 +72,8 @@ public class RoleTableModel extends AbstractTableModel{
     public Role getRoleAt(int row) {
         return roles.get(row);
     }
+    
+    public List<Role> getAll() {
+        return roles;
+    }
 }

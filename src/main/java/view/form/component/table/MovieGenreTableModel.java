@@ -65,4 +65,8 @@ public class MovieGenreTableModel extends AbstractTableModel{
     public MovieGenre getMovieGenreAt(int row) {
         return movieGenres.get(row);
     }
+    
+    public List<MovieGenre> getAll() {
+        return movieGenres;
+    }
 }

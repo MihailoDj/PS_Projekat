@@ -65,4 +65,8 @@ public class ProductionTableModel extends AbstractTableModel{
     public Production getProductionAt(int row) {
         return productionCompanies.get(row);
     }
+    
+    public List<Production> getAll() {
+        return productionCompanies;
+    }
 }

@@ -6,6 +6,8 @@
 package domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -20,9 +22,15 @@ public class Movie {
     private String description;
     private double score;
     private Director director;
+    private List<Role> roles;
+    private List<MovieGenre> movieGenres;
+    private List<Production> productions;
+    
     
     public Movie() {
-        
+        this.roles = new ArrayList<Role>();
+        this.movieGenres = new ArrayList<MovieGenre>();
+        this.productions = new ArrayList<Production>();
     }
 
     public Movie(int movieID, String name, LocalDate releaseDate, String description, double score, Director director) {
@@ -32,6 +40,9 @@ public class Movie {
         this.description = description;
         this.score = score;
         this.director = director;
+        this.roles = new ArrayList<Role>();
+        this.movieGenres = new ArrayList<MovieGenre>();
+        this.productions = new ArrayList<Production>();
     }
     
     public int getMovieID() {
@@ -81,6 +92,32 @@ public class Movie {
     public void setDirector(Director director) {
         this.director = director;
     }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<MovieGenre> getMovieGenres() {
+        return movieGenres;
+    }
+
+    public void setMovieGenres(List<MovieGenre> movieGenres) {
+        this.movieGenres = movieGenres;
+    }
+
+    public List<Production> getProductions() {
+        return productions;
+    }
+
+    public void setProductions(List<Production> productions) {
+        this.productions = productions;
+    }
+    
+    
 
     @Override
     public int hashCode() {

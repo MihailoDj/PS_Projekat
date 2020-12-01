@@ -7,6 +7,7 @@ package view.form;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
+import domain.Director;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.time.DayOfWeek;

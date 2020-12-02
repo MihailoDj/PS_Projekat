@@ -5,8 +5,12 @@
  */
 package view.form.component.table;
 
+import controller.Controller;
 import domain.Role;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -58,6 +62,27 @@ public class RoleTableModel extends AbstractTableModel{
             default: return "N/A";
         }
     }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Role role = roles.get(rowIndex);
+        
+        try {
+            switch(columnIndex) {
+            case 3:
+                role.setRoleName((String) aValue);
+                break;
+            }
+
+            Controller.getInstance().updateRole(role);
+        } catch(Exception e) {
+            Logger.getLogger(RoleTableModel.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "Invalid input", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
+    
+    
     
     @Override
     public String getColumnName(int column) {
@@ -68,6 +93,13 @@ public class RoleTableModel extends AbstractTableModel{
     public Class<?> getColumnClass(int columnIndex) {
         return columnClasses[columnIndex];
     }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return columnIndex == 3;
+    }
+    
+    
     
     public Role getRoleAt(int row) {
         return roles.get(row);

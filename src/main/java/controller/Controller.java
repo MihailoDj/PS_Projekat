@@ -12,6 +12,7 @@ import domain.User;
 import domain.Director;
 import domain.Genre;
 import domain.ProductionCompany;
+import domain.Role;
 import repository.Repository;
 import repository.db.DbRepository;
 import repository.db.impl.DbActorRepository;
@@ -19,6 +20,7 @@ import repository.db.impl.DbDirectorRepository;
 import repository.db.impl.DbGenreRepository;
 import repository.db.impl.DbMovieRepository;
 import repository.db.impl.DbProductionCompanyRepository;
+import repository.db.impl.DbRoleRepository;
 import repository.db.impl.DbUserRepository;
 
 /**
@@ -32,6 +34,7 @@ public class Controller {
     private final Repository actorRepository;
     private final Repository genreRepository;
     private final Repository productionCompanyRepository;
+    private final Repository roleRepository;
     
     private static Controller controller;
 
@@ -42,6 +45,7 @@ public class Controller {
         actorRepository = new DbActorRepository();
         genreRepository = new DbGenreRepository();
         productionCompanyRepository = new DbProductionCompanyRepository();
+        roleRepository = new DbRoleRepository();
     }
     
     public static Controller getInstance() {
@@ -255,6 +259,19 @@ public class Controller {
         }catch(Exception e){
             e.printStackTrace();
             ((DbRepository)actorRepository).rollback();
+            throw e;
+        }
+    }
+    
+    public void updateRole(Role role) throws Exception {
+        ((DbRepository)roleRepository).connect();
+        
+        try{
+            ((DbRepository)roleRepository).update(role);
+            ((DbRepository)roleRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)roleRepository).rollback();
             throw e;
         }
     }

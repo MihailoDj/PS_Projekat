@@ -170,6 +170,7 @@ public class MovieController {
             public void actionPerformed(ActionEvent e) {
                 Role role = new Role() {
                     {
+                        setMovie(movie);
                         setRoleName(frmMovie.getTxtRoleName().getText().trim());
                         setActor((Actor)frmMovie.getCbActors().getSelectedItem());
                     }
@@ -194,6 +195,7 @@ public class MovieController {
             public void actionPerformed(ActionEvent e) {
                 MovieGenre movieGenre = new MovieGenre() {
                     {
+                        setMovie(movie);
                         setGenre((Genre)frmMovie.getCbGenres().getSelectedItem());
                     }
                 };
@@ -217,6 +219,7 @@ public class MovieController {
             public void actionPerformed(ActionEvent e) {
                 Production productionCompany = new Production() {
                     {
+                        setMovie(movie);
                         setProductionCompany((ProductionCompany)frmMovie.getCbProductionCompanies().getSelectedItem());
                     }
                 };
@@ -315,12 +318,15 @@ public class MovieController {
                 
                 RoleTableModel rtm = new RoleTableModel(movie.getRoles());
                 frmMovie.getTblRoles().setModel(rtm);
+                frmMovie.getTblRoles().setEnabled(false);
                 
                 MovieGenreTableModel mgtm = new MovieGenreTableModel(movie.getMovieGenres());
                 frmMovie.getTblMovieGenre().setModel(mgtm);
+                frmMovie.getTblMovieGenre().setEnabled(false);
                 
                 ProductionTableModel ptm = new ProductionTableModel(movie.getProductions());
                 frmMovie.getTblProduction().setModel(ptm);
+                frmMovie.getTblProduction().setEnabled(false);
                 
                 frmMovie.getBtnCancel().setEnabled(true);
                 frmMovie.getBtnDelete().setEnabled(true);
@@ -328,12 +334,20 @@ public class MovieController {
                 frmMovie.getBtnEnableChanges().setEnabled(true);
                 frmMovie.getBtnAdd().setEnabled(false);
                 
+                
                 frmMovie.getTxtMovieID().setEditable(false);
                 frmMovie.getTxtName().setEditable(false);
                 frmMovie.getTxtDescription().setEditable(false);
                 frmMovie.getTxtScore().setEditable(false);
                 frmMovie.getCbDirector().setEnabled(false);
                 frmMovie.getReleaseDate().setEnabled(false);
+                
+                frmMovie.getCbActors().setEnabled(false);
+                frmMovie.getCbGenres().setEnabled(false);
+                frmMovie.getCbProductionCompanies().setEnabled(false);
+                frmMovie.getBtnAddActor().setEnabled(false);
+                frmMovie.getBtnAddGenre().setEnabled(false);
+                frmMovie.getBtnAddProductionCompany().setEnabled(false);
                 
                 break;
             case FORM_EDIT:
@@ -349,6 +363,17 @@ public class MovieController {
                 frmMovie.getTxtScore().setEditable(false);
                 frmMovie.getCbDirector().setEnabled(true);
                 frmMovie.getReleaseDate().setEnabled(true);
+                
+                frmMovie.getCbActors().setEnabled(true);
+                frmMovie.getCbGenres().setEnabled(true);
+                frmMovie.getCbProductionCompanies().setEnabled(true);
+                frmMovie.getBtnAddActor().setEnabled(true);
+                frmMovie.getBtnAddGenre().setEnabled(true);
+                frmMovie.getBtnAddProductionCompany().setEnabled(true);
+                
+                frmMovie.getTblRoles().setEnabled(true);
+                frmMovie.getTblMovieGenre().setEnabled(true);
+                frmMovie.getTblProduction().setEnabled(true);
                 break;
         }
     }
@@ -362,6 +387,10 @@ public class MovieController {
                 setScore(Double.parseDouble(frmMovie.getTxtScore().getText()));
                 setDirector((Director) frmMovie.getCbDirector().getSelectedItem());
                 setReleaseDate(frmMovie.getReleaseDate().getDate());
+                
+                setRoles(((RoleTableModel)frmMovie.getTblRoles().getModel()).getAll());
+                setMovieGenres(((MovieGenreTableModel)frmMovie.getTblMovieGenre().getModel()).getAll());
+                setProductions(((ProductionTableModel)frmMovie.getTblProduction().getModel()).getAll());
             }
         };
         

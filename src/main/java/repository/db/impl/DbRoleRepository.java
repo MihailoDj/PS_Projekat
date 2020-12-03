@@ -35,20 +35,7 @@ public class DbRoleRepository implements DbRepository<Role>{
 
     @Override
     public void update(Role role) throws Exception {
-        try {
-            Connection connection = DbConnectionFactory.getInstance().getConnection();
-            String sql = "UPDATE role SET rolename=? WHERE movieID= " + role.getMovie().getMovieID() + 
-                    " AND actorID= " + role.getActor().getActorID();
-                    
-            PreparedStatement statement = connection.prepareStatement(sql);
-            
-            statement.setString(1, role.getRoleName());
-            
-            statement.executeUpdate();
         
-        } catch(Exception ex) {
-            throw new Exception("Error updating role!");
-        }
     }
 
     @Override

@@ -143,6 +143,7 @@ public class DbMovieRepository implements DbRepository<Movie>{
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             
+            //INSERT MOVIE
             String sql = "INSERT INTO movie (movieID, name, releasedate, score, description, directorid) VALUES(?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             
@@ -160,7 +161,7 @@ public class DbMovieRepository implements DbRepository<Movie>{
                 int id = rsKey.getInt(1);
                 movie.setMovieID(id);
                 
-                //ROLES
+                //INSERT ROLES
                 sql = "INSERT INTO role (actorID, movieID, rolename) VALUES (?, ?, ?)";
                 statement = connection.prepareStatement(sql);
                 for (Role role : movie.getRoles()) {
@@ -170,7 +171,7 @@ public class DbMovieRepository implements DbRepository<Movie>{
                     statement.executeUpdate();
                 }
                 
-                //MOVIE GENRES
+                //INSERT MOVIE GENRES
                 sql = "INSERT INTO movie_genre (genreID, movieID) VALUES (?, ?)";
                 statement = connection.prepareStatement(sql);
                 for (MovieGenre movieGenre : movie.getMovieGenres()) {
@@ -179,7 +180,7 @@ public class DbMovieRepository implements DbRepository<Movie>{
                     statement.executeUpdate();
                 }
                 
-                //PRODUCTIONS
+                //INSERT PRODUCTIONS
                 sql = "INSERT INTO production (productioncompanyID, movieID) VALUES (?, ?)";
                 statement = connection.prepareStatement(sql);
                 for (Production production : movie.getProductions()) {
@@ -191,7 +192,7 @@ public class DbMovieRepository implements DbRepository<Movie>{
                 statement.close();
                 rsKey.close();
             } else {
-                throw new Exception("Error inserting movie(dbmovierepo)");
+                throw new Exception("Error inserting movie");
             }
             
             statement.close();
@@ -215,6 +216,8 @@ public class DbMovieRepository implements DbRepository<Movie>{
     public void update(Movie movie) throws Exception {
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
+            
+            //UPDATE BASIC MOVIE INFO
             String sql = "UPDATE movie SET movieID=?, name=?, releasedate=?, score=?, description=?, directorID=? "
                     + "WHERE movieID=" + movie.getMovieID();
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -227,6 +230,49 @@ public class DbMovieRepository implements DbRepository<Movie>{
             statement.setInt(6, movie.getDirector().getDirectorID());
             
             statement.executeUpdate();
+            
+            //REMOVE ROLES RELATED TO MOVIE
+            sql = "DELETE FROM role WHERE movieID=" + movie.getMovieID();
+            statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+            
+            //INSERT ROLES
+            sql = "INSERT INTO role (actorID, movieID, rolename) VALUES (?, ?, ?)";
+            statement = connection.prepareStatement(sql);
+            for (Role role : movie.getRoles()) {
+                statement.setInt(1, role.getActor().getActorID());
+                statement.setInt(2, movie.getMovieID());
+                statement.setString(3, role.getRoleName());
+                statement.executeUpdate();
+            }
+            
+            //REMOVE MOVIE GENRES RELATED TO MOVIE
+            sql = "DELETE FROM movie_genre WHERE movieID=" + movie.getMovieID();
+            statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+
+            //INSERT MOVIE GENRES
+            sql = "INSERT INTO movie_genre (genreID, movieID) VALUES (?, ?)";
+            statement = connection.prepareStatement(sql);
+            for (MovieGenre movieGenre : movie.getMovieGenres()) {
+                statement.setInt(1, movieGenre.getGenre().getGenreID());
+                statement.setInt(2, movie.getMovieID());
+                statement.executeUpdate();
+            }
+            
+            //REMOVE PRODUCTIONS RELATED TO MOVIE
+            sql = "DELETE FROM production WHERE movieID=" + movie.getMovieID();
+            statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+
+            //INSERT PRODUCTIONS
+            sql = "INSERT INTO production (productioncompanyID, movieID) VALUES (?, ?)";
+            statement = connection.prepareStatement(sql);
+            for (Production production : movie.getProductions()) {
+                statement.setInt(1, production.getProductionCompany().getProductionCompanyID());
+                statement.setInt(2, movie.getMovieID());
+                statement.executeUpdate();
+            }
         
         } catch(Exception ex) {
             throw new Exception("Error updating movie!");

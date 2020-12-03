@@ -262,17 +262,4 @@ public class Controller {
             throw e;
         }
     }
-    
-    public void updateRole(Role role) throws Exception {
-        ((DbRepository)roleRepository).connect();
-        
-        try{
-            ((DbRepository)roleRepository).update(role);
-            ((DbRepository)roleRepository).commit();
-        }catch(Exception e){
-            e.printStackTrace();
-            ((DbRepository)roleRepository).rollback();
-            throw e;
-        }
-    }
 }

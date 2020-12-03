@@ -67,18 +67,11 @@ public class RoleTableModel extends AbstractTableModel{
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         Role role = roles.get(rowIndex);
         
-        try {
             switch(columnIndex) {
             case 3:
                 role.setRoleName((String) aValue);
                 break;
             }
-
-            Controller.getInstance().updateRole(role);
-        } catch(Exception e) {
-            Logger.getLogger(RoleTableModel.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(null, "Invalid input", "Error", JOptionPane.ERROR_MESSAGE);
-        }
         
     }
     

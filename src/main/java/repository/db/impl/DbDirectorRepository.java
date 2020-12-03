@@ -32,7 +32,7 @@ public class DbDirectorRepository implements DbRepository<Director>{
             List<Director> directors = new ArrayList<Director>();
             
             String sql = 
-                    "SELECT * FROM director";
+                    "SELECT * FROM director ORDER BY firstname ASC, lastname";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             

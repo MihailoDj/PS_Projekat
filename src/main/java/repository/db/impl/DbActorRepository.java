@@ -30,7 +30,7 @@ public class DbActorRepository implements DbRepository<Actor>{
             List<Actor> actors = new ArrayList<Actor>();
             
             String sql = 
-                    "SELECT * FROM actor";
+                    "SELECT * FROM actor ORDER BY firstname ASC, lastname";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             

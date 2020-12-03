@@ -7,6 +7,7 @@ package view.form.component.table;
 
 import controller.Controller;
 import domain.Role;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +19,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Mihailo
  */
 public class RoleTableModel extends AbstractTableModel{
-    private final List<Role> roles;
+    private List<Role> roles;
     private final String[] columnNames = {
         "ID", 
         "First name", 
@@ -75,8 +76,6 @@ public class RoleTableModel extends AbstractTableModel{
         
     }
     
-    
-    
     @Override
     public String getColumnName(int column) {
         return columnNames[column];
@@ -100,5 +99,9 @@ public class RoleTableModel extends AbstractTableModel{
     
     public List<Role> getAll() {
         return roles;
+    }
+    
+    public void removeAll() {
+        roles = null;
     }
 }

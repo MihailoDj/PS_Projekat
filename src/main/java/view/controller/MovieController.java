@@ -178,6 +178,7 @@ public class MovieController {
                 
                 movie.getRoles().add(role);
                 fillTblRoles(movie.getRoles());
+                frmMovie.getBtnRemoveAllRoles().setEnabled(true);
             }
         });
         frmMovie.addBtnRemoveActorActionListener(new ActionListener() {
@@ -188,6 +189,9 @@ public class MovieController {
                 
                 movie.getRoles().remove(role);
                 fillTblRoles(movie.getRoles());
+                
+                if (movie.getRoles().size() == 0) 
+                    frmMovie.getBtnRemoveAllRoles().setEnabled(false);
             }
         });
         frmMovie.addBtnAddGenreActionListener(new ActionListener() {
@@ -202,6 +206,7 @@ public class MovieController {
                 
                 movie.getMovieGenres().add(movieGenre);
                 fillTblMovieGenres(movie.getMovieGenres());
+                frmMovie.getBtnRemoveAllMovieGenres();
             }
         });
         frmMovie.addBtnRemoveGenreActionListener(new ActionListener() {
@@ -212,6 +217,9 @@ public class MovieController {
                 
                 movie.getMovieGenres().remove(movieGenre);
                 fillTblMovieGenres(movie.getMovieGenres());
+                
+                if (movie.getMovieGenres().size() == 0)
+                    frmMovie.getBtnRemoveAllMovieGenres().setEnabled(false);
             }
         });
         frmMovie.addBtnAddProductionCompanyActionListener(new ActionListener() {
@@ -226,6 +234,7 @@ public class MovieController {
                 
                 movie.getProductions().add(productionCompany);
                 fillTblProduction(movie.getProductions());
+                frmMovie.getBtnRemoveAllProductions().setEnabled(true);
             }
         });
         frmMovie.addBtnRemoveProductionCompanyActionListener(new ActionListener() {
@@ -236,6 +245,48 @@ public class MovieController {
                 
                 movie.getProductions().remove(productionCompany);
                 fillTblProduction(movie.getProductions());
+                
+                if (movie.getProductions().size() == 0)
+                    frmMovie.getBtnRemoveAllProductions().setEnabled(false);
+            }
+        });
+        frmMovie.addBtnRemoveAllRolesActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int check = JOptionPane.showConfirmDialog(frmMovie, "Are you sure you want to delete ALL assigned roles?", 
+                        "Confrim", JOptionPane.YES_NO_OPTION);
+                
+                if (check == JOptionPane.YES_OPTION) {
+                    movie.setRoles(new ArrayList<Role>());
+                    fillTblRoles(movie.getRoles());
+                    frmMovie.getBtnRemoveAllRoles().setEnabled(false);
+                }
+            }
+        });
+        frmMovie.addBtnRemoveAllMovieGenresActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int check = JOptionPane.showConfirmDialog(frmMovie, "Are you sure you want to delete ALL assigned genres?", 
+                        "Confrim", JOptionPane.YES_NO_OPTION);
+                
+                if (check == JOptionPane.YES_OPTION) {
+                    movie.setMovieGenres(new ArrayList<MovieGenre>());
+                    fillTblMovieGenres(movie.getMovieGenres());
+                    frmMovie.getBtnRemoveAllMovieGenres().setEnabled(false);
+                }
+            }
+        });
+        frmMovie.addBtnRemoveAllProductionsActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int check = JOptionPane.showConfirmDialog(frmMovie, "Are you sure you want to delete ALL assigned productions?", 
+                        "Confrim", JOptionPane.YES_NO_OPTION);
+                
+                if (check == JOptionPane.YES_OPTION) {
+                    movie.setProductions(new ArrayList<Production>());
+                    fillTblProduction(movie.getProductions());
+                    frmMovie.getBtnRemoveAllProductions().setEnabled(false);
+                }
             }
         });
     }
@@ -349,6 +400,9 @@ public class MovieController {
                 frmMovie.getBtnAddGenre().setEnabled(false);
                 frmMovie.getBtnAddProductionCompany().setEnabled(false);
                 
+                frmMovie.getBtnRemoveAllRoles().setEnabled(false);
+                frmMovie.getBtnRemoveAllMovieGenres().setEnabled(false);
+                frmMovie.getBtnRemoveAllProductions().setEnabled(false);
                 break;
             case FORM_EDIT:
                 frmMovie.getBtnCancel().setEnabled(true);
@@ -374,6 +428,10 @@ public class MovieController {
                 frmMovie.getTblRoles().setEnabled(true);
                 frmMovie.getTblMovieGenre().setEnabled(true);
                 frmMovie.getTblProduction().setEnabled(true);
+                
+                frmMovie.getBtnRemoveAllRoles().setEnabled(true);
+                frmMovie.getBtnRemoveAllMovieGenres().setEnabled(true);
+                frmMovie.getBtnRemoveAllProductions().setEnabled(true);
                 break;
         }
     }

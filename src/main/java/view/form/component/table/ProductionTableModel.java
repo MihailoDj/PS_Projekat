@@ -6,6 +6,7 @@
 package view.form.component.table;
 
 import domain.Production;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -14,7 +15,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Mihailo
  */
 public class ProductionTableModel extends AbstractTableModel{
-    private final List<Production> productionCompanies;
+    private List<Production> productionCompanies;
     private final String[] columnNames = {
         "ID",
         "Production co. name"
@@ -68,5 +69,9 @@ public class ProductionTableModel extends AbstractTableModel{
     
     public List<Production> getAll() {
         return productionCompanies;
+    }
+    
+    public void removeAll() {
+        productionCompanies = null;
     }
 }

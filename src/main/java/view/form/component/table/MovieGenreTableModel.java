@@ -6,6 +6,7 @@
 package view.form.component.table;
 
 import domain.MovieGenre;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -14,7 +15,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Mihailo
  */
 public class MovieGenreTableModel extends AbstractTableModel{
-    private final List<MovieGenre> movieGenres;
+    private List<MovieGenre> movieGenres;
     private final String[] columnNames = {
         "ID",
         "Genre name"
@@ -68,5 +69,9 @@ public class MovieGenreTableModel extends AbstractTableModel{
     
     public List<MovieGenre> getAll() {
         return movieGenres;
+    }
+    
+    public void removeAll() {
+        movieGenres = null;
     }
 }

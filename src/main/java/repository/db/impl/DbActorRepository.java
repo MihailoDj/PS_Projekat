@@ -104,12 +104,12 @@ public class DbActorRepository implements DbRepository<Actor>{
     }
 
     @Override
-    public Actor select(Actor actor) throws Exception {
+    public void deleteAll() throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void deleteAll() throws Exception {
+    public List<Actor> select(String criteria) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

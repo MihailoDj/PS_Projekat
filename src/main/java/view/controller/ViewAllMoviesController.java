@@ -95,6 +95,20 @@ public class ViewAllMoviesController {
     }
     
     private void addActionListener() {
+        frmViewMovies.getBtnSearchAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String search = frmViewMovies.getTxtSearch().getText().trim();
+                
+                try {
+                    List<Movie> movies = Controller.getInstance().selectMovies(search);
+                    MovieTableModel mtm = new MovieTableModel(movies);
+                    frmViewMovies.getTblMovies().setModel(mtm);
+                } catch (Exception ex) {
+                    Logger.getLogger(ViewAllMoviesController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
         frmViewMovies.getBtnDetailsAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

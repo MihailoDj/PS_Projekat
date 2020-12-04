@@ -39,7 +39,7 @@ public class DbRoleRepository implements DbRepository<Role>{
     }
 
     @Override
-    public Role select(Role obj) throws Exception {
+    public List<Role> select(String obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

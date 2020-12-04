@@ -43,87 +43,9 @@ public class DbMovieRepository implements DbRepository<Movie>{
             ResultSet rs = statement.executeQuery(sql);
             
             while(rs.next()) {
-                //LOAD MOVIE
-                Movie movie = new Movie(){
-                    {
-                        setMovieID(rs.getInt("movieID"));
-                        setName(rs.getString("name"));
-                        setReleaseDate(rs.getObject("releaseDate", LocalDate.class));
-                        setDescription(rs.getString("description"));
-                        setScore(rs.getDouble("score"));
-                        setDirector(new Director() {
-                            {
-                                setDirectorID(rs.getInt("directorID"));
-                                setFirstName(rs.getString("firstname"));
-                                setLastName(rs.getString("lastname"));
-                                setDateOfBirth(rs.getObject("dateofbirth", LocalDate.class));
-                            }
-                        });
-                    }
-                };
+                Movie movie = loadMovie(rs);
                 
-                //LOAD ROLES
-                String sqlRoles = "SELECT * FROM movie m JOIN role r ON (m.movieID = r.movieID) "
-                        + "JOIN actor a ON (r.actorID = a.actorID)"
-                        + "WHERE r.movieID = " + movie.getMovieID();
-                Statement statementRoles = connection.createStatement();
-                ResultSet rsRoles = statementRoles.executeQuery(sqlRoles);
-                
-                while(rsRoles.next()) {
-                    Role role = new Role() {
-                        {
-                            setRoleName(rsRoles.getString("rolename"));
-                            setActor(new Actor() { {
-                                setActorID(rsRoles.getInt("actorID"));
-                                setFirstName(rsRoles.getString("firstname"));
-                                setLastName(rsRoles.getString("lastname"));
-                                setBiography(rsRoles.getString("biography"));
-                            }});
-                            setMovie(movie);
-                        }  
-                    };
-                    movie.getRoles().add(role);
-                }
-                
-                //LOAD MOVIE GENRES
-                String sqlMovieGenres = "SELECT g.name as gname, g.genreID as ggenreID FROM movie m JOIN movie_genre mg ON (m.movieID = mg.movieID) "
-                        + "JOIN genre g ON (mg.genreID = g.genreID)"
-                        + "WHERE mg.movieID = " + movie.getMovieID();
-                Statement statementMovieGenres = connection.createStatement();
-                ResultSet rsMovieGenres = statementMovieGenres.executeQuery(sqlMovieGenres);
-                
-                while(rsMovieGenres.next()) {
-                    MovieGenre movieGenre = new MovieGenre() {
-                        {
-                            setGenre(new Genre() { {
-                                setGenreID(rsMovieGenres.getInt("ggenreID"));
-                                setName(rsMovieGenres.getString("gname"));
-                            }});
-                            setMovie(movie);
-                        }  
-                    };
-                    movie.getMovieGenres().add(movieGenre);
-                }
-                //LOAD PRODUCTIONS
-                String sqlProductions = "SELECT pc.name as pcname, pc.pcID FROM movie m "
-                        + "JOIN production p ON (m.movieID = p.movieID) "
-                        + "JOIN productioncompany pc ON (pc.pcID = p.productioncompanyID)"
-                        + "WHERE p.movieID = " + movie.getMovieID();
-                Statement statementProductions = connection.createStatement();
-                ResultSet rsProductions = statementProductions.executeQuery(sqlProductions);
-                
-                while(rsProductions.next()) {
-                    Production production = new Production() {
-                        {
-                            setProductionCompany(new ProductionCompany() { {
-                                setProductionCompanyID(rsProductions.getInt("pcID"));
-                                setName(rsProductions.getString("pcname"));
-                            }});
-                            setMovie(movie);
-                        }  
-                    };
-                    movie.getProductions().add(production);
-                }
+                loadAssociationClasses(connection, movie);
                 
                 movies.add(movie);
             }
@@ -280,8 +202,28 @@ public class DbMovieRepository implements DbRepository<Movie>{
     }
 
     @Override
-    public Movie select(Movie obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Movie> select(String criteria) throws Exception {
+        try {
+            List<Movie> movies = new ArrayList<>();
+            Connection connection = DbConnectionFactory.getInstance().getConnection();
+            String sql = "SELECT * FROM movie m JOIN director d ON (m.directorID = d.directorID)"
+                    + "WHERE name like \"%" + criteria + "%\" OR firstname like \"%" + criteria + "%\" OR "
+                    + "lastname like \"%" + criteria + "%\"";
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            
+            while(rs.next()) {
+                Movie movie = loadMovie(rs);
+                
+                loadAssociationClasses(connection, movie);
+                
+                movies.add(movie);
+            }
+            
+            return movies;
+        } catch(SQLException e) {
+            throw e;
+        }
     }
 
     @Override
@@ -289,4 +231,107 @@ public class DbMovieRepository implements DbRepository<Movie>{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    private Movie loadMovie(ResultSet rs) throws Exception{
+        Movie movie = new Movie(){
+            {
+                setMovieID(rs.getInt("movieID"));
+                setName(rs.getString("name"));
+                setReleaseDate(rs.getObject("releaseDate", LocalDate.class));
+                setDescription(rs.getString("description"));
+                setScore(rs.getDouble("score"));
+                setDirector(new Director() {
+                    {
+                        setDirectorID(rs.getInt("directorID"));
+                        setFirstName(rs.getString("firstname"));
+                        setLastName(rs.getString("lastname"));
+                        setDateOfBirth(rs.getObject("dateofbirth", LocalDate.class));
+                    }
+                });
+            }
+        };
+        return movie;
+    }
+    
+    private Role loadRole(ResultSet rs) throws Exception{
+        Role role = new Role() {
+            {
+                setRoleName(rs.getString("rolename"));
+                setActor(new Actor() { {
+                    setActorID(rs.getInt("actorID"));
+                    setFirstName(rs.getString("firstname"));
+                    setLastName(rs.getString("lastname"));
+                    setBiography(rs.getString("biography"));
+                }});
+            }  
+        };
+        return role;
+    }
+    
+    private MovieGenre loadMovieGenre(ResultSet rs) throws Exception{
+        MovieGenre movieGenre = new MovieGenre() {
+            {
+                setGenre(new Genre() { {
+                    setGenreID(rs.getInt("ggenreID"));
+                    setName(rs.getString("gname"));
+                }});
+            }  
+        };
+        return movieGenre;
+    }
+    
+    private Production loadProduction(ResultSet rs) throws Exception{
+        Production production = new Production() {
+            {
+                setProductionCompany(new ProductionCompany() { {
+                    setProductionCompanyID(rs.getInt("pcID"));
+                    setName(rs.getString("pcname"));
+                }});
+            }  
+        };
+        return production;
+    }
+    
+    private void loadAssociationClasses(Connection connection, Movie movie) throws Exception{
+        //LOAD ROLES
+        String sqlRoles = "SELECT * FROM movie m JOIN role r ON (m.movieID = r.movieID) "
+                + "JOIN actor a ON (r.actorID = a.actorID)"
+                + "WHERE r.movieID = " + movie.getMovieID();
+        Statement statementRoles = connection.createStatement();
+        ResultSet rsRoles = statementRoles.executeQuery(sqlRoles);
+
+        while(rsRoles.next()) {
+            Role role = loadRole(rsRoles);
+
+            role.setMovie(movie);
+            movie.getRoles().add(role);
+        }
+
+        //LOAD MOVIE GENRES
+        String sqlMovieGenres = "SELECT g.name as gname, g.genreID as ggenreID FROM movie m JOIN movie_genre mg ON (m.movieID = mg.movieID) "
+                + "JOIN genre g ON (mg.genreID = g.genreID)"
+                + "WHERE mg.movieID = " + movie.getMovieID();
+        Statement statementMovieGenres = connection.createStatement();
+        ResultSet rsMovieGenres = statementMovieGenres.executeQuery(sqlMovieGenres);
+
+        while(rsMovieGenres.next()) {
+            MovieGenre movieGenre = loadMovieGenre(rsMovieGenres);
+
+            movieGenre.setMovie(movie);
+            movie.getMovieGenres().add(movieGenre);
+        }
+        //LOAD PRODUCTIONS
+        String sqlProductions = "SELECT pc.name as pcname, pc.pcID FROM movie m "
+                + "JOIN production p ON (m.movieID = p.movieID) "
+                + "JOIN productioncompany pc ON (pc.pcID = p.productioncompanyID)"
+                + "WHERE p.movieID = " + movie.getMovieID();
+        Statement statementProductions = connection.createStatement();
+        ResultSet rsProductions = statementProductions.executeQuery(sqlProductions);
+
+        while(rsProductions.next()) {
+            Production production = loadProduction(rsProductions);
+
+            production.setMovie(movie);
+            movie.getProductions().add(production);
+        }
+    }
 }

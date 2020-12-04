@@ -105,13 +105,14 @@ public class DbDirectorRepository implements DbRepository<Director>{
         }
     }
 
+
     @Override
-    public Director select(Director obj) throws Exception {
+    public void deleteAll() throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void deleteAll() throws Exception {
+    public List<Director> select(String criteria) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

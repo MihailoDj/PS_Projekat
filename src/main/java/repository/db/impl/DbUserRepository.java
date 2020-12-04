@@ -73,27 +73,8 @@ public class DbUserRepository implements DbRepository<User>{
     }
 
     @Override
-    public User select(User user) throws Exception {
-        try {
-            Connection connection = DbConnectionFactory.getInstance().getConnection();
-            
-            String sql = "SELECT * FROM user WHERE username=\"" + user.getUsername() +"\";";
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            User u = new User();
-            
-            while(rs.next()) {
-                u.setUserID(rs.getInt("userID"));
-                u.setUsername(rs.getString("username"));
-                u.setPassword(rs.getString("password"));
-                u.setAdmin(rs.getBoolean("admin"));
-            }
-            
-            return u;
-        } catch (SQLException ex) {
-            Logger.getLogger(DbUserRepository.class.getName()).log(Level.SEVERE, null, ex);
-            throw new Exception("Connection error!");
-        }
+    public List<User> select(String user) throws Exception {
+        return null;
     }
     
 }

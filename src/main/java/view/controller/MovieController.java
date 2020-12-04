@@ -206,7 +206,7 @@ public class MovieController {
                 
                 movie.getMovieGenres().add(movieGenre);
                 fillTblMovieGenres(movie.getMovieGenres());
-                frmMovie.getBtnRemoveAllMovieGenres();
+                frmMovie.getBtnRemoveAllMovieGenres().setEnabled(true);
             }
         });
         frmMovie.addBtnRemoveGenreActionListener(new ActionListener() {

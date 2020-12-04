@@ -44,7 +44,7 @@ public class DbGenreRepository implements DbRepository{
     }
 
     @Override
-    public Object select(Object obj) throws Exception {
+    public List<Genre> select(String obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

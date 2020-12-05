@@ -6,6 +6,7 @@
 package view.form;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -43,7 +44,6 @@ public class FrmViewMovies extends javax.swing.JDialog {
         btnDeleteMovie = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
-        btnSearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -83,8 +83,6 @@ public class FrmViewMovies extends javax.swing.JDialog {
 
         jLabel1.setText("Filter:");
 
-        btnSearch.setText("Search");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,8 +94,6 @@ public class FrmViewMovies extends javax.swing.JDialog {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSearch)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
@@ -114,8 +110,7 @@ public class FrmViewMovies extends javax.swing.JDialog {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch))
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -138,7 +133,6 @@ public class FrmViewMovies extends javax.swing.JDialog {
     private javax.swing.JButton btnAddMovie;
     private javax.swing.JButton btnDeleteMovie;
     private javax.swing.JButton btnDetails;
-    private javax.swing.JButton btnSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblMovies;
@@ -177,16 +171,12 @@ public class FrmViewMovies extends javax.swing.JDialog {
         tblMovies.getSelectionModel().addListSelectionListener(listSelectionListener);
     }
     
-    public void getBtnSearchAddActionListener(ActionListener actionListener) {
-        btnSearch.addActionListener(actionListener);
-    }
-    
     public JTextField getTxtSearch() {
         return txtSearch;
     }
     
-    public JButton getBtnSearch() {
-        return btnSearch;
+    public void filterKeyPressed(KeyListener keyListener) {
+        txtSearch.addKeyListener(keyListener);
     }
     
     /*

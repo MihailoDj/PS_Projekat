@@ -11,21 +11,33 @@ import domain.Director;
 import domain.Genre;
 import domain.Movie;
 import domain.MovieGenre;
+import domain.MoviePoster;
 import domain.Production;
 import domain.ProductionCompany;
 import domain.Role;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableColumnModel;
 import view.constant.Constants;
 import view.coordinator.MainCoordinator;
@@ -72,19 +84,17 @@ public class MovieController {
                     List<MovieGenre> movieGenres = ((MovieGenreTableModel)frmMovie.getTblMovieGenre().getModel()).getAll();
                     List<Production> productions = ((ProductionTableModel)frmMovie.getTblProduction().getModel()).getAll();
                     
-                    Movie movie = new Movie() {
-                        {
-                            setMovieID(0);
-                            setName(frmMovie.getTxtName().getText().trim());
-                            setDescription(frmMovie.getTxtDescription().getText().trim());
-                            setScore(Double.parseDouble(frmMovie.getTxtScore().getText()));
-                            setDirector((Director) frmMovie.getCbDirector().getSelectedItem());
-                            setReleaseDate(frmMovie.getReleaseDate().getDate());
-                            setRoles(roles);
-                            setMovieGenres(movieGenres);
-                            setProductions(productions);
-                        }
-                    };
+                    
+                    movie.setMovieID(0);
+                    movie.setName(frmMovie.getTxtName().getText().trim());
+                    movie.setDescription(frmMovie.getTxtDescription().getText().trim());
+                    movie.setScore(Double.parseDouble(frmMovie.getTxtScore().getText()));
+                    movie.setDirector((Director) frmMovie.getCbDirector().getSelectedItem());
+                    movie.setReleaseDate(frmMovie.getReleaseDate().getDate());
+                    movie.setRoles(roles);
+                    movie.setMovieGenres(movieGenres);
+                    movie.setProductions(productions);
+
                     
                     Controller.getInstance().insertMovie(movie);
                     JOptionPane.showMessageDialog(frmMovie, "Movie successfully saved!");
@@ -125,7 +135,6 @@ public class MovieController {
                         "Delete movie", JOptionPane.YES_NO_OPTION);
                 
                 if (check == JOptionPane.YES_OPTION) {
-                    Movie movie = makeMovieFromForm();
                     try {
                         Controller.getInstance().deleteMovie(movie);
                         JOptionPane.showMessageDialog(frmMovie, "Movie deleted successfully!\n", "Delete movie", JOptionPane.INFORMATION_MESSAGE);
@@ -289,6 +298,39 @@ public class MovieController {
                 }
             }
         });
+        frmMovie.addBtnUploadPosterActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser chooser = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg");
+                
+                chooser.setFileFilter(filter);
+                chooser.setDialogTitle("Upload image");
+                chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                
+                int returnValue = chooser.showOpenDialog(frmMovie);
+                
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    File poster = chooser.getSelectedFile();
+                    BufferedImage bi;
+                    try {
+                        bi = ImageIO.read(poster);
+                        frmMovie.getLblPoster().setIcon(new ImageIcon(bi.getScaledInstance(frmMovie.getLblPoster().getWidth(),
+                                frmMovie.getLblPoster().getHeight(), Image.SCALE_SMOOTH)));
+                        
+                        movie.setMoviePoster(new MoviePoster() {
+                            {
+                                setMoviePosterID(0);
+                                setPosterImage(bi);
+                            }
+                        });
+                        
+                    } catch(IOException ex) {
+                       ex.printStackTrace();
+                    }
+                }
+            }
+        });
     }
     
     private void addListSelectionListener() {
@@ -349,6 +391,7 @@ public class MovieController {
                 frmMovie.getBtnUpdate().setEnabled(false);
                 frmMovie.getBtnEnableChanges().setEnabled(false);
                 frmMovie.getBtnAdd().setEnabled(true);
+                frmMovie.getBtnUploadPoster().setEnabled(true);
 
                 frmMovie.getTxtMovieID().setEditable(false);
                 frmMovie.getTxtName().setEditable(true);
@@ -384,7 +427,7 @@ public class MovieController {
                 frmMovie.getBtnUpdate().setEnabled(false);
                 frmMovie.getBtnEnableChanges().setEnabled(true);
                 frmMovie.getBtnAdd().setEnabled(false);
-                
+                frmMovie.getBtnUploadPoster().setEnabled(false);
                 
                 frmMovie.getTxtMovieID().setEditable(false);
                 frmMovie.getTxtName().setEditable(false);
@@ -403,6 +446,10 @@ public class MovieController {
                 frmMovie.getBtnRemoveAllRoles().setEnabled(false);
                 frmMovie.getBtnRemoveAllMovieGenres().setEnabled(false);
                 frmMovie.getBtnRemoveAllProductions().setEnabled(false);
+                
+                frmMovie.getLblPoster().setIcon(new ImageIcon(
+                        movie.getMoviePoster().getPosterImage().getScaledInstance(frmMovie.getLblPoster().getWidth(),
+                                frmMovie.getLblPoster().getHeight(), Image.SCALE_SMOOTH)));
                 break;
             case FORM_EDIT:
                 frmMovie.getBtnCancel().setEnabled(true);
@@ -432,6 +479,8 @@ public class MovieController {
                 frmMovie.getBtnRemoveAllRoles().setEnabled(true);
                 frmMovie.getBtnRemoveAllMovieGenres().setEnabled(true);
                 frmMovie.getBtnRemoveAllProductions().setEnabled(true);
+                
+                frmMovie.getBtnUploadPoster().setEnabled(true);
                 break;
         }
     }
@@ -449,6 +498,20 @@ public class MovieController {
                 setRoles(((RoleTableModel)frmMovie.getTblRoles().getModel()).getAll());
                 setMovieGenres(((MovieGenreTableModel)frmMovie.getTblMovieGenre().getModel()).getAll());
                 setProductions(((ProductionTableModel)frmMovie.getTblProduction().getModel()).getAll());
+                
+                setMoviePoster(new MoviePoster() {
+                    {
+                        Icon icon = frmMovie.getLblPoster().getIcon();
+                        BufferedImage image = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_RGB);
+                        Graphics g = image.createGraphics();
+                        icon.paintIcon(null, g, 0, 0);
+                        g.dispose();
+                        
+                        setMoviePosterID(0);
+                        setPosterImage(image);
+                    }
+                });
+                
             }
         };
         

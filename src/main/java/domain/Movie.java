@@ -25,12 +25,14 @@ public class Movie {
     private List<Role> roles;
     private List<MovieGenre> movieGenres;
     private List<Production> productions;
+    private MoviePoster moviePoster;
     
     
     public Movie() {
         this.roles = new ArrayList<Role>();
         this.movieGenres = new ArrayList<MovieGenre>();
         this.productions = new ArrayList<Production>();
+        this.moviePoster = new MoviePoster();
     }
 
     public Movie(int movieID, String name, LocalDate releaseDate, String description, double score, Director director) {
@@ -43,6 +45,7 @@ public class Movie {
         this.roles = new ArrayList<Role>();
         this.movieGenres = new ArrayList<MovieGenre>();
         this.productions = new ArrayList<Production>();
+        this.moviePoster = new MoviePoster();
     }
     
     public int getMovieID() {
@@ -117,7 +120,13 @@ public class Movie {
         this.productions = productions;
     }
     
+    public MoviePoster getMoviePoster() {
+        return moviePoster;
+    }
     
+    public void setMoviePoster(MoviePoster moviePoster) {
+        this.moviePoster = moviePoster;
+    }
 
     @Override
     public int hashCode() {

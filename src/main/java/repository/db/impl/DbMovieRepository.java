@@ -10,9 +10,18 @@ import domain.Director;
 import domain.Genre;
 import domain.Movie;
 import domain.MovieGenre;
+import domain.MoviePoster;
 import domain.Production;
 import domain.ProductionCompany;
 import domain.Role;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import repository.db.DbConnectionFactory;
 import repository.db.DbRepository;
 
@@ -38,11 +48,13 @@ public class DbMovieRepository implements DbRepository<Movie>{
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             List<Movie> movies = new ArrayList<Movie>();
             
-            String sql = "SELECT * FROM movie m JOIN director d ON (m.directorID = d.directorID)";
+            String sql = "SELECT * FROM movie m JOIN director d ON (m.directorID = d.directorID) JOIN "
+                    + "movieposter mp ON (m.movieposterID = mp.movieposterID)";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             
             while(rs.next()) {
+                
                 Movie movie = loadMovie(rs);
                 
                 loadAssociationClasses(connection, movie);
@@ -65,9 +77,33 @@ public class DbMovieRepository implements DbRepository<Movie>{
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             
-            //INSERT MOVIE
-            String sql = "INSERT INTO movie (movieID, name, releasedate, score, description, directorid) VALUES(?, ?, ?, ?, ?, ?)";
+            //INSERT MOVIE POSTER
+            String sql = "INSERT INTO movieposter (movieposterID, posterimage) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            
+            statement.setInt(1, movie.getMoviePoster().getMoviePosterID());
+            
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(movie.getMoviePoster().getPosterImage(), "jpg", baos);
+            InputStream imageStream = new ByteArrayInputStream(baos.toByteArray());
+            
+            statement.setBlob(2, imageStream);
+            statement.executeUpdate();
+            
+            //////////GET MOVIE POSTER ID///////////
+            
+            ResultSet rsKey = statement.getGeneratedKeys();
+            
+            if (rsKey.next()) {
+                int movieposterID = rsKey.getInt(1);
+                movie.getMoviePoster().setMoviePosterID(movieposterID);
+            }
+            //////////////////////////////////////////
+            
+            //INSERT MOVIE
+            sql = "INSERT INTO movie (movieID, name, releasedate, score, description, directorid, movieposterID) "
+                    + "VALUES(?, ?, ?, ?, ?, ?, ?)";
+            statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             
             statement.setInt(1, movie.getMovieID());
             statement.setString(2, movie.getName());
@@ -75,9 +111,10 @@ public class DbMovieRepository implements DbRepository<Movie>{
             statement.setDouble(4, movie.getScore());
             statement.setString(5, movie.getDescription());
             statement.setInt(6, movie.getDirector().getDirectorID());
+            statement.setInt(7, movie.getMoviePoster().getMoviePosterID());
             
             statement.executeUpdate();
-            ResultSet rsKey = statement.getGeneratedKeys();
+            rsKey = statement.getGeneratedKeys();
             
             if (rsKey.next()) {
                 int id = rsKey.getInt(1);
@@ -131,6 +168,10 @@ public class DbMovieRepository implements DbRepository<Movie>{
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.executeUpdate();
         
+        sql = "DELETE FROM movieposter WHERE movieposterID = " + movie.getMoviePoster().getMoviePosterID();
+        statement = connection.prepareStatement(sql);
+        statement.executeUpdate();
+        
         statement.close();
     }
 
@@ -139,10 +180,28 @@ public class DbMovieRepository implements DbRepository<Movie>{
         try {
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             
+            //INSERT NEW POSTER
+            String sql = "INSERT INTO movieposter (movieposterID, posterimage) VALUES (?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, movie.getMoviePoster().getMoviePosterID());
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(movie.getMoviePoster().getPosterImage(), "jpg", baos);
+            InputStream imageStream = new ByteArrayInputStream(baos.toByteArray());
+            
+            statement.setBlob(2, imageStream);
+            statement.executeUpdate();
+            ResultSet rsKey = statement.getGeneratedKeys();
+            
+            int movieposterID = 0;
+            
+            if (rsKey.next()) {
+                movieposterID = rsKey.getInt(1);
+            }
+            
             //UPDATE BASIC MOVIE INFO
-            String sql = "UPDATE movie SET movieID=?, name=?, releasedate=?, score=?, description=?, directorID=? "
-                    + "WHERE movieID=" + movie.getMovieID();
-            PreparedStatement statement = connection.prepareStatement(sql);
+            sql = "UPDATE movie SET movieID=?, name=?, releasedate=?, score=?, description=?, directorID=?,"
+                    + " movieposterID=? WHERE movieID=" + movie.getMovieID();
+            statement = connection.prepareStatement(sql);
             
             statement.setInt(1, movie.getMovieID());
             statement.setString(2, movie.getName());
@@ -150,7 +209,13 @@ public class DbMovieRepository implements DbRepository<Movie>{
             statement.setDouble(4, movie.getScore());
             statement.setString(5, movie.getDescription());
             statement.setInt(6, movie.getDirector().getDirectorID());
+            statement.setInt(7, movieposterID);
             
+            statement.executeUpdate();
+            
+            //REMOVE OLD POSTER
+            sql = "DELETE FROM movieposter WHERE movieposterID not in (SELECT movieposterID FROM movie)";
+            statement = connection.prepareStatement(sql);
             statement.executeUpdate();
             
             //REMOVE ROLES RELATED TO MOVIE
@@ -245,6 +310,12 @@ public class DbMovieRepository implements DbRepository<Movie>{
                         setFirstName(rs.getString("firstname"));
                         setLastName(rs.getString("lastname"));
                         setDateOfBirth(rs.getObject("dateofbirth", LocalDate.class));
+                    }
+                });
+                setMoviePoster(new MoviePoster() {
+                    {
+                        setMoviePosterID(rs.getInt("movieposterID"));
+                        setPosterImage(ImageIO.read(rs.getBlob("posterimage").getBinaryStream()));
                     }
                 });
             }

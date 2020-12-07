@@ -106,7 +106,12 @@ public class LoginController {
             frmLogin.dispose();
 
             MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, user);
-            MainCoordinator.getInstance().openMainForm();
+            if(user.isAdmin())
+                MainCoordinator.getInstance().openMainForm();
+            else
+                MainCoordinator.getInstance().openUserMainForm();
+            
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(frmLogin, e.getMessage(), "Login error", JOptionPane.ERROR_MESSAGE);
         }

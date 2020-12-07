@@ -13,6 +13,7 @@ import view.controller.LoginController;
 import view.controller.MainController;
 import view.controller.MovieController;
 import view.controller.RegisterController;
+import view.controller.UserMainController;
 import view.controller.ViewAllActorsController;
 import view.controller.ViewAllDirectorsController;
 import view.controller.ViewAllMoviesController;
@@ -22,6 +23,7 @@ import view.form.FrmLogin;
 import view.form.FrmMain;
 import view.form.FrmMovie;
 import view.form.FrmRegister;
+import view.form.FrmUserMain;
 import view.form.FrmViewActors;
 import view.form.FrmViewDirectors;
 import view.form.FrmViewMovies;
@@ -34,10 +36,12 @@ import view.form.util.FormMode;
 public class MainCoordinator {
     private static MainCoordinator instance;
     private final MainController mainController;
+    private final UserMainController userMainController;
     private final Map<String, Object> params;
     
     private MainCoordinator() {
         mainController = new MainController(new FrmMain());
+        userMainController = new UserMainController(new FrmUserMain());
         params = new HashMap<>();
     }
     
@@ -60,6 +64,10 @@ public class MainCoordinator {
     
     public void openMainForm() {
         mainController.openForm();
+    }
+    
+    public void openUserMainForm() {
+        userMainController.openForm();
     }
     
     public void openMovieForm() {

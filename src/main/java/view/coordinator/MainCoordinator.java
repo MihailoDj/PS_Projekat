@@ -12,6 +12,7 @@ import view.controller.DirectorController;
 import view.controller.LoginController;
 import view.controller.MainController;
 import view.controller.MovieController;
+import view.controller.RegisterController;
 import view.controller.ViewAllActorsController;
 import view.controller.ViewAllDirectorsController;
 import view.controller.ViewAllMoviesController;
@@ -20,6 +21,7 @@ import view.form.FrmDirector;
 import view.form.FrmLogin;
 import view.form.FrmMain;
 import view.form.FrmMovie;
+import view.form.FrmRegister;
 import view.form.FrmViewActors;
 import view.form.FrmViewDirectors;
 import view.form.FrmViewMovies;
@@ -49,6 +51,11 @@ public class MainCoordinator {
     public void openLoginForm() {
         LoginController loginContoller = new LoginController(new FrmLogin());
         loginContoller.openForm();
+    }
+    
+    public void openRegisterForm() {
+        RegisterController registerController = new RegisterController(new FrmRegister());
+        registerController.openForm();
     }
     
     public void openMainForm() {

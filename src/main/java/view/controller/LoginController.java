@@ -62,6 +62,12 @@ public class LoginController {
                 login();
             }
         });
+        frmLogin.registerAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainCoordinator.getInstance().openRegisterForm();
+            }
+        });
     }
     
     private void resetErrorFields() {

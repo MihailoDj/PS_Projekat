@@ -7,6 +7,7 @@ package repository.db.impl;
 
 import domain.User;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -53,8 +54,23 @@ public class DbUserRepository implements DbRepository<User>{
     }
 
     @Override
-    public void insert(User obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void insert(User user) throws Exception {
+        try {
+            Connection connection = DbConnectionFactory.getInstance().getConnection();
+            String sql = "INSERT INTO user (userID, username, password, admin) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            
+            statement.setInt(1, user.getUserID());
+            statement.setString(2, user.getUsername());
+            statement.setString(3, user.getPassword());
+            statement.setBoolean(4, user.isAdmin());
+            statement.executeUpdate();
+            
+            statement.close();
+            
+        } catch(Exception e) {
+            throw new Exception("Username taken.");
+        }
     }
 
     @Override

@@ -89,8 +89,6 @@ public class MovieTableModel extends AbstractTableModel{
                     movie.setDirector((Director) value);
                     break;
             }
-
-            Controller.getInstance().updateMovie(movie);
             
         } catch (Exception ex) {
             Logger.getLogger(MovieTableModel.class.getName()).log(Level.SEVERE, null, ex);

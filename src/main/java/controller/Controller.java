@@ -67,6 +67,21 @@ public class Controller {
         throw new Exception("User doesn't exist.");
     }
     
+    public void insertUser(User user) throws Exception{
+        ((DbRepository)userRepository).connect();
+        
+        try{
+            userRepository.insert(user);
+            ((DbRepository)userRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)userRepository).rollback();
+            throw e;
+        } finally {
+            ((DbRepository)userRepository).disconnect();
+        }
+    }
+    
     public List<Director> selectAllDirectors() throws Exception{
         List<Director> directors = null;
         

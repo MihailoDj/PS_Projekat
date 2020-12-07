@@ -38,6 +38,7 @@ public class FrmLogin extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         lblUsernameError = new javax.swing.JLabel();
         lblPasswordError = new javax.swing.JLabel();
+        btnRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -52,6 +53,8 @@ public class FrmLogin extends javax.swing.JFrame {
 
         lblPasswordError.setForeground(new java.awt.Color(255, 0, 0));
 
+        btnRegister.setText("Register");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -61,6 +64,8 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnRegister)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLogin))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,7 +95,9 @@ public class FrmLogin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblPasswordError)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(btnLogin)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLogin)
+                    .addComponent(btnRegister))
                 .addContainerGap())
         );
 
@@ -100,6 +107,7 @@ public class FrmLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnRegister;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblPasswordError;
     private javax.swing.JLabel lblUsername;
@@ -110,6 +118,10 @@ public class FrmLogin extends javax.swing.JFrame {
 
     public void loginAddActionListener(ActionListener actionListener){
         btnLogin.addActionListener(actionListener);
+    }
+    
+    public void registerAddActionListener(ActionListener actionListener) {
+        btnRegister.addActionListener(actionListener);
     }
     
     public javax.swing.JLabel getLblUsernameError() {
@@ -139,7 +151,7 @@ public class FrmLogin extends javax.swing.JFrame {
     public JLabel getLblPasswordError() {
         return lblPasswordError;
     }
-
+    
     public void setLblPasswordError(JLabel lblPasswordError) {
         this.lblPasswordError = lblPasswordError;
     }

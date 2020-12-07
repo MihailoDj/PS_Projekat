@@ -7,6 +7,7 @@ package view.coordinator;
 
 import java.util.HashMap;
 import java.util.Map;
+import view.controller.AccountSettingsController;
 import view.controller.ActorController;
 import view.controller.DirectorController;
 import view.controller.LoginController;
@@ -17,6 +18,7 @@ import view.controller.UserMainController;
 import view.controller.ViewAllActorsController;
 import view.controller.ViewAllDirectorsController;
 import view.controller.ViewAllMoviesController;
+import view.form.FrmAccountSettings;
 import view.form.FrmActor;
 import view.form.FrmDirector;
 import view.form.FrmLogin;
@@ -68,6 +70,12 @@ public class MainCoordinator {
     
     public void openUserMainForm() {
         userMainController.openForm();
+    }
+    
+    public void openAccountSettingsForm() {
+        AccountSettingsController asc = new AccountSettingsController(
+                new FrmAccountSettings(userMainController.getFrmUserMain(), true));
+        asc.openForm();
     }
     
     public void openMovieForm() {
@@ -126,6 +134,10 @@ public class MainCoordinator {
     
     public MainController getMainContoller() {
         return mainController;
+    }
+    
+    public UserMainController getUserMainController() {
+        return userMainController;
     }
 
 

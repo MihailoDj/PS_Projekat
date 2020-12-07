@@ -9,7 +9,7 @@
             <Property name="text" type="java.lang.String" value="My movies"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jmiView">
+            <MenuItem class="javax.swing.JMenuItem" name="jmiViewMyMovies">
               <Properties>
                 <Property name="text" type="java.lang.String" value="View"/>
               </Properties>
@@ -56,17 +56,17 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblCurrentUser" min="-2" pref="74" max="-2" attributes="0"/>
-              <EmptySpace pref="495" max="32767" attributes="0"/>
+              <Component id="lblCurrentUser" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="569" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-              <Component id="lblCurrentUser" min="-2" pref="12" max="-2" attributes="0"/>
-              <EmptySpace pref="313" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <Component id="lblCurrentUser" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="352" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

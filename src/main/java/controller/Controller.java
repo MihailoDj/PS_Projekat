@@ -67,11 +67,52 @@ public class Controller {
         throw new Exception("User doesn't exist.");
     }
     
+    public List<User> selectUser(String user) throws Exception{
+        List<User> users = null;
+        
+        try {
+            users = userRepository.select(user);
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        
+        return users;
+    }
+    
+    public void updateUser(User user) throws Exception{
+        ((DbRepository)userRepository).connect();
+        
+        try{
+            ((DbRepository)userRepository).update(user);
+            ((DbRepository)userRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)userRepository).rollback();
+            throw e;
+        }
+    }
+    
     public void insertUser(User user) throws Exception{
         ((DbRepository)userRepository).connect();
         
         try{
             userRepository.insert(user);
+            ((DbRepository)userRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)userRepository).rollback();
+            throw e;
+        } finally {
+            ((DbRepository)userRepository).disconnect();
+        }
+    }
+    
+    public void deleteUser(User user) throws Exception {
+        ((DbRepository)userRepository).connect();
+        
+        try{
+            userRepository.delete(user);
             ((DbRepository)userRepository).commit();
         }catch(Exception e){
             e.printStackTrace();

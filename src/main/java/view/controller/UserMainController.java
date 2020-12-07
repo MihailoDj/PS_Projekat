@@ -6,6 +6,8 @@
 package view.controller;
 
 import domain.User;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import view.constant.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmUserMain;
@@ -19,7 +21,7 @@ public class UserMainController {
 
     public UserMainController(FrmUserMain frmUserMain) {
         this.frmUserMain = frmUserMain;
-        //addActionListener();
+        addActionListener();
     }
 
     public void openForm() {
@@ -31,5 +33,18 @@ public class UserMainController {
         frmUserMain.getLblCurrentUser().setText("Current " + systemRole + ": " + user.getUsername());
         
         frmUserMain.setVisible(true);
+    }
+    
+    private void addActionListener() {
+        frmUserMain.jmiAccountSettings(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainCoordinator.getInstance().openAccountSettingsForm();
+            }
+        });
+    }
+    
+    public FrmUserMain getFrmUserMain() {
+        return frmUserMain;
     }
 }

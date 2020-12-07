@@ -5,6 +5,7 @@
  */
 package view.form;
 
+import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 
 /**
@@ -32,7 +33,7 @@ public class FrmUserMain extends javax.swing.JFrame {
         lblCurrentUser = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuMyMovies = new javax.swing.JMenu();
-        jmiView = new javax.swing.JMenuItem();
+        jmiViewMyMovies = new javax.swing.JMenuItem();
         jMenuAccount = new javax.swing.JMenu();
         jmiSettings = new javax.swing.JMenuItem();
 
@@ -40,8 +41,8 @@ public class FrmUserMain extends javax.swing.JFrame {
 
         jMenuMyMovies.setText("My movies");
 
-        jmiView.setText("View");
-        jMenuMyMovies.add(jmiView);
+        jmiViewMyMovies.setText("View");
+        jMenuMyMovies.add(jmiViewMyMovies);
 
         jMenuBar1.add(jMenuMyMovies);
 
@@ -60,15 +61,15 @@ public class FrmUserMain extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblCurrentUser, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(495, Short.MAX_VALUE))
+                .addComponent(lblCurrentUser)
+                .addContainerGap(569, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(lblCurrentUser, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(313, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addComponent(lblCurrentUser)
+                .addContainerGap(352, Short.MAX_VALUE))
         );
 
         pack();
@@ -79,11 +80,19 @@ public class FrmUserMain extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuMyMovies;
     private javax.swing.JMenuItem jmiSettings;
-    private javax.swing.JMenuItem jmiView;
+    private javax.swing.JMenuItem jmiViewMyMovies;
     private javax.swing.JLabel lblCurrentUser;
     // End of variables declaration//GEN-END:variables
 
     public JLabel getLblCurrentUser() {
         return lblCurrentUser;
+    }
+    
+    public void jmiViewMyMoviesActionListener(ActionListener actionListener) {
+        jmiViewMyMovies.addActionListener(actionListener);
+    }
+    
+    public void jmiAccountSettings(ActionListener actionListener) {
+        jmiSettings.addActionListener(actionListener);
     }
 }

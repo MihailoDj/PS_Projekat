@@ -74,23 +74,62 @@ public class DbUserRepository implements DbRepository<User>{
     }
 
     @Override
-    public void delete(User obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(User user) throws Exception {
+        Connection connection = DbConnectionFactory.getInstance().getConnection();
+        String sql = "DELETE FROM user WHERE userID=" + user.getUserID();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.executeUpdate();
     }
 
     @Override
     public void deleteAll() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
-    public void update(User obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(User user) throws Exception {
+        try {
+            Connection connection = DbConnectionFactory.getInstance().getConnection();
+            String sql = "UPDATE user SET username=?, password=? WHERE userID=" + user.getUserID();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getPassword());
+            statement.executeUpdate();
+            
+            statement.close();
+        } catch(Exception e) {
+            throw new Exception("Unable to update user!");
+        }
     }
 
     @Override
     public List<User> select(String user) throws Exception {
-        return null;
+        try {
+            Connection connection = DbConnectionFactory.getInstance().getConnection();
+            List<User> users = new ArrayList<User>();
+            
+            String sql = "SELECT * FROM user WHERE username=\"" + user + "\"";
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            
+            while (rs.next()) {
+                User u = new User() {
+                    {
+                        setUserID(rs.getInt("userID"));
+                        setUsername(rs.getString("username"));
+                        setPassword(rs.getString("password"));
+                        setAdmin(rs.getBoolean("admin"));
+                    }
+                };
+                users.add(u);
+            }
+            
+            return users;
+        } catch (SQLException ex) {
+            Logger.getLogger(DbUserRepository.class.getName()).log(Level.SEVERE, null, ex);
+            throw new Exception("Connection error!");
+        }
     }
     
 }

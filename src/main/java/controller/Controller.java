@@ -12,6 +12,7 @@ import domain.User;
 import domain.Director;
 import domain.Genre;
 import domain.ProductionCompany;
+import domain.UserMovieCollection;
 import repository.Repository;
 import repository.db.DbRepository;
 import repository.db.impl.DbActorRepository;
@@ -19,6 +20,7 @@ import repository.db.impl.DbDirectorRepository;
 import repository.db.impl.DbGenreRepository;
 import repository.db.impl.DbMovieRepository;
 import repository.db.impl.DbProductionCompanyRepository;
+import repository.db.impl.DbUserMovieCollectionRepository;
 import repository.db.impl.DbUserRepository;
 
 /**
@@ -32,6 +34,7 @@ public class Controller {
     private final Repository actorRepository;
     private final Repository genreRepository;
     private final Repository productionCompanyRepository;
+    private final Repository collectionRepository;
     
     private static Controller controller;
 
@@ -42,6 +45,7 @@ public class Controller {
         actorRepository = new DbActorRepository();
         genreRepository = new DbGenreRepository();
         productionCompanyRepository = new DbProductionCompanyRepository();
+        collectionRepository = new DbUserMovieCollectionRepository();
     }
     
     public static Controller getInstance() {
@@ -327,6 +331,21 @@ public class Controller {
             e.printStackTrace();
             ((DbRepository)actorRepository).rollback();
             throw e;
+        }
+    }
+    
+    public void insertCollection(UserMovieCollection collection) throws Exception{
+        ((DbRepository)collectionRepository).connect();
+        
+        try{
+            collectionRepository.insert(collection);
+            ((DbRepository)collectionRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)collectionRepository).rollback();
+            throw e;
+        } finally {
+            ((DbRepository)collectionRepository).disconnect();
         }
     }
 }

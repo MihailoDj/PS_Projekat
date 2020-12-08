@@ -10,10 +10,12 @@ import controller.Controller;
 import domain.Director;
 import domain.Movie;
 import domain.User;
+import domain.UserMovieCollection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -83,11 +85,40 @@ public class UserMainController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    validateSearchField();
+                    
                     String searchParam = frmUserMain.getTxtSearch().getText().trim();
                     List<Movie> movies = Controller.getInstance().selectMovies(searchParam);
                     fillTblMovies(movies);
                 } catch (Exception ex) {
                     Logger.getLogger(UserMainController.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(frmUserMain, ex.getMessage(), 
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        frmUserMain.btnSaveActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int selectedRow = frmUserMain.getTblMovies().getSelectedRow();
+                    Movie movie = ((MovieTableModel)frmUserMain.getTblMovies().getModel()).getMovieAt(selectedRow);
+                    User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
+                    
+                    UserMovieCollection collection = new UserMovieCollection(){
+                        {
+                            setMovie(movie);
+                            setUser(user);
+                        }
+                    };
+                    Controller.getInstance().insertCollection(collection);
+                    JOptionPane.showMessageDialog(frmUserMain, "Movie successfully saved to collection!", 
+                            "Success", JOptionPane.INFORMATION_MESSAGE);
+                
+                } catch (Exception ex) {
+                    Logger.getLogger(UserMainController.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(frmUserMain, "Unable to save movie to collection!", 
+                            "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -128,6 +159,12 @@ public class UserMainController {
         tcm.getColumn(3).setPreferredWidth(75);
         tcm.getColumn(4).setPreferredWidth(15);
         tcm.getColumn(5).setPreferredWidth(100);
+    }
+    
+    private void validateSearchField() throws Exception{
+        if(frmUserMain.getTxtSearch().getText().trim().isEmpty()) {
+            throw new Exception("Search field can't be empty!");
+        }
     }
     
     public FrmUserMain getFrmUserMain() {

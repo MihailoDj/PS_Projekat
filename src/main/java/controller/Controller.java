@@ -12,6 +12,7 @@ import domain.User;
 import domain.Director;
 import domain.Genre;
 import domain.ProductionCompany;
+import domain.Review;
 import domain.UserMovieCollection;
 import repository.Repository;
 import repository.db.DbRepository;
@@ -20,6 +21,7 @@ import repository.db.impl.DbDirectorRepository;
 import repository.db.impl.DbGenreRepository;
 import repository.db.impl.DbMovieRepository;
 import repository.db.impl.DbProductionCompanyRepository;
+import repository.db.impl.DbReviewRepository;
 import repository.db.impl.DbUserMovieCollectionRepository;
 import repository.db.impl.DbUserRepository;
 
@@ -35,6 +37,7 @@ public class Controller {
     private final Repository genreRepository;
     private final Repository productionCompanyRepository;
     private final Repository collectionRepository;
+    private final Repository reviewRepository;
     
     private static Controller controller;
 
@@ -46,6 +49,7 @@ public class Controller {
         genreRepository = new DbGenreRepository();
         productionCompanyRepository = new DbProductionCompanyRepository();
         collectionRepository = new DbUserMovieCollectionRepository();
+        reviewRepository = new DbReviewRepository();
     }
     
     public static Controller getInstance() {
@@ -346,6 +350,49 @@ public class Controller {
             throw e;
         } finally {
             ((DbRepository)collectionRepository).disconnect();
+        }
+    }
+    
+    public List<UserMovieCollection> selectAllCollections() throws Exception{
+        List<UserMovieCollection> collection = null;
+        
+        try {
+            collection = collectionRepository.selectAll();
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        
+        return collection;
+    }
+    
+    public void deleteCollection(UserMovieCollection collection) throws Exception{
+        ((DbRepository)collectionRepository).connect();
+        
+        try{
+            collectionRepository.delete(collection);
+            ((DbRepository)collectionRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)collectionRepository).rollback();
+            throw e;
+        } finally {
+            ((DbRepository)collectionRepository).disconnect();
+        }
+    }
+    
+    public void insertReview(Review review) throws Exception{
+        ((DbRepository)reviewRepository).connect();
+        
+        try{
+            reviewRepository.insert(review);
+            ((DbRepository)reviewRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)reviewRepository).rollback();
+            throw e;
+        } finally {
+            ((DbRepository)reviewRepository).disconnect();
         }
     }
 }

@@ -81,6 +81,12 @@ public class UserMainController {
                 MainCoordinator.getInstance().openAccountSettingsForm();
             }
         });
+        frmUserMain.jmiViewMyMoviesActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainCoordinator.getInstance().openViewAllMoviesForm();
+            }
+        });
         frmUserMain.btnSearchActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -14,6 +14,7 @@ import view.controller.LoginController;
 import view.controller.MainController;
 import view.controller.MovieController;
 import view.controller.RegisterController;
+import view.controller.ReviewController;
 import view.controller.UserMainController;
 import view.controller.ViewAllActorsController;
 import view.controller.ViewAllDirectorsController;
@@ -25,6 +26,7 @@ import view.form.FrmLogin;
 import view.form.FrmMain;
 import view.form.FrmMovie;
 import view.form.FrmRegister;
+import view.form.FrmReview;
 import view.form.FrmUserMain;
 import view.form.FrmViewActors;
 import view.form.FrmViewDirectors;
@@ -76,6 +78,11 @@ public class MainCoordinator {
         AccountSettingsController asc = new AccountSettingsController(
                 new FrmAccountSettings(userMainController.getFrmUserMain(), true));
         asc.openForm();
+    }
+    
+    public void openReviewForm() {
+        ReviewController reviewController = new ReviewController(new FrmReview(null, true));
+        reviewController.openForm();
     }
     
     public void openMovieForm() {

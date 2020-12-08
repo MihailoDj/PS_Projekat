@@ -78,6 +78,11 @@ public class Review {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Review{" + "reviewID=" + reviewID + ", reviewText=" + reviewText + ", reviewScore=" + reviewScore + ", reviewDate=" + reviewDate + ", movie=" + movie + ", user=" + user + '}';
+    }
     
     
 }

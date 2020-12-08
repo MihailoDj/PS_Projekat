@@ -9,17 +9,22 @@ import com.github.lgooddatepicker.tableeditors.DateTableEditor;
 import controller.Controller;
 import domain.Director;
 import domain.Movie;
+import domain.User;
+import domain.UserMovieCollection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -44,6 +49,8 @@ public class ViewAllMoviesController {
 
     public ViewAllMoviesController(FrmViewMovies frmViewMovies) {
         this.frmViewMovies = frmViewMovies;
+        fillTblMovies();
+        prepareButtons();
         addActionListener();
         addListSelectionListener();
         addKeyListener();
@@ -120,6 +127,14 @@ public class ViewAllMoviesController {
     }
     
     private void addActionListener() {
+        User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
+        
+        frmViewMovies.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {
+                fillTblMovies();
+            }
+        });
         frmViewMovies.getBtnDetailsAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -135,17 +150,18 @@ public class ViewAllMoviesController {
             }
         });
         
-        frmViewMovies.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowActivated(WindowEvent e) {
-                fillTblMovies();
-            }
-        });
-        
         frmViewMovies.getBtnAddMovieAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainCoordinator.getInstance().openMovieForm();
+                if(user.isAdmin()) {
+                    MainCoordinator.getInstance().openMovieForm();
+                } else {
+                    int selectedRow = frmViewMovies.getTblMovies().getSelectedRow();
+                    Movie movie = ((MovieTableModel)frmViewMovies.getTblMovies().getModel()).getMovieAt(selectedRow);
+                    MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, movie);
+                    MainCoordinator.getInstance().openReviewForm();
+                }
+                
             }
         });
         
@@ -161,8 +177,20 @@ public class ViewAllMoviesController {
                         
                         if (check == JOptionPane.YES_OPTION) {
                             Movie movie = ((MovieTableModel) frmViewMovies.getTblMovies().getModel()).getMovieAt(row);
-                            MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, null);
-                            Controller.getInstance().deleteMovie(movie);
+                            
+                            if (user.isAdmin()) {
+                                MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, null);
+                                Controller.getInstance().deleteMovie(movie);
+                            } else {
+                                UserMovieCollection umc = new UserMovieCollection(){
+                                    {
+                                        setMovie(movie);
+                                        setUser(user);
+                                    }
+                                };
+                                Controller.getInstance().deleteCollection(umc);
+                            }
+                            
                             JOptionPane.showMessageDialog(frmViewMovies, "Movie successfully deleted", 
                                 "Success", JOptionPane.INFORMATION_MESSAGE);
                         }
@@ -189,19 +217,26 @@ public class ViewAllMoviesController {
     }
 
     private void fillTblMovies() {
-        List<Movie> movies;
-        
+        User user = ((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
+        List<Movie> movies = new ArrayList<>();
         
         try {
-            movies = Controller.getInstance().selectAllMovies();
+            if(!user.isAdmin()) {
+                for(UserMovieCollection umc : Controller.getInstance().selectAllCollections()) {
+                    if(umc.getUser().getUserID() == user.getUserID()) {
+                        movies.add(umc.getMovie());
+                    }
+                }
+            } else {
+                movies = Controller.getInstance().selectAllMovies();
+            }
             MovieTableModel mtm = new MovieTableModel(movies);
             frmViewMovies.getTblMovies().setModel(mtm);
-            
+
             setUpTableColumns();
-            
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(frmViewMovies, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(ViewAllMoviesController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(frmViewMovies, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(ViewAllMoviesController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     
@@ -244,5 +279,17 @@ public class ViewAllMoviesController {
         frmViewMovies.getTblMovies().setRowSorter(trs);
         
         trs.setRowFilter(RowFilter.regexFilter("(?i)" + filter));
+    }
+
+    private void prepareButtons() {
+        User user = ((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
+        
+        if(!user.isAdmin()) {
+            frmViewMovies.getBtnAddMovie().setText("Review");
+            frmViewMovies.getBtnDeleteMovie().setText("Remove");
+                    
+            frmViewMovies.repaint();
+            frmViewMovies.revalidate();
+        }
     }
 }

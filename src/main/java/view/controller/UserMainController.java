@@ -5,12 +5,30 @@
  */
 package view.controller;
 
+import com.github.lgooddatepicker.tableeditors.DateTableEditor;
+import controller.Controller;
+import domain.Director;
+import domain.Movie;
 import domain.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import view.constant.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmUserMain;
+import view.form.component.table.MovieTableModel;
 
 /**
  *
@@ -22,6 +40,7 @@ public class UserMainController {
     public UserMainController(FrmUserMain frmUserMain) {
         this.frmUserMain = frmUserMain;
         addActionListener();
+        addListSelectionListener();
     }
 
     public void openForm() {
@@ -35,13 +54,80 @@ public class UserMainController {
         frmUserMain.setVisible(true);
     }
     
+    private void addListSelectionListener() {
+        frmUserMain.tblMoviesAddListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (frmUserMain.getTblMovies().getSelectedRow() != -1)
+                    frmUserMain.getBtnSave().setEnabled(true);
+                else
+                    frmUserMain.getBtnSave().setEnabled(false);
+            }
+        });
+    }
+    
     private void addActionListener() {
+        frmUserMain.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {
+                fillTblMovies(new ArrayList<>());
+            }
+        });
         frmUserMain.jmiAccountSettings(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainCoordinator.getInstance().openAccountSettingsForm();
             }
         });
+        frmUserMain.btnSearchActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String searchParam = frmUserMain.getTxtSearch().getText().trim();
+                    List<Movie> movies = Controller.getInstance().selectMovies(searchParam);
+                    fillTblMovies(movies);
+                } catch (Exception ex) {
+                    Logger.getLogger(UserMainController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
+    
+    private void fillTblMovies(List<Movie> movies) {
+        try {
+            MovieTableModel mtm = new MovieTableModel(movies);
+            frmUserMain.getTblMovies().setModel(mtm);
+            
+            setUpTableColumns();
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frmUserMain, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(UserMainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void setUpTableColumns() throws Exception {
+        List<Director> directors = Controller.getInstance().selectAllDirectors();
+        JComboBox cbDirector = new JComboBox(directors.toArray());
+
+        TableColumnModel tcm = frmUserMain.getTblMovies().getColumnModel();
+        TableColumn tcDirector = tcm.getColumn(5);
+        tcDirector.setCellEditor(new DefaultCellEditor(cbDirector));
+
+        TableColumn tcReleaseDate = tcm.getColumn(2);
+        tcReleaseDate.setCellEditor(new DateTableEditor());
+        tcReleaseDate.setCellRenderer(new DateTableEditor());
+
+        frmUserMain.getTblMovies().setAutoCreateRowSorter(true);
+        frmUserMain.getTblMovies().getTableHeader().setResizingAllowed(false);
+
+        frmUserMain.getTblMovies().setRowHeight(30);
+        tcm.getColumn(0).setPreferredWidth(15);
+        tcm.getColumn(1).setPreferredWidth(100);
+        tcm.getColumn(2).setPreferredWidth(100);
+        tcm.getColumn(3).setPreferredWidth(75);
+        tcm.getColumn(4).setPreferredWidth(15);
+        tcm.getColumn(5).setPreferredWidth(100);
     }
     
     public FrmUserMain getFrmUserMain() {

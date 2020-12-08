@@ -52,7 +52,7 @@ public class DbMovieRepository implements DbRepository<Movie>{
                 
                 Movie movie = loadMovie(rs);
                 
-                loadAssociationClasses(connection, movie);
+                loadAssociationClasses(movie);
                 
                 movies.add(movie);
             }
@@ -267,6 +267,7 @@ public class DbMovieRepository implements DbRepository<Movie>{
             List<Movie> movies = new ArrayList<>();
             Connection connection = DbConnectionFactory.getInstance().getConnection();
             String sql = "SELECT * FROM movie m JOIN director d ON (m.directorID = d.directorID)"
+                    + "JOIN movieposter mp ON (m.movieposterID = mp.movieposterID) "
                     + "WHERE name like \"%" + criteria + "%\" OR firstname like \"%" + criteria + "%\" OR "
                     + "lastname like \"%" + criteria + "%\"";
             Statement statement = connection.createStatement();
@@ -275,7 +276,7 @@ public class DbMovieRepository implements DbRepository<Movie>{
             while(rs.next()) {
                 Movie movie = loadMovie(rs);
                 
-                loadAssociationClasses(connection, movie);
+                loadAssociationClasses(movie);
                 
                 movies.add(movie);
             }
@@ -357,7 +358,9 @@ public class DbMovieRepository implements DbRepository<Movie>{
         return production;
     }
     
-    private void loadAssociationClasses(Connection connection, Movie movie) throws Exception{
+    private void loadAssociationClasses(Movie movie) throws Exception{
+        Connection connection = DbConnectionFactory.getInstance().getConnection();
+        
         //LOAD ROLES
         String sqlRoles = "SELECT * FROM movie m JOIN role r ON (m.movieID = r.movieID) "
                 + "JOIN actor a ON (r.actorID = a.actorID)"

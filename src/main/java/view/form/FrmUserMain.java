@@ -6,7 +6,11 @@
 package view.form;
 
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -31,6 +35,12 @@ public class FrmUserMain extends javax.swing.JFrame {
     private void initComponents() {
 
         lblCurrentUser = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblMovies = new javax.swing.JTable();
+        lblSearch = new javax.swing.JLabel();
+        txtSearch = new javax.swing.JTextField();
+        btnSave = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuMyMovies = new javax.swing.JMenu();
         jmiViewMyMovies = new javax.swing.JMenuItem();
@@ -38,6 +48,23 @@ public class FrmUserMain extends javax.swing.JFrame {
         jmiSettings = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        tblMovies.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblMovies);
+
+        lblSearch.setText("Search:");
+
+        btnSave.setText("Save");
+        btnSave.setEnabled(false);
+
+        btnSearch.setText("Search");
 
         jMenuMyMovies.setText("My movies");
 
@@ -61,31 +88,73 @@ public class FrmUserMain extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblCurrentUser)
-                .addContainerGap(569, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblCurrentUser)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnSearch)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSave)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(lblCurrentUser)
-                .addContainerGap(352, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSearch)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSave))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JMenu jMenuAccount;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuMyMovies;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem jmiSettings;
     private javax.swing.JMenuItem jmiViewMyMovies;
     private javax.swing.JLabel lblCurrentUser;
+    private javax.swing.JLabel lblSearch;
+    private javax.swing.JTable tblMovies;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 
     public JLabel getLblCurrentUser() {
         return lblCurrentUser;
+    }
+    
+    public JTextField getTxtSearch() {
+        return txtSearch;
+    }
+    
+    public JTable getTblMovies() {
+        return tblMovies;
+    }
+
+    public JButton getBtnSave() {
+        return btnSave;
     }
     
     public void jmiViewMyMoviesActionListener(ActionListener actionListener) {
@@ -94,5 +163,17 @@ public class FrmUserMain extends javax.swing.JFrame {
     
     public void jmiAccountSettings(ActionListener actionListener) {
         jmiSettings.addActionListener(actionListener);
+    }
+    
+    public void btnSaveActionListener(ActionListener actionListener) {
+        btnSave.addActionListener(actionListener);
+    }
+    
+    public void btnSearchActionListener(ActionListener actionListener) {
+        btnSearch.addActionListener(actionListener);
+    }
+    
+    public void tblMoviesAddListSelectionListener(ListSelectionListener listSelectionListener) {
+        tblMovies.getSelectionModel().addListSelectionListener(listSelectionListener);
     }
 }

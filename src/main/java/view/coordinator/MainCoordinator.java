@@ -19,6 +19,7 @@ import view.controller.UserMainController;
 import view.controller.ViewAllActorsController;
 import view.controller.ViewAllDirectorsController;
 import view.controller.ViewAllMoviesController;
+import view.controller.ViewAllReviewsController;
 import view.form.FrmAccountSettings;
 import view.form.FrmActor;
 import view.form.FrmDirector;
@@ -31,6 +32,7 @@ import view.form.FrmUserMain;
 import view.form.FrmViewActors;
 import view.form.FrmViewDirectors;
 import view.form.FrmViewMovies;
+import view.form.FrmViewReviews;
 import view.form.util.FormMode;
 
 /**
@@ -78,6 +80,12 @@ public class MainCoordinator {
         AccountSettingsController asc = new AccountSettingsController(
                 new FrmAccountSettings(userMainController.getFrmUserMain(), true));
         asc.openForm();
+    }
+    
+    public void openViewAllReviewsForm() {
+        ViewAllReviewsController cont = new ViewAllReviewsController(
+                new FrmViewReviews(MainCoordinator.getInstance().getUserMainController().getFrmUserMain(), true));
+        cont.openForm();
     }
     
     public void openReviewForm() {

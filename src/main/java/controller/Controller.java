@@ -395,4 +395,17 @@ public class Controller {
             ((DbRepository)reviewRepository).disconnect();
         }
     }
+
+    public List<Review> selectAllReviews() throws Exception{
+        List<Review> reviews = null;
+        
+        try {
+            reviews = reviewRepository.selectAll();
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        
+        return reviews;
+    }
 }

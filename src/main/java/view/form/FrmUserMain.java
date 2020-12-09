@@ -44,6 +44,8 @@ public class FrmUserMain extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuMyMovies = new javax.swing.JMenu();
         jmiViewMyMovies = new javax.swing.JMenuItem();
+        jMenuReviews = new javax.swing.JMenu();
+        jmiReviews = new javax.swing.JMenuItem();
         jMenuAccount = new javax.swing.JMenu();
         jmiSettings = new javax.swing.JMenuItem();
 
@@ -72,6 +74,13 @@ public class FrmUserMain extends javax.swing.JFrame {
         jMenuMyMovies.add(jmiViewMyMovies);
 
         jMenuBar1.add(jMenuMyMovies);
+
+        jMenuReviews.setText("My reviews");
+
+        jmiReviews.setText("View");
+        jMenuReviews.add(jmiReviews);
+
+        jMenuBar1.add(jMenuReviews);
 
         jMenuAccount.setText("Account");
 
@@ -132,7 +141,9 @@ public class FrmUserMain extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuAccount;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuMyMovies;
+    private javax.swing.JMenu jMenuReviews;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenuItem jmiReviews;
     private javax.swing.JMenuItem jmiSettings;
     private javax.swing.JMenuItem jmiViewMyMovies;
     private javax.swing.JLabel lblCurrentUser;
@@ -163,6 +174,10 @@ public class FrmUserMain extends javax.swing.JFrame {
     
     public void jmiAccountSettings(ActionListener actionListener) {
         jmiSettings.addActionListener(actionListener);
+    }
+    
+    public void jmiReviews(ActionListener actionListener) {
+        jmiReviews.addActionListener(actionListener);
     }
     
     public void btnSaveActionListener(ActionListener actionListener) {

@@ -16,6 +16,18 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenuReviews">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="My reviews"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiReviews">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="View"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="jMenuAccount">
           <Properties>
             <Property name="text" type="java.lang.String" value="Account"/>

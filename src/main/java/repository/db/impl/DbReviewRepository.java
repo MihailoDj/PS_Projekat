@@ -5,13 +5,21 @@
  */
 package repository.db.impl;
 
+import domain.Movie;
 import domain.Review;
+import domain.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import repository.db.DbConnectionFactory;
 import repository.db.DbRepository;
+import view.constant.Constants;
+import view.coordinator.MainCoordinator;
 
 /**
  *
@@ -37,6 +45,13 @@ public class DbReviewRepository implements DbRepository<Review>{
             statement.setInt(6, review.getUser().getUserID());
             
             statement.executeUpdate();
+            
+            //UPDATE MOVIE WITH NEW AVERAGE SCORE
+            sql = "UPDATE movie m SET score =(SELECT AVG(reviewscore) FROM review r WHERE r.movieID="
+                    + review.getMovie().getMovieID() + ") WHERE m.movieID=" + review.getMovie().getMovieID();
+            statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+            
             statement.close();
         } catch(Exception e) {
             e.printStackTrace();
@@ -66,7 +81,43 @@ public class DbReviewRepository implements DbRepository<Review>{
 
     @Override
     public List<Review> selectAll() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
+            List<Review> reviews = new ArrayList<>();
+            Connection connection = DbConnectionFactory.getInstance().getConnection();
+            String sql = "SELECT * FROM review r JOIN movie m ON (m.movieID=r.movieID) WHERE r.userID=" + user.getUserID();
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            
+            while(rs.next()) {
+                Review review = new Review() {
+                    {
+                        setReviewID(rs.getInt("reviewID"));
+                        setReviewText(rs.getString("reviewtext"));
+                        setReviewScore(rs.getInt("reviewscore"));
+                        setReviewDate(rs.getTimestamp("reviewdate").toLocalDateTime());
+                        setMovie(new Movie(){
+                            {
+                                setMovieID(rs.getInt("movieID"));
+                                setName(rs.getString("name"));
+                                setReleaseDate(rs.getObject("releaseDate", LocalDate.class));
+                                setScore(rs.getDouble("score"));
+                                setDescription(rs.getString("description"));
+                            }
+                        });
+                        setUser(user);
+                    }  
+                };
+                reviews.add(review);
+            }
+        
+            statement.close();
+            rs.close();
+            return reviews;
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
     
 }

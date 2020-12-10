@@ -5,14 +5,21 @@
  */
 package view.controller;
 
+import controller.Controller;
+import domain.Movie;
+import domain.Review;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
+import view.constant.Constants;
+import view.coordinator.MainCoordinator;
 import view.form.FrmViewReviews;
 import view.form.component.table.ReviewTableModel;
 
@@ -33,20 +40,7 @@ public class ViewAllReviewsController {
     public void openForm() {
         frmViewReviews.setLocationRelativeTo(null);
         frmViewReviews.setTitle("My reviews");
-        prepareView();
-        
         frmViewReviews.setVisible(true);
-    }
-
-    private void prepareView() {
-        try {
-            ReviewTableModel rtm = new ReviewTableModel();
-            frmViewReviews.getTblReviews().setModel(rtm);
-            setUpTableColumns();
-        } catch (Exception ex) {
-            Logger.getLogger(ViewAllReviewsController.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(frmViewReviews, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }
     
     public void setUpTableColumns() throws Exception {
@@ -65,16 +59,41 @@ public class ViewAllReviewsController {
     }
 
     private void addActionListener() {
+        frmViewReviews.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {
+                fillTblReviews();
+            }
+            
+        });
         frmViewReviews.btnRemoveReviewActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int check = JOptionPane.showConfirmDialog(frmViewReviews, "Delete review", "Are you sure?", JOptionPane.YES_NO_OPTION);
+                int row = frmViewReviews.getTblReviews().getSelectedRow();
                 
+                if (check == JOptionPane.YES_OPTION) {
+                    try {
+                        Review review = ((ReviewTableModel)frmViewReviews.getTblReviews().getModel()).getReviewAt(row);
+                        Controller.getInstance().deleteReview(review);
+                        JOptionPane.showMessageDialog(frmViewReviews, "Review deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (Exception ex) {
+                        Logger.getLogger(ViewAllReviewsController.class.getName()).log(Level.SEVERE, null, ex);
+                        JOptionPane.showMessageDialog(frmViewReviews, "Unable to delete review", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
             }
         });
         frmViewReviews.btnUpdateReviewActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int row = frmViewReviews.getTblReviews().getSelectedRow();
+                Review review = ((ReviewTableModel)frmViewReviews.getTblReviews().getModel()).getReviewAt(row);
+                Movie movie = review.getMovie();
                 
+                MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, movie);
+                MainCoordinator.getInstance().addParam(Constants.PARAM_REVIEW, review);
+                MainCoordinator.getInstance().openReviewEditForm();
             }
         });
     }
@@ -93,5 +112,16 @@ public class ViewAllReviewsController {
                 
             }
         });
+    }
+    
+    private void fillTblReviews() {
+        try {
+            ReviewTableModel rtm = new ReviewTableModel();
+            frmViewReviews.getTblReviews().setModel(rtm);
+            setUpTableColumns();
+        } catch (Exception ex) {
+            Logger.getLogger(ViewAllReviewsController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(frmViewReviews, "Error loading table", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

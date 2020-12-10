@@ -92,7 +92,12 @@ public class MainCoordinator {
     
     public void openReviewForm() {
         ReviewController reviewController = new ReviewController(new FrmReview(null, true));
-        reviewController.openForm();
+        reviewController.openForm(FormMode.FORM_ADD);
+    }
+    
+    public void openReviewEditForm() {
+        ReviewController reviewController = new ReviewController(new FrmReview(null, true));
+        reviewController.openForm(FormMode.FORM_EDIT);
     }
     
     public void openMovieCollectionForm() {

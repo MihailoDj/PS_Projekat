@@ -9,6 +9,7 @@ import com.github.lgooddatepicker.tableeditors.DateTableEditor;
 import controller.Controller;
 import domain.Director;
 import domain.Movie;
+import domain.Review;
 import domain.User;
 import domain.UserMovieCollection;
 import java.awt.event.ActionEvent;
@@ -75,7 +76,15 @@ public class MovieCollectionController {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = frmMovieCollection.getTblCollection().getSelectedRow();
                 Movie movie = ((MovieTableModel)frmMovieCollection.getTblCollection().getModel()).getMovieAt(selectedRow);
+                User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
+                Review review = new Review(){
+                    {
+                        setMovie(movie);
+                        setUser(user);
+                    }  
+                };
                 MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, movie);
+                MainCoordinator.getInstance().addParam(Constants.PARAM_REVIEW, review);
                 MainCoordinator.getInstance().openReviewForm();
             }
         });

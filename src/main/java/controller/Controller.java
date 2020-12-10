@@ -408,4 +408,32 @@ public class Controller {
         
         return reviews;
     }
+    
+    public void deleteReview(Review review) throws Exception{
+        ((DbRepository)reviewRepository).connect();
+        
+        try{
+            reviewRepository.delete(review);
+            ((DbRepository)reviewRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)reviewRepository).rollback();
+            throw e;
+        } finally {
+            ((DbRepository)reviewRepository).disconnect();
+        }
+    }
+    
+    public void updateReview (Review review) throws Exception {
+        ((DbRepository)reviewRepository).connect();
+        
+        try{
+            ((DbRepository)reviewRepository).update(review);
+            ((DbRepository)reviewRepository).commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            ((DbRepository)reviewRepository).rollback();
+            throw e;
+        }
+    }
 }

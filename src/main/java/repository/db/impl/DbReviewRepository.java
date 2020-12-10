@@ -69,8 +69,39 @@ public class DbReviewRepository implements DbRepository<Review>{
     }
 
     @Override
-    public void delete(Review obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void delete(Review review) throws Exception {
+        try {
+            Connection connection = DbConnectionFactory.getInstance().getConnection();
+            String sql = "DELETE FROM review WHERE userID=" + review.getUser().getUserID() + 
+                    " AND movieID=" + review.getMovie().getMovieID();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+            
+            //CHECK TO SEE IF NO REVIEWS EXIST FOR MOVIE
+            sql = "SELECT * FROM review WHERE userID=" + review.getUser().getUserID() +
+                    " AND movieID=" + review.getMovie().getMovieID();
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            //SET TO DEFUALT IF THEY DON'T EXIST
+            if(!rs.next()) {
+                sql = "UPDATE movie m SET score = 0.0 WHERE m.movieID=" + review.getMovie().getMovieID();
+                statement = connection.prepareStatement(sql);
+                statement.executeUpdate();
+            } else {
+                //SET TO AVERAGE REVIEW SCORE IF THEY DO
+                sql = "UPDATE movie m SET score =(SELECT AVG(reviewscore) FROM review r WHERE r.movieID="
+                        + review.getMovie().getMovieID() + ") WHERE m.movieID=" + review.getMovie().getMovieID();
+                statement = connection.prepareStatement(sql);
+                statement.executeUpdate();
+            }
+            
+            rs.close();
+            statement.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Override
@@ -79,8 +110,27 @@ public class DbReviewRepository implements DbRepository<Review>{
     }
 
     @Override
-    public void update(Review obj) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(Review review) throws Exception {
+        try {
+            Connection connection = DbConnectionFactory.getInstance().getConnection();
+            String sql = "UPDATE review SET reviewscore=?, reviewtext=? WHERE userID=" + review.getUser().getUserID() +
+                    " AND movieID=" + review.getMovie().getMovieID();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, review.getReviewScore());
+            statement.setString(2, review.getReviewText());
+            statement.executeUpdate();
+            
+            //UPDATE AVERAGE MOVIE SCO RE
+            sql = "UPDATE movie m SET score =(SELECT AVG(reviewscore) FROM review r WHERE r.movieID="
+                    + review.getMovie().getMovieID() + ") WHERE m.movieID=" + review.getMovie().getMovieID();
+            statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+            
+            statement.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Override

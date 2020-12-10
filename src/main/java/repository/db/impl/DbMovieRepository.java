@@ -299,7 +299,7 @@ public class DbMovieRepository implements DbRepository<Movie>{
                 setName(rs.getString("name"));
                 setReleaseDate(rs.getObject("releaseDate", LocalDate.class));
                 setDescription(rs.getString("description"));
-                setScore(rs.getDouble("score"));
+                setScore(Math.floor(rs.getDouble("score")* 100) / 100);
                 setDirector(new Director() {
                     {
                         setDirectorID(rs.getInt("directorID"));

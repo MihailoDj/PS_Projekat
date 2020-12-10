@@ -45,18 +45,18 @@ import view.form.component.table.MovieTableModel;
  * @author Mihailo
  */
 public class ViewAllMoviesController {
+
     private final FrmViewMovies frmViewMovies;
 
     public ViewAllMoviesController(FrmViewMovies frmViewMovies) {
         this.frmViewMovies = frmViewMovies;
         fillTblMovies();
-        prepareButtons();
         addActionListener();
         addListSelectionListener();
         addKeyListener();
         //addTableModelListener();
     }
-    
+
     /*
     private void addTableModelListener() {
         
@@ -92,18 +92,17 @@ public class ViewAllMoviesController {
             }
         });
     }
-    */
-    
+     */
     private void addKeyListener() {
         frmViewMovies.filterKeyPressed(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                
+
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
-                
+
             }
 
             @Override
@@ -113,22 +112,21 @@ public class ViewAllMoviesController {
             }
         });
     }
-    
+
     private void addListSelectionListener() {
         frmViewMovies.getTableViewMoviesAddListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (frmViewMovies.getTblMovies().getSelectedRow() != -1)
+                if (frmViewMovies.getTblMovies().getSelectedRow() != -1) {
                     enableButtons();
-                else
+                } else {
                     disableButtons();
+                }
             }
         });
     }
-    
+
     private void addActionListener() {
-        User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
-        
         frmViewMovies.addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent e) {
@@ -139,7 +137,7 @@ public class ViewAllMoviesController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int row = frmViewMovies.getTblMovies().getSelectedRow();
-                
+
                 if (row != -1) {
                     Movie movie = ((MovieTableModel) frmViewMovies.getTblMovies().getModel()).getMovieAt(row);
                     MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, movie);
@@ -149,52 +147,35 @@ public class ViewAllMoviesController {
                 }
             }
         });
-        
+
         frmViewMovies.getBtnAddMovieAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(user.isAdmin()) {
-                    MainCoordinator.getInstance().openMovieForm();
-                } else {
-                    int selectedRow = frmViewMovies.getTblMovies().getSelectedRow();
-                    Movie movie = ((MovieTableModel)frmViewMovies.getTblMovies().getModel()).getMovieAt(selectedRow);
-                    MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, movie);
-                    MainCoordinator.getInstance().openReviewForm();
-                }
-                
+                MainCoordinator.getInstance().openMovieForm();
             }
         });
-        
+
         frmViewMovies.getBtnDeleteAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                User user = ((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
                 int row = frmViewMovies.getTblMovies().getSelectedRow();
-                
+
                 if (row != -1) {
                     try {
-                        int check = JOptionPane.showConfirmDialog(frmViewMovies, "Are you sure?", 
+                        int check = JOptionPane.showConfirmDialog(frmViewMovies, "Are you sure?",
                                 "Delete movie", JOptionPane.YES_NO_OPTION);
-                        
+
                         if (check == JOptionPane.YES_OPTION) {
                             Movie movie = ((MovieTableModel) frmViewMovies.getTblMovies().getModel()).getMovieAt(row);
+
+                            MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, null);
+                            Controller.getInstance().deleteMovie(movie);
                             
-                            if (user.isAdmin()) {
-                                MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, null);
-                                Controller.getInstance().deleteMovie(movie);
-                            } else {
-                                UserMovieCollection umc = new UserMovieCollection(){
-                                    {
-                                        setMovie(movie);
-                                        setUser(user);
-                                    }
-                                };
-                                Controller.getInstance().deleteCollection(umc);
-                            }
-                            
-                            JOptionPane.showMessageDialog(frmViewMovies, "Movie successfully deleted", 
-                                "Success", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(frmViewMovies, "Movie successfully deleted",
+                                    "Success", JOptionPane.INFORMATION_MESSAGE);
                         }
-                        
+
                     } catch (Exception ex) {
                         Logger.getLogger(ViewAllMoviesController.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(frmViewMovies, "Unable to delete movie", "Error", JOptionPane.ERROR_MESSAGE);
@@ -217,29 +198,20 @@ public class ViewAllMoviesController {
     }
 
     private void fillTblMovies() {
-        User user = ((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
         List<Movie> movies = new ArrayList<>();
-        
+
         try {
-            if(!user.isAdmin()) {
-                for(UserMovieCollection umc : Controller.getInstance().selectAllCollections()) {
-                    if(umc.getUser().getUserID() == user.getUserID()) {
-                        movies.add(umc.getMovie());
-                    }
-                }
-            } else {
-                movies = Controller.getInstance().selectAllMovies();
-            }
+            movies = Controller.getInstance().selectAllMovies();
             MovieTableModel mtm = new MovieTableModel(movies);
             frmViewMovies.getTblMovies().setModel(mtm);
 
             setUpTableColumns();
-        } catch(Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(frmViewMovies, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(ViewAllMoviesController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    
+
     public void setUpTableColumns() throws Exception {
         List<Director> directors = Controller.getInstance().selectAllDirectors();
         JComboBox cbDirector = new JComboBox(directors.toArray());
@@ -263,33 +235,21 @@ public class ViewAllMoviesController {
         tcm.getColumn(4).setPreferredWidth(15);
         tcm.getColumn(5).setPreferredWidth(100);
     }
-    
+
     public void enableButtons() {
         frmViewMovies.getBtnDeleteMovie().setEnabled(true);
         frmViewMovies.getBtnDetails().setEnabled(true);
     }
-    
+
     public void disableButtons() {
         frmViewMovies.getBtnDeleteMovie().setEnabled(false);
         frmViewMovies.getBtnDetails().setEnabled(false);
     }
-    
-    private void filter(String filter) {
-        TableRowSorter<MovieTableModel> trs = new TableRowSorter<>((MovieTableModel)frmViewMovies.getTblMovies().getModel());
-        frmViewMovies.getTblMovies().setRowSorter(trs);
-        
-        trs.setRowFilter(RowFilter.regexFilter("(?i)" + filter));
-    }
 
-    private void prepareButtons() {
-        User user = ((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
-        
-        if(!user.isAdmin()) {
-            frmViewMovies.getBtnAddMovie().setText("Review");
-            frmViewMovies.getBtnDeleteMovie().setText("Remove");
-                    
-            frmViewMovies.repaint();
-            frmViewMovies.revalidate();
-        }
+    private void filter(String filter) {
+        TableRowSorter<MovieTableModel> trs = new TableRowSorter<>((MovieTableModel) frmViewMovies.getTblMovies().getModel());
+        frmViewMovies.getTblMovies().setRowSorter(trs);
+
+        trs.setRowFilter(RowFilter.regexFilter("(?i)" + filter));
     }
 }

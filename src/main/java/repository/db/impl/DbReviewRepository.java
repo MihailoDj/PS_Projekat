@@ -5,8 +5,16 @@
  */
 package repository.db.impl;
 
+import domain.Actor;
+import domain.Director;
+import domain.Genre;
 import domain.Movie;
+import domain.MovieGenre;
+import domain.MoviePoster;
+import domain.Production;
+import domain.ProductionCompany;
 import domain.Review;
+import domain.Role;
 import domain.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,6 +24,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 import repository.db.DbConnectionFactory;
 import repository.db.DbRepository;
 import view.constant.Constants;
@@ -85,7 +94,9 @@ public class DbReviewRepository implements DbRepository<Review>{
             User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
             List<Review> reviews = new ArrayList<>();
             Connection connection = DbConnectionFactory.getInstance().getConnection();
-            String sql = "SELECT * FROM review r JOIN movie m ON (m.movieID=r.movieID) WHERE r.userID=" + user.getUserID();
+            String sql = "SELECT * FROM review r JOIN movie m ON (m.movieID=r.movieID) "
+                    + "JOIN director d ON (m.directorID = d.directorID) "
+                    + "JOIN movieposter mp ON (m.movieposterID = mp.movieposterID) WHERE r.userID=" + user.getUserID();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             
@@ -101,13 +112,28 @@ public class DbReviewRepository implements DbRepository<Review>{
                                 setMovieID(rs.getInt("movieID"));
                                 setName(rs.getString("name"));
                                 setReleaseDate(rs.getObject("releaseDate", LocalDate.class));
-                                setScore(rs.getDouble("score"));
+                                setScore(Math.floor(rs.getDouble("score")* 100) / 100);
                                 setDescription(rs.getString("description"));
+                                setDirector(new Director(){
+                                    {
+                                        setDirectorID(rs.getInt("directorID"));
+                                        setFirstName(rs.getString("firstname"));
+                                        setLastName(rs.getString("lastname"));
+                                        setDateOfBirth(rs.getObject("dateofbirth", LocalDate.class));
+                                    }
+                                });
+                                setMoviePoster(new MoviePoster() {
+                                    {
+                                        setMoviePosterID(rs.getInt("movieposterID"));
+                                        setPosterImage(ImageIO.read(rs.getBlob("posterimage").getBinaryStream()));
+                                    }
+                                });
                             }
                         });
                         setUser(user);
                     }  
                 };
+                loadAssociationClasses(review.getMovie());
                 reviews.add(review);
             }
         
@@ -120,4 +146,88 @@ public class DbReviewRepository implements DbRepository<Review>{
         }
     }
     
+    private void loadAssociationClasses(Movie movie) throws Exception{
+        Connection connection = DbConnectionFactory.getInstance().getConnection();
+        
+        //LOAD ROLES
+        String sqlRoles = "SELECT * FROM movie m JOIN role r ON (m.movieID = r.movieID) "
+                + "JOIN actor a ON (r.actorID = a.actorID)"
+                + "WHERE r.movieID = " + movie.getMovieID();
+        Statement statementRoles = connection.createStatement();
+        ResultSet rsRoles = statementRoles.executeQuery(sqlRoles);
+
+        while(rsRoles.next()) {
+            Role role = loadRole(rsRoles);
+
+            role.setMovie(movie);
+            movie.getRoles().add(role);
+        }
+
+        //LOAD MOVIE GENRES
+        String sqlMovieGenres = "SELECT g.name as gname, g.genreID as ggenreID FROM movie m JOIN movie_genre mg ON (m.movieID = mg.movieID) "
+                + "JOIN genre g ON (mg.genreID = g.genreID)"
+                + "WHERE mg.movieID = " + movie.getMovieID();
+        Statement statementMovieGenres = connection.createStatement();
+        ResultSet rsMovieGenres = statementMovieGenres.executeQuery(sqlMovieGenres);
+
+        while(rsMovieGenres.next()) {
+            MovieGenre movieGenre = loadMovieGenre(rsMovieGenres);
+
+            movieGenre.setMovie(movie);
+            movie.getMovieGenres().add(movieGenre);
+        }
+        //LOAD PRODUCTIONS
+        String sqlProductions = "SELECT pc.name as pcname, pc.pcID FROM movie m "
+                + "JOIN production p ON (m.movieID = p.movieID) "
+                + "JOIN productioncompany pc ON (pc.pcID = p.productioncompanyID)"
+                + "WHERE p.movieID = " + movie.getMovieID();
+        Statement statementProductions = connection.createStatement();
+        ResultSet rsProductions = statementProductions.executeQuery(sqlProductions);
+
+        while(rsProductions.next()) {
+            Production production = loadProduction(rsProductions);
+
+            production.setMovie(movie);
+            movie.getProductions().add(production);
+        }
+    }
+    
+    private Role loadRole(ResultSet rs) throws Exception{
+        Role role = new Role() {
+            {
+                setRoleName(rs.getString("rolename"));
+                setActor(new Actor() { {
+                    setActorID(rs.getInt("actorID"));
+                    setFirstName(rs.getString("firstname"));
+                    setLastName(rs.getString("lastname"));
+                    setBiography(rs.getString("biography"));
+                }});
+            }  
+        };
+        return role;
+    }
+    
+    private MovieGenre loadMovieGenre(ResultSet rs) throws Exception{
+        MovieGenre movieGenre = new MovieGenre() {
+            {
+                setGenre(new Genre() { {
+                    setGenreID(rs.getInt("ggenreID"));
+                    setName(rs.getString("gname"));
+                }});
+            }  
+        };
+        return movieGenre;
+    }
+    
+    private Production loadProduction(ResultSet rs) throws Exception{
+        Production production = new Production() {
+            {
+                setProductionCompany(new ProductionCompany() { {
+                    setProductionCompanyID(rs.getInt("pcID"));
+                    setName(rs.getString("pcname"));
+                }});
+            }  
+        };
+        return production;
+    }
 }

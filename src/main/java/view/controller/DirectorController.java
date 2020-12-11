@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package view.controller;
-
-import controller.Controller;
+import communication.Communication;
 import domain.Director;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,7 +46,7 @@ public class DirectorController {
                         }
                     };
                     
-                    Controller.getInstance().insertDirector(director);
+                    Communication.getInstance().insertDirector(director);
                     JOptionPane.showMessageDialog(frmDirector, "Director successfully saved!");
                     frmDirector.dispose();
                 } catch (Exception ex) {
@@ -88,7 +87,7 @@ public class DirectorController {
                 if (check == JOptionPane.YES_OPTION) {
                     Director director = makeDirectorFromForm();
                     try {
-                        Controller.getInstance().deleteDirector(director);
+                        Communication.getInstance().deleteDirector(director);
                         JOptionPane.showMessageDialog(frmDirector, "Director deleted successfully!\n", "Delete director", JOptionPane.INFORMATION_MESSAGE);
                         frmDirector.dispose();
                     } catch (Exception ex) {
@@ -114,7 +113,7 @@ public class DirectorController {
                     if(check == JOptionPane.YES_OPTION){
                         
                         Director director = makeDirectorFromForm();
-                        Controller.getInstance().updateDirector(director);
+                        Communication.getInstance().updateDirector(director);
                         JOptionPane.showMessageDialog(frmDirector, "Director updated successfully!\n", "Update director", JOptionPane.INFORMATION_MESSAGE);
                         frmDirector.dispose();
                     }

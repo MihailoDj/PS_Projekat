@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package view.controller;
-
-import controller.Controller;
+import communication.Communication;
 import domain.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,7 +53,7 @@ public class AccountSettingsController {
                     if (String.copyValueOf(form.getTxtOldPassword().getPassword()).equals(oldPass)) {
                         try {
                             User user = ((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
-                            Controller.getInstance().deleteUser(user);
+                            Communication.getInstance().deleteUser(user);
                             JOptionPane.showMessageDialog(form, "Account successfully deleted", 
                                     "Goodbye!" ,JOptionPane.INFORMATION_MESSAGE);
                             
@@ -86,7 +85,7 @@ public class AccountSettingsController {
                             ((User)MainCoordinator.getInstance().getParam(
                                     Constants.CURRENT_USER)).setPassword(String.copyValueOf(form.getTxtNewPassword().getPassword()));
 
-                            Controller.getInstance().updateUser((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
+                            Communication.getInstance().updateUser((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
                             JOptionPane.showMessageDialog(form, "Account info successfully updated", 
                                     "Success", JOptionPane.INFORMATION_MESSAGE);
                         } catch (Exception ex) {
@@ -103,14 +102,15 @@ public class AccountSettingsController {
     }
     
     private void prepareView() {
-        try {
+       /* try {
             String username = ((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER)).getUsername();
-            User user = Controller.getInstance().selectUser(username).get(0);
+            User user = Communication.getInstance().selectUser(username).get(0);
             
             form.getTxtUsername().setText(user.getUsername());
             MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, user);
         } catch (Exception ex) {
             Logger.getLogger(AccountSettingsController.class.getName()).log(Level.SEVERE, null, ex);
         }
+*/
     }
 }

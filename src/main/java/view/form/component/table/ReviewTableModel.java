@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package view.form.component.table;
-
-import controller.Controller;
 import domain.Movie;
 import domain.Review;
 import java.time.LocalDateTime;
@@ -22,8 +20,8 @@ public class ReviewTableModel extends AbstractTableModel{
     private final String[] columnNames = new String[]{"ID", "Review", "Score", "Posted on", "Movie"};
     private final Class[] columnClasses = new Class[]{Integer.class, String.class, Double.class, LocalDateTime.class, Movie.class};
     
-    public ReviewTableModel() throws Exception {
-        reviews = Controller.getInstance().selectAllReviews();
+    public ReviewTableModel(List<Review> reviews) throws Exception {
+        this.reviews = reviews;
     }
     
     @Override

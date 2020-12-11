@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package view.controller;
-
-import controller.Controller;
+import communication.Communication;
 import domain.Movie;
 import domain.Review;
 import domain.User;
@@ -64,7 +63,7 @@ public class ReviewController {
                         }
                     };
                 
-                    Controller.getInstance().insertReview(review);
+                    Communication.getInstance().insertReview(review);
                     JOptionPane.showMessageDialog(frmReview, movie.getName() + " successfully reviewd!", 
                             "Success", JOptionPane.INFORMATION_MESSAGE);
                     frmReview.dispose();
@@ -93,7 +92,7 @@ public class ReviewController {
                                 setMovie(movie);
                             }
                         };
-                        Controller.getInstance().updateReview(review);
+                        Communication.getInstance().updateReview(review);
                         JOptionPane.showMessageDialog(frmReview, "Review successfully updated", 
                                 "Success", JOptionPane.INFORMATION_MESSAGE);
                         frmReview.dispose();

@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package view.controller;
-
-import controller.Controller;
+import communication.Communication;
 import domain.Actor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -93,7 +92,7 @@ public class ViewAllActorsController {
                             
                             Actor actor = ((ActorTableModel) frmViewActors.getTblActors().getModel()).getActorAt(row);
                             MainCoordinator.getInstance().addParam(Constants.PARAM_ACTOR, null);
-                            Controller.getInstance().deleteActor(actor);
+                            Communication.getInstance().deleteActor(actor);
                             JOptionPane.showMessageDialog(frmViewActors, "Actor successfully deleted", 
                                 "Success", JOptionPane.INFORMATION_MESSAGE);
                         }
@@ -126,7 +125,7 @@ public class ViewAllActorsController {
         
         
         try {
-            actors = Controller.getInstance().selectAllActors();
+            actors = Communication.getInstance().selectAllActors();
             ActorTableModel atm = new ActorTableModel(actors);
             frmViewActors.getTblActors().setModel(atm);
             

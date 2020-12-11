@@ -17,8 +17,8 @@
             <version>8.0.2.2</version>
         </dependency>
         <dependency>
-            <groupId>domain_classes</groupId>
-            <artifactId>domain_classes</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>PS_project_Common</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

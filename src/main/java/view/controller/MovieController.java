@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package view.controller;
-
-import controller.Controller;
+import communication.Communication;
 import domain.Actor;
 import domain.Director;
 import domain.Genre;
@@ -96,7 +95,7 @@ public class MovieController {
                     movie.setProductions(productions);
 
                     
-                    Controller.getInstance().insertMovie(movie);
+                    Communication.getInstance().insertMovie(movie);
                     JOptionPane.showMessageDialog(frmMovie, "Movie successfully saved!");
                     frmMovie.dispose();
                 } catch (Exception ex) {
@@ -136,7 +135,7 @@ public class MovieController {
                 
                 if (check == JOptionPane.YES_OPTION) {
                     try {
-                        Controller.getInstance().deleteMovie(movie);
+                        Communication.getInstance().deleteMovie(movie);
                         JOptionPane.showMessageDialog(frmMovie, "Movie deleted successfully!\n", "Delete movie", JOptionPane.INFORMATION_MESSAGE);
                         frmMovie.dispose();
                     } catch (Exception ex) {
@@ -162,7 +161,7 @@ public class MovieController {
                     if(check == JOptionPane.YES_OPTION){
                         
                         Movie movie = makeMovieFromForm();
-                        Controller.getInstance().updateMovie(movie);
+                        Communication.getInstance().updateMovie(movie);
                         JOptionPane.showMessageDialog(frmMovie, "Movie updated successfully!\n", "Update movie", JOptionPane.INFORMATION_MESSAGE);
                         frmMovie.dispose();
                     }
@@ -528,7 +527,7 @@ public class MovieController {
     private void fillCbDirector() {
         try {
             frmMovie.getCbDirector().removeAllItems();
-            List<Director> directors = Controller.getInstance().selectAllDirectors();
+            List<Director> directors = Communication.getInstance().selectAllDirectors();
             frmMovie.getCbDirector().setModel(new DefaultComboBoxModel<>(directors.toArray()));
         } catch (Exception ex) {
             Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
@@ -539,7 +538,7 @@ public class MovieController {
     private void fillCbActors() {
         try {
             frmMovie.getCbActors().removeAllItems();
-            List<Actor> actors = Controller.getInstance().selectAllActors();
+            List<Actor> actors = Communication.getInstance().selectAllActors();
             frmMovie.getCbActors().setModel(new DefaultComboBoxModel<>(actors.toArray()));
         } catch (Exception ex) {
             Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
@@ -550,7 +549,7 @@ public class MovieController {
     private void fillCbGenres() {
         try {
             frmMovie.getCbGenres().removeAllItems();
-            List<Genre> genres = Controller.getInstance().selectAllGenres();
+            List<Genre> genres = Communication.getInstance().selectAllGenres();
             frmMovie.getCbGenres().setModel(new DefaultComboBoxModel<>(genres.toArray()));
         } catch (Exception ex) {
             Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);
@@ -561,7 +560,7 @@ public class MovieController {
     private void fillCbProductionCompanies() {
         try {
             frmMovie.getCbProductionCompanies().removeAllItems();
-            List<ProductionCompany> productionCompanies = Controller.getInstance().selectAllProductionCompanies();
+            List<ProductionCompany> productionCompanies = Communication.getInstance().selectAllProductionCompanies();
             frmMovie.getCbProductionCompanies().setModel(new DefaultComboBoxModel<>(productionCompanies.toArray()));
         } catch (Exception ex) {
             Logger.getLogger(MovieController.class.getName()).log(Level.SEVERE, null, ex);

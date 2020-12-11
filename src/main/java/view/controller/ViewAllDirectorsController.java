@@ -6,7 +6,7 @@
 package view.controller;
 
 import com.github.lgooddatepicker.tableeditors.DateTableEditor;
-import controller.Controller;
+import communication.Communication;
 import domain.Director;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -95,7 +95,7 @@ public class ViewAllDirectorsController {
                             
                             Director director = ((DirectorTableModel) frmViewDirectors.getTblDirectors().getModel()).getDirectorAt(row);
                             MainCoordinator.getInstance().addParam(Constants.PARAM_DIRECTOR, null);
-                            Controller.getInstance().deleteDirector(director);
+                            Communication.getInstance().deleteDirector(director);
                             JOptionPane.showMessageDialog(frmViewDirectors, "Director successfully deleted", 
                                 "Success", JOptionPane.INFORMATION_MESSAGE);
                         }
@@ -128,7 +128,7 @@ public class ViewAllDirectorsController {
         
         
         try {
-            directors = Controller.getInstance().selectAllDirectors();
+            directors = Communication.getInstance().selectAllDirectors();
             DirectorTableModel dtm = new DirectorTableModel(directors);
             frmViewDirectors.getTblDirectors().setModel(dtm);
             

@@ -6,7 +6,7 @@
 package view.controller;
 
 import com.github.lgooddatepicker.tableeditors.DateTableEditor;
-import controller.Controller;
+import communication.Communication;
 import domain.Director;
 import domain.Movie;
 import domain.User;
@@ -99,8 +99,8 @@ public class UserMainController {
                     validateSearchField();
                     
                     String searchParam = frmUserMain.getTxtSearch().getText().trim();
-                    List<Movie> movies = Controller.getInstance().selectMovies(searchParam);
-                    fillTblMovies(movies);
+                    //List<Movie> movies = Communication.getInstance().selectMovies(searchParam);
+                    //fillTblMovies(movies);
                 } catch (Exception ex) {
                     Logger.getLogger(UserMainController.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(frmUserMain, ex.getMessage(), 
@@ -122,7 +122,7 @@ public class UserMainController {
                             setUser(user);
                         }
                     };
-                    Controller.getInstance().insertCollection(collection);
+                    Communication.getInstance().insertCollection(collection);
                     JOptionPane.showMessageDialog(frmUserMain, "Movie successfully saved to collection!", 
                             "Success", JOptionPane.INFORMATION_MESSAGE);
                 
@@ -149,7 +149,7 @@ public class UserMainController {
     }
     
     public void setUpTableColumns() throws Exception {
-        List<Director> directors = Controller.getInstance().selectAllDirectors();
+        List<Director> directors = Communication.getInstance().selectAllDirectors();
         JComboBox cbDirector = new JComboBox(directors.toArray());
 
         TableColumnModel tcm = frmUserMain.getTblMovies().getColumnModel();

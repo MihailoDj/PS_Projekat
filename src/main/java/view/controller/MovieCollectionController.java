@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 package view.controller;
-
 import com.github.lgooddatepicker.tableeditors.DateTableEditor;
-import controller.Controller;
+import communication.Communication;
 import domain.Director;
 import domain.Movie;
 import domain.Review;
@@ -109,7 +108,7 @@ public class MovieCollectionController {
                                     setUser(user);
                                 }
                             };
-                            Controller.getInstance().deleteCollection(umc);
+                            Communication.getInstance().deleteCollection(umc);
                         }
 
                             JOptionPane.showMessageDialog(frmMovieCollection, "Movie successfully removed",
@@ -193,7 +192,7 @@ public class MovieCollectionController {
         try {
             List<Movie> movies = new ArrayList<>();
             
-            for (UserMovieCollection umc : Controller.getInstance().selectAllCollections()) {
+            for (UserMovieCollection umc : Communication.getInstance().selectAllCollections()) {
                 movies.add(umc.getMovie());
             }
             
@@ -207,7 +206,7 @@ public class MovieCollectionController {
     }
 
     private void setUpTableColumns() throws Exception {
-        List<Director> directors = Controller.getInstance().selectAllDirectors();
+        List<Director> directors = Communication.getInstance().selectAllDirectors();
         JComboBox cbDirector = new JComboBox(directors.toArray());
 
         TableColumnModel tcm = frmMovieCollection.getTblCollection().getColumnModel();

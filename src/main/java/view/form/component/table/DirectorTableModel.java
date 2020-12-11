@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package view.form.component.table;
-
-import controller.Controller;
 import domain.Director;
 import java.time.LocalDate;
 import java.util.List;
@@ -80,8 +78,6 @@ public class DirectorTableModel extends AbstractTableModel{
                     director.setDateOfBirth((LocalDate)value);
                     break;
             }
-
-            Controller.getInstance().updateDirector(director);
             
         } catch (Exception ex) {
             Logger.getLogger(DirectorTableModel.class.getName()).log(Level.SEVERE, null, ex);

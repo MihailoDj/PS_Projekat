@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package view.controller;
-
-import controller.Controller;
+import communication.Communication;
 import domain.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -99,7 +98,7 @@ public class LoginController {
 
             validateForm(username, password);
 
-            User user = Controller.getInstance().login(username, password);
+            User user = Communication.getInstance().login(username, password);
             JOptionPane.showMessageDialog(
                     frmLogin, "Welcome " + user.toString(), "Login successful", JOptionPane.INFORMATION_MESSAGE);
 

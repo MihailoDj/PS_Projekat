@@ -4,14 +4,15 @@
  * and open the template in the editor.
  */
 package view.controller;
-
-import controller.Controller;
+import communication.Communication;
 import domain.Movie;
 import domain.Review;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -75,7 +76,7 @@ public class ViewAllReviewsController {
                 if (check == JOptionPane.YES_OPTION) {
                     try {
                         Review review = ((ReviewTableModel)frmViewReviews.getTblReviews().getModel()).getReviewAt(row);
-                        Controller.getInstance().deleteReview(review);
+                        Communication.getInstance().deleteReview(review);
                         JOptionPane.showMessageDialog(frmViewReviews, "Review deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception ex) {
                         Logger.getLogger(ViewAllReviewsController.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,7 +117,8 @@ public class ViewAllReviewsController {
     
     private void fillTblReviews() {
         try {
-            ReviewTableModel rtm = new ReviewTableModel();
+            List<Review> reviews = new ArrayList<>();
+            ReviewTableModel rtm = new ReviewTableModel(reviews);
             frmViewReviews.getTblReviews().setModel(rtm);
             setUpTableColumns();
         } catch (Exception ex) {

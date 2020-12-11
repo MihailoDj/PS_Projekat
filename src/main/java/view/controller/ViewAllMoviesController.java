@@ -6,11 +6,10 @@
 package view.controller;
 
 import com.github.lgooddatepicker.tableeditors.DateTableEditor;
-import controller.Controller;
+import communication.Communication;
 import domain.Director;
 import domain.Movie;
 import domain.User;
-import domain.UserMovieCollection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -24,7 +23,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -170,7 +168,7 @@ public class ViewAllMoviesController {
                             Movie movie = ((MovieTableModel) frmViewMovies.getTblMovies().getModel()).getMovieAt(row);
 
                             MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, null);
-                            Controller.getInstance().deleteMovie(movie);
+                            Communication.getInstance().deleteMovie(movie);
                             
                             JOptionPane.showMessageDialog(frmViewMovies, "Movie successfully deleted",
                                     "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -201,7 +199,7 @@ public class ViewAllMoviesController {
         List<Movie> movies = new ArrayList<>();
 
         try {
-            movies = Controller.getInstance().selectAllMovies();
+            movies = Communication.getInstance().selectAllMovies();
             MovieTableModel mtm = new MovieTableModel(movies);
             frmViewMovies.getTblMovies().setModel(mtm);
 
@@ -213,7 +211,7 @@ public class ViewAllMoviesController {
     }
 
     public void setUpTableColumns() throws Exception {
-        List<Director> directors = Controller.getInstance().selectAllDirectors();
+        List<Director> directors = Communication.getInstance().selectAllDirectors();
         JComboBox cbDirector = new JComboBox(directors.toArray());
 
         TableColumnModel tcm = frmViewMovies.getTblMovies().getColumnModel();

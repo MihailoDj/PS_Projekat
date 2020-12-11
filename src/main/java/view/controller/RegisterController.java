@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package view.controller;
-
-import controller.Controller;
+import communication.Communication;
 import domain.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,7 +53,7 @@ public class RegisterController {
                         }
                     };
                 
-                    Controller.getInstance().insertUser(user);
+                    Communication.getInstance().insertUser(user);
                     JOptionPane.showMessageDialog(frmRegister, "Account registration successful", "Register", 
                             JOptionPane.INFORMATION_MESSAGE);
                     frmRegister.dispose();

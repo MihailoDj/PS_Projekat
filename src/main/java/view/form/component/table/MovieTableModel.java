@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package view.form.component.table;
-
-import controller.Controller;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import domain.Movie;

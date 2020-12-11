@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package view.controller;
-
-import controller.Controller;
+import communication.Communication;
 import domain.Actor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,7 +46,7 @@ public class ActorController {
                         }
                     };
                     
-                    Controller.getInstance().insertActor(actor);
+                    Communication.getInstance().insertActor(actor);
                     JOptionPane.showMessageDialog(frmActor, "Actor successfully saved!");
                     frmActor.dispose();
                 } catch (Exception ex) {
@@ -88,7 +87,7 @@ public class ActorController {
                 if (check == JOptionPane.YES_OPTION) {
                     Actor actor = makeActorFromForm();
                     try {
-                        Controller.getInstance().deleteActor(actor);
+                        Communication.getInstance().deleteActor(actor);
                         JOptionPane.showMessageDialog(frmActor, "Actor deleted successfully!\n", 
                                 "Delete actor", JOptionPane.INFORMATION_MESSAGE);
                         frmActor.dispose();
@@ -116,7 +115,7 @@ public class ActorController {
                     if(check == JOptionPane.YES_OPTION){
                         
                         Actor actor = makeActorFromForm();
-                        Controller.getInstance().updateActor(actor);
+                        Communication.getInstance().updateActor(actor);
                         JOptionPane.showMessageDialog(frmActor, "Actor updated successfully!\n", 
                                 "Update actor", JOptionPane.INFORMATION_MESSAGE);
                         frmActor.dispose();

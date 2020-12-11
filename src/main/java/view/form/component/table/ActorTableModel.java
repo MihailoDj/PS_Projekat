@@ -5,7 +5,6 @@
  */
 package view.form.component.table;
 
-import controller.Controller;
 import domain.Actor;
 import java.util.List;
 import java.util.logging.Level;
@@ -78,8 +77,6 @@ public class ActorTableModel extends AbstractTableModel{
                     actor.setBiography(String.valueOf(value));
                     break;
             }
-
-            Controller.getInstance().updateActor(actor);
             
         } catch (Exception ex) {
             Logger.getLogger(ActorTableModel.class.getName()).log(Level.SEVERE, null, ex);

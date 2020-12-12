@@ -7,6 +7,7 @@ package view.controller;
 import communication.Communication;
 import domain.Movie;
 import domain.Review;
+import domain.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -53,10 +54,10 @@ public class ViewAllReviewsController {
 
         frmViewReviews.getTblReviews().setRowHeight(30);
         tcm.getColumn(0).setPreferredWidth(15);
-        tcm.getColumn(1).setPreferredWidth(100);
+        tcm.getColumn(1).setPreferredWidth(150);
         tcm.getColumn(2).setPreferredWidth(15);
-        tcm.getColumn(3).setPreferredWidth(100);
-        tcm.getColumn(4).setPreferredWidth(100);
+        tcm.getColumn(3).setPreferredWidth(150);
+        tcm.getColumn(4).setPreferredWidth(150);
     }
 
     private void addActionListener() {
@@ -117,7 +118,11 @@ public class ViewAllReviewsController {
     
     private void fillTblReviews() {
         try {
-            List<Review> reviews = new ArrayList<>();
+            User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
+            Review review = new Review();
+            review.setUser(user);
+            
+            List<Review> reviews = Communication.getInstance().selectReviews(review);
             ReviewTableModel rtm = new ReviewTableModel(reviews);
             frmViewReviews.getTblReviews().setModel(rtm);
             setUpTableColumns();

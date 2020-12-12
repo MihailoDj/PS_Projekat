@@ -102,15 +102,14 @@ public class AccountSettingsController {
     }
     
     private void prepareView() {
-       /* try {
-            String username = ((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER)).getUsername();
-            User user = Communication.getInstance().selectUser(username).get(0);
+       try {
+            User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
+            user = Communication.getInstance().selectUser(user).get(0);
             
             form.getTxtUsername().setText(user.getUsername());
             MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, user);
         } catch (Exception ex) {
             Logger.getLogger(AccountSettingsController.class.getName()).log(Level.SEVERE, null, ex);
         }
-*/
     }
 }

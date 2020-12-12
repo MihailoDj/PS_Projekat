@@ -9,12 +9,14 @@ import com.github.lgooddatepicker.tableeditors.DateTableEditor;
 import communication.Communication;
 import domain.Director;
 import domain.Movie;
+import domain.MoviePoster;
 import domain.User;
 import domain.UserMovieCollection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -99,8 +101,21 @@ public class UserMainController {
                     validateSearchField();
                     
                     String searchParam = frmUserMain.getTxtSearch().getText().trim();
-                    //List<Movie> movies = Communication.getInstance().selectMovies(searchParam);
-                    //fillTblMovies(movies);
+                    
+                    Director director = new Director();
+                    director.setFirstName(searchParam);
+                    director.setLastName(searchParam);
+                    
+                    MoviePoster mp = new MoviePoster();
+                    mp.setPosterImage(new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB));
+                    
+                    Movie movie = new Movie();
+                    movie.setName(searchParam);
+                    movie.setDirector(director);
+                    movie.setMoviePoster(mp);
+                    
+                    List<Movie> movies = Communication.getInstance().selectMovies(movie);
+                    fillTblMovies(movies);
                 } catch (Exception ex) {
                     Logger.getLogger(UserMainController.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(frmUserMain, ex.getMessage(), 

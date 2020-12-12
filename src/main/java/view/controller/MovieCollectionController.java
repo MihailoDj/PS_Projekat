@@ -189,8 +189,11 @@ public class MovieCollectionController {
     private void fillTblCollection () {
         try {
             List<Movie> movies = new ArrayList<>();
+            User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
+            UserMovieCollection collection = new UserMovieCollection();
+            collection.setUser(user);
             
-            for (UserMovieCollection umc : Communication.getInstance().selectAllCollections()) {
+            for (UserMovieCollection umc : Communication.getInstance().selectCollections(collection)) {
                 movies.add(umc.getMovie());
             }
             

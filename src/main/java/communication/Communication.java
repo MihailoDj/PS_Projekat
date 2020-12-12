@@ -58,19 +58,16 @@ public class Communication {
             throw response.getException();
     }
     
-    /*public List<User> selectUser(String user) throws Exception{
-        List<User> users = null;
+    public List<User> selectUser(User user) throws Exception{
+        Request request = new Request(Operation.SELECT_USER, user);
+        sender.send(request);
+        Response response = (Response)receiver.receive();
         
-        try {
-            users = userRepository.select(user);
-        } catch(Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-        
-        return users;
+        if (response.getException() == null)
+            return (List<User>)response.getResult();
+        else
+            throw response.getException();
     }
-    */
     
     public void updateUser(User user) throws Exception{
         Request request = new Request(Operation.UPDATE_USER, user);
@@ -186,19 +183,16 @@ public class Communication {
              throw response.getException();
     }
     
-    /*public List<Movie> selectMovies(String criteria) throws Exception {
-        List<Movie> movies = null;
+    public List<Movie> selectMovies(Movie movie) throws Exception {
+        Request request = new Request(Operation.SELECT_MOVIES, movie);
+        sender.send(request);
+        Response response = (Response)receiver.receive();
         
-        try{
-            movies = movieRepository.select(criteria);
-        }catch(Exception e){
-            e.printStackTrace();
-            throw e;
-        }
-        
-        return movies;
+        if (response.getException() == null)
+            return (List<Movie>)response.getResult();
+        else
+            throw response.getException();
     }
-    */
     
     public void insertDirector(Director director) throws Exception {
         Request request = new Request(Operation.INSERT_DIRECTOR, director);
@@ -274,6 +268,17 @@ public class Communication {
             throw response.getException();
     }
     
+     public List<UserMovieCollection> selectCollections(UserMovieCollection collection) throws Exception {
+        Request request = new Request(Operation.SELECT_COLLECTIONS, collection);
+        sender.send(request);
+        Response response = (Response)receiver.receive();
+        
+        if (response.getException() == null)
+            return (List<UserMovieCollection>)response.getResult();
+        else
+            throw response.getException();
+    }
+    
     public void deleteCollection(UserMovieCollection collection) throws Exception{
         Request request = new Request(Operation.DELETE_COLLECTION, collection);
         sender.send(request);
@@ -298,6 +303,17 @@ public class Communication {
         Response response = (Response)receiver.receive();
         
         if(response.getException() == null) 
+            return (List<Review>)response.getResult();
+        else
+            throw response.getException();
+    }
+    
+    public List<Review> selectReviews(Review review) throws Exception {
+        Request request = new Request(Operation.SELECT_REVIEWS, review);
+        sender.send(request);
+        Response response = (Response)receiver.receive();
+        
+        if (response.getException() == null)
             return (List<Review>)response.getResult();
         else
             throw response.getException();

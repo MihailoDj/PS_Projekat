@@ -176,13 +176,10 @@ public class MovieController {
         frmMovie.addBtnAddActorActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Role role = new Role() {
-                    {
-                        setMovie(movie);
-                        setRoleName(frmMovie.getTxtRoleName().getText().trim());
-                        setActor((Actor)frmMovie.getCbActors().getSelectedItem());
-                    }
-                };
+                Role role = new Role();
+                role.setMovie(movie);
+                role.setRoleName(frmMovie.getTxtRoleName().getText().trim());
+                role.setActor((Actor)frmMovie.getCbActors().getSelectedItem());
                 
                 movie.getRoles().add(role);
                 fillTblRoles(movie.getRoles());
@@ -205,12 +202,9 @@ public class MovieController {
         frmMovie.addBtnAddGenreActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MovieGenre movieGenre = new MovieGenre() {
-                    {
-                        setMovie(movie);
-                        setGenre((Genre)frmMovie.getCbGenres().getSelectedItem());
-                    }
-                };
+                MovieGenre movieGenre = new MovieGenre();
+                movieGenre.setMovie(movie);
+                movieGenre.setGenre((Genre)frmMovie.getCbGenres().getSelectedItem());
                 
                 movie.getMovieGenres().add(movieGenre);
                 fillTblMovieGenres(movie.getMovieGenres());
@@ -233,12 +227,9 @@ public class MovieController {
         frmMovie.addBtnAddProductionCompanyActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Production productionCompany = new Production() {
-                    {
-                        setMovie(movie);
-                        setProductionCompany((ProductionCompany)frmMovie.getCbProductionCompanies().getSelectedItem());
-                    }
-                };
+                Production productionCompany = new Production();
+                productionCompany.setMovie(movie);
+                productionCompany.setProductionCompany((ProductionCompany)frmMovie.getCbProductionCompanies().getSelectedItem());
                 
                 movie.getProductions().add(productionCompany);
                 fillTblProduction(movie.getProductions());
@@ -317,12 +308,11 @@ public class MovieController {
                         frmMovie.getLblPoster().setIcon(new ImageIcon(bi.getScaledInstance(frmMovie.getLblPoster().getWidth(),
                                 frmMovie.getLblPoster().getHeight(), Image.SCALE_SMOOTH)));
                         
-                        movie.setMoviePoster(new MoviePoster() {
-                            {
-                                setMoviePosterID(0);
-                                setPosterImage(bi);
-                            }
-                        });
+                        MoviePoster moviePoster = new MoviePoster();
+                        moviePoster.setMoviePosterID(0);
+                        moviePoster.setPosterImage(bi);
+                        
+                        movie.setMoviePoster(moviePoster);
                         
                     } catch(IOException ex) {
                        ex.printStackTrace();
@@ -485,34 +475,29 @@ public class MovieController {
     }
 
     private Movie makeMovieFromForm() {
-        Movie movie = new Movie(){
-            {
-                setMovieID(Integer.parseInt(frmMovie.getTxtMovieID().getText().trim()));
-                setName(frmMovie.getTxtName().getText().trim());
-                setDescription(frmMovie.getTxtDescription().getText().trim());
-                setScore(Double.parseDouble(frmMovie.getTxtScore().getText()));
-                setDirector((Director) frmMovie.getCbDirector().getSelectedItem());
-                setReleaseDate(frmMovie.getReleaseDate().getDate());
+        Movie movie = new Movie();
+        movie.setMovieID(Integer.parseInt(frmMovie.getTxtMovieID().getText().trim()));
+        movie.setName(frmMovie.getTxtName().getText().trim());
+        movie.setDescription(frmMovie.getTxtDescription().getText().trim());
+        movie.setScore(Double.parseDouble(frmMovie.getTxtScore().getText()));
+        movie.setDirector((Director) frmMovie.getCbDirector().getSelectedItem());
+        movie.setReleaseDate(frmMovie.getReleaseDate().getDate());
+
+        movie.setRoles(((RoleTableModel)frmMovie.getTblRoles().getModel()).getAll());
+        movie.setMovieGenres(((MovieGenreTableModel)frmMovie.getTblMovieGenre().getModel()).getAll());
+        movie.setProductions(((ProductionTableModel)frmMovie.getTblProduction().getModel()).getAll());
                 
-                setRoles(((RoleTableModel)frmMovie.getTblRoles().getModel()).getAll());
-                setMovieGenres(((MovieGenreTableModel)frmMovie.getTblMovieGenre().getModel()).getAll());
-                setProductions(((ProductionTableModel)frmMovie.getTblProduction().getModel()).getAll());
-                
-                setMoviePoster(new MoviePoster() {
-                    {
-                        Icon icon = frmMovie.getLblPoster().getIcon();
-                        BufferedImage image = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_RGB);
-                        Graphics g = image.createGraphics();
-                        icon.paintIcon(null, g, 0, 0);
-                        g.dispose();
-                        
-                        setMoviePosterID(0);
-                        setPosterImage(image);
-                    }
-                });
-                
-            }
-        };
+        MoviePoster moviePoster = new MoviePoster();
+        Icon icon = frmMovie.getLblPoster().getIcon();
+        BufferedImage image = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics g = image.createGraphics();
+        icon.paintIcon(null, g, 0, 0);
+        g.dispose();
+
+        moviePoster.setMoviePosterID(0);
+        moviePoster.setPosterImage(image);
+        
+        movie.setMoviePoster(moviePoster);
         
         return movie;
     }

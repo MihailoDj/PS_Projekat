@@ -6,7 +6,6 @@
 package view.form.component.table;
 
 import domain.Production;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 

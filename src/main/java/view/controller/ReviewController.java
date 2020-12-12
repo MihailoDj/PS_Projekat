@@ -52,16 +52,14 @@ public class ReviewController {
                     
                     Movie movie = (Movie)MainCoordinator.getInstance().getParam(Constants.PARAM_MOVIE);
                     User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
-                    Review review = new Review() {
-                        {
-                            setReviewID(0);
-                            setReviewText(frmReview.getTxtReviewText().getText().trim());
-                            setReviewScore(Integer.parseInt(frmReview.getTxtReviewScore().getText().trim()));
-                            setReviewDate(LocalDateTime.now());
-                            setUser(user);
-                            setMovie(movie);
-                        }
-                    };
+                    
+                    Review review = new Review();
+                    review.setReviewID(0);
+                    review.setReviewText(frmReview.getTxtReviewText().getText().trim());
+                    review.setReviewScore(Integer.parseInt(frmReview.getTxtReviewScore().getText().trim()));
+                    review.setReviewDate(LocalDateTime.now());
+                    review.setUser(user);
+                    review.setMovie(movie);
                 
                     Communication.getInstance().insertReview(review);
                     JOptionPane.showMessageDialog(frmReview, movie.getName() + " successfully reviewd!", 
@@ -84,14 +82,13 @@ public class ReviewController {
                     if (check == JOptionPane.YES_OPTION) {
                         Movie movie = (Movie)MainCoordinator.getInstance().getParam(Constants.PARAM_MOVIE);
                         User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
-                        Review review = new Review() {
-                            {
-                                setReviewText(frmReview.getTxtReviewText().getText().trim());
-                                setReviewScore(Integer.parseInt(frmReview.getTxtReviewScore().getText().trim()));
-                                setUser(user);
-                                setMovie(movie);
-                            }
-                        };
+                        
+                        Review review = new Review();
+                        review.setReviewText(frmReview.getTxtReviewText().getText().trim());
+                        review.setReviewScore(Integer.parseInt(frmReview.getTxtReviewScore().getText().trim()));
+                        review.setUser(user);
+                        review.setMovie(movie);
+                        
                         Communication.getInstance().updateReview(review);
                         JOptionPane.showMessageDialog(frmReview, "Review successfully updated", 
                                 "Success", JOptionPane.INFORMATION_MESSAGE);

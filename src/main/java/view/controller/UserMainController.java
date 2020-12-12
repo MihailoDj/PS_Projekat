@@ -116,12 +116,10 @@ public class UserMainController {
                     Movie movie = ((MovieTableModel)frmUserMain.getTblMovies().getModel()).getMovieAt(selectedRow);
                     User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
                     
-                    UserMovieCollection collection = new UserMovieCollection(){
-                        {
-                            setMovie(movie);
-                            setUser(user);
-                        }
-                    };
+                    UserMovieCollection collection = new UserMovieCollection();
+                    collection.setMovie(movie);
+                    collection.setUser(user);
+                    
                     Communication.getInstance().insertCollection(collection);
                     JOptionPane.showMessageDialog(frmUserMain, "Movie successfully saved to collection!", 
                             "Success", JOptionPane.INFORMATION_MESSAGE);

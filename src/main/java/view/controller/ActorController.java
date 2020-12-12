@@ -38,13 +38,11 @@ public class ActorController {
             private void add() {
                 try {
                     validateForm();
-                    Actor actor = new Actor() {
-                        {
-                            setFirstName(frmActor.getTxtActorFirstName().getText().trim());
-                            setLastName(frmActor.getTxtActorLastName().getText().trim());
-                            setBiography(frmActor.getBiography().getText().trim());
-                        }
-                    };
+                   
+                    Actor actor = new Actor();
+                    actor.setFirstName(frmActor.getTxtActorFirstName().getText().trim());
+                    actor.setLastName(frmActor.getTxtActorLastName().getText().trim());
+                    actor.setBiography(frmActor.getBiography().getText().trim());
                     
                     Communication.getInstance().insertActor(actor);
                     JOptionPane.showMessageDialog(frmActor, "Actor successfully saved!");
@@ -109,6 +107,7 @@ public class ActorController {
             private void update() {
                 try {
                     validateForm();
+                    
                     int check = JOptionPane.showConfirmDialog(frmActor, "Are you sure?", 
                         "Update actor", JOptionPane.YES_NO_OPTION);
                 
@@ -195,15 +194,12 @@ public class ActorController {
     }
     
     private Actor makeActorFromForm() {
-        Actor actor = new Actor(){
-            {
-                setActorID(Integer.parseInt(frmActor.getTxtActorID().getText().trim()));
-                setFirstName(frmActor.getTxtActorFirstName().getText().trim());
-                setLastName(frmActor.getTxtActorLastName().getText().trim());
-                setBiography(frmActor.getBiography().getText().trim());
-            }
-        };
-        
+        Actor actor = new Actor();
+        actor.setActorID(Integer.parseInt(frmActor.getTxtActorID().getText().trim()));
+        actor.setFirstName(frmActor.getTxtActorFirstName().getText().trim());
+        actor.setLastName(frmActor.getTxtActorLastName().getText().trim());
+        actor.setBiography(frmActor.getBiography().getText().trim());
+                
         return actor;
     }
 }

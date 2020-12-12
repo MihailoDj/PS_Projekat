@@ -156,7 +156,6 @@ public class ViewAllMoviesController {
         frmViewMovies.getBtnDeleteAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                User user = ((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
                 int row = frmViewMovies.getTblMovies().getSelectedRow();
 
                 if (row != -1) {
@@ -167,8 +166,8 @@ public class ViewAllMoviesController {
                         if (check == JOptionPane.YES_OPTION) {
                             Movie movie = ((MovieTableModel) frmViewMovies.getTblMovies().getModel()).getMovieAt(row);
 
-                            MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, null);
                             Communication.getInstance().deleteMovie(movie);
+                            MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, null);
                             
                             JOptionPane.showMessageDialog(frmViewMovies, "Movie successfully deleted",
                                     "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -186,17 +185,13 @@ public class ViewAllMoviesController {
     }
 
     public void openForm() {
-        prepareView();
+        frmViewMovies.setTitle("View movies");
         frmViewMovies.setLocationRelativeTo(MainCoordinator.getInstance().getMainContoller().getFrmMain());
         frmViewMovies.setVisible(true);
     }
 
-    private void prepareView() {
-        frmViewMovies.setTitle("View movies");
-    }
-
     private void fillTblMovies() {
-        List<Movie> movies = new ArrayList<>();
+        List<Movie> movies ;
 
         try {
             movies = Communication.getInstance().selectAllMovies();

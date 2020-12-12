@@ -38,15 +38,14 @@ public class DirectorController {
             private void add() {
                 try {
                     validateForm();
-                    Director director = new Director() {
-                        {
-                            setFirstName(frmDirector.getTxtDirectorFirstName().getText().trim());
-                            setLastName(frmDirector.getTxtDirectorLastName().getText().trim());
-                            setDateOfBirth(frmDirector.getDateOfBirth().getDate());
-                        }
-                    };
+                    
+                    Director director = new Director();
+                    director.setFirstName(frmDirector.getTxtDirectorFirstName().getText().trim());
+                    director.setLastName(frmDirector.getTxtDirectorLastName().getText().trim());
+                    director.setDateOfBirth(frmDirector.getDateOfBirth().getDate());
                     
                     Communication.getInstance().insertDirector(director);
+                    
                     JOptionPane.showMessageDialog(frmDirector, "Director successfully saved!");
                     frmDirector.dispose();
                 } catch (Exception ex) {
@@ -88,6 +87,7 @@ public class DirectorController {
                     Director director = makeDirectorFromForm();
                     try {
                         Communication.getInstance().deleteDirector(director);
+                        
                         JOptionPane.showMessageDialog(frmDirector, "Director deleted successfully!\n", "Delete director", JOptionPane.INFORMATION_MESSAGE);
                         frmDirector.dispose();
                     } catch (Exception ex) {
@@ -114,6 +114,7 @@ public class DirectorController {
                         
                         Director director = makeDirectorFromForm();
                         Communication.getInstance().updateDirector(director);
+                        
                         JOptionPane.showMessageDialog(frmDirector, "Director updated successfully!\n", "Update director", JOptionPane.INFORMATION_MESSAGE);
                         frmDirector.dispose();
                     }
@@ -193,14 +194,11 @@ public class DirectorController {
     }
     
     private Director makeDirectorFromForm() {
-        Director director = new Director(){
-            {
-                setDirectorID(Integer.parseInt(frmDirector.getTxtDirectorID().getText().trim()));
-                setFirstName(frmDirector.getTxtDirectorFirstName().getText().trim());
-                setLastName(frmDirector.getTxtDirectorLastName().getText().trim());
-                setDateOfBirth(frmDirector.getDateOfBirth().getDate());
-            }
-        };
+        Director director = new Director();
+        director.setDirectorID(Integer.parseInt(frmDirector.getTxtDirectorID().getText().trim()));
+        director.setFirstName(frmDirector.getTxtDirectorFirstName().getText().trim());
+        director.setLastName(frmDirector.getTxtDirectorLastName().getText().trim());
+        director.setDateOfBirth(frmDirector.getDateOfBirth().getDate());
         
         return director;
     }

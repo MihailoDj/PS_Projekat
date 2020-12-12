@@ -74,14 +74,14 @@ public class MovieCollectionController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = frmMovieCollection.getTblCollection().getSelectedRow();
+                
                 Movie movie = ((MovieTableModel)frmMovieCollection.getTblCollection().getModel()).getMovieAt(selectedRow);
                 User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
-                Review review = new Review(){
-                    {
-                        setMovie(movie);
-                        setUser(user);
-                    }  
-                };
+                
+                Review review = new Review();
+                review.setMovie(movie);
+                review.setUser(user);
+                
                 MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, movie);
                 MainCoordinator.getInstance().addParam(Constants.PARAM_REVIEW, review);
                 MainCoordinator.getInstance().openReviewForm();
@@ -102,12 +102,10 @@ public class MovieCollectionController {
                         if (check == JOptionPane.YES_OPTION) {
                             Movie movie = ((MovieTableModel) frmMovieCollection.getTblCollection().getModel()).getMovieAt(row);
 {
-                            UserMovieCollection umc = new UserMovieCollection() {
-                                {
-                                    setMovie(movie);
-                                    setUser(user);
-                                }
-                            };
+                            UserMovieCollection umc = new UserMovieCollection() ;
+                            umc.setMovie(movie);
+                            umc.setUser(user);
+                            
                             Communication.getInstance().deleteCollection(umc);
                         }
 

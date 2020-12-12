@@ -44,15 +44,12 @@ public class RegisterController {
                 try{
                     validateForm();
                     
-                    User user = new User() {
-                        {
-                            setUserID(0);
-                            setUsername(frmRegister.getTxtUsername().getText().trim());
-                            setPassword(String.copyValueOf(frmRegister.getTxtPassword().getPassword()));
-                            setAdmin(false);
-                        }
-                    };
-                
+                    User user = new User();
+                    user.setUserID(0);
+                    user.setUsername(frmRegister.getTxtUsername().getText().trim());
+                    user.setPassword(String.copyValueOf(frmRegister.getTxtPassword().getPassword()));
+                    user.setAdmin(false);
+                   
                     Communication.getInstance().insertUser(user);
                     JOptionPane.showMessageDialog(frmRegister, "Account registration successful", "Register", 
                             JOptionPane.INFORMATION_MESSAGE);

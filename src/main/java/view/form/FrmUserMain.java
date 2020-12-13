@@ -48,6 +48,7 @@ public class FrmUserMain extends javax.swing.JFrame {
         jmiReviews = new javax.swing.JMenuItem();
         jMenuAccount = new javax.swing.JMenu();
         jmiSettings = new javax.swing.JMenuItem();
+        jmiLogout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,6 +87,9 @@ public class FrmUserMain extends javax.swing.JFrame {
 
         jmiSettings.setText("Settings");
         jMenuAccount.add(jmiSettings);
+
+        jmiLogout.setText("Logout");
+        jMenuAccount.add(jmiLogout);
 
         jMenuBar1.add(jMenuAccount);
 
@@ -143,6 +147,7 @@ public class FrmUserMain extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuMyMovies;
     private javax.swing.JMenu jMenuReviews;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenuItem jmiLogout;
     private javax.swing.JMenuItem jmiReviews;
     private javax.swing.JMenuItem jmiSettings;
     private javax.swing.JMenuItem jmiViewMyMovies;
@@ -178,6 +183,10 @@ public class FrmUserMain extends javax.swing.JFrame {
     
     public void jmiReviews(ActionListener actionListener) {
         jmiReviews.addActionListener(actionListener);
+    }
+    
+    public void jmiLogoutActionListener(ActionListener actionListener) {
+        jmiLogout.addActionListener(actionListener);
     }
     
     public void btnSaveActionListener(ActionListener actionListener) {

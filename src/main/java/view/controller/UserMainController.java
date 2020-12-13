@@ -82,6 +82,14 @@ public class UserMainController {
                 MainCoordinator.getInstance().openAccountSettingsForm();
             }
         });
+        frmUserMain.jmiLogoutActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frmUserMain.dispose();
+                MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, null);
+                MainCoordinator.getInstance().openLoginForm();
+            }
+        });
         frmUserMain.jmiViewMyMoviesActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

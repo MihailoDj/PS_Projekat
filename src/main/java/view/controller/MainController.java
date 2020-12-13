@@ -38,6 +38,14 @@ public class MainController {
     }
 
     private void addActionListener() {
+        frmMain.jmiLogoutActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frmMain.dispose();
+                MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, null);
+                MainCoordinator.getInstance().openLoginForm();
+            }
+        });
         frmMain.jmiNewMovieAddActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -55,6 +55,18 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenuAccount">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Account"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jmiLogout">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Logout"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="jMenuAbout">
           <Properties>
             <Property name="text" type="java.lang.String" value="About"/>

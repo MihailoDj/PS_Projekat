@@ -41,6 +41,8 @@ public class FrmMain extends javax.swing.JFrame {
         jmActor = new javax.swing.JMenu();
         jmiNewActor = new javax.swing.JMenuItem();
         jmiViewAllActors = new javax.swing.JMenuItem();
+        jMenuAccount = new javax.swing.JMenu();
+        jmiLogout = new javax.swing.JMenuItem();
         jMenuAbout = new javax.swing.JMenu();
         jmiAboutSoftware = new javax.swing.JMenuItem();
 
@@ -76,6 +78,13 @@ public class FrmMain extends javax.swing.JFrame {
 
         jMenuBarMain.add(jmActor);
 
+        jMenuAccount.setText("Account");
+
+        jmiLogout.setText("Logout");
+        jMenuAccount.add(jmiLogout);
+
+        jMenuBarMain.add(jMenuAccount);
+
         jMenuAbout.setText("About");
 
         jmiAboutSoftware.setText("Software");
@@ -107,11 +116,13 @@ public class FrmMain extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenuAbout;
+    private javax.swing.JMenu jMenuAccount;
     private javax.swing.JMenuBar jMenuBarMain;
     private javax.swing.JMenu jmActor;
     private javax.swing.JMenu jmDirector;
     private javax.swing.JMenu jmMovie;
     private javax.swing.JMenuItem jmiAboutSoftware;
+    private javax.swing.JMenuItem jmiLogout;
     private javax.swing.JMenuItem jmiNewActor;
     private javax.swing.JMenuItem jmiNewDirector;
     private javax.swing.JMenuItem jmiNewMovie;
@@ -143,6 +154,10 @@ public class FrmMain extends javax.swing.JFrame {
     
     public void jmiViewAllActorsActionListener(ActionListener actionListener) {
         jmiViewAllActors.addActionListener(actionListener);
+    }
+    
+    public void jmiLogoutActionListener(ActionListener actionListener) {
+        jmiLogout.addActionListener(actionListener);
     }
     
     public JLabel getLblCurrentUser () {

@@ -45,7 +45,7 @@ public class RegisterController {
                     validateForm();
                     
                     User user = new User();
-                    user.setUserID(0);
+                    user.setUserID(0l);
                     user.setUsername(frmRegister.getTxtUsername().getText().trim());
                     user.setPassword(String.copyValueOf(frmRegister.getTxtPassword().getPassword()));
                     user.setAdmin(false);

@@ -195,7 +195,7 @@ public class ActorController {
     
     private Actor makeActorFromForm() {
         Actor actor = new Actor();
-        actor.setActorID(Integer.parseInt(frmActor.getTxtActorID().getText().trim()));
+        actor.setActorID(Long.parseLong(frmActor.getTxtActorID().getText().trim()));
         actor.setFirstName(frmActor.getTxtActorFirstName().getText().trim());
         actor.setLastName(frmActor.getTxtActorLastName().getText().trim());
         actor.setBiography(frmActor.getBiography().getText().trim());

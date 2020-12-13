@@ -32,7 +32,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -84,7 +83,7 @@ public class MovieController {
                     List<Production> productions = ((ProductionTableModel)frmMovie.getTblProduction().getModel()).getAll();
                     
                     
-                    movie.setMovieID(0);
+                    movie.setMovieID(0l);
                     movie.setName(frmMovie.getTxtName().getText().trim());
                     movie.setDescription(frmMovie.getTxtDescription().getText().trim());
                     movie.setScore(Double.parseDouble(frmMovie.getTxtScore().getText()));
@@ -309,7 +308,7 @@ public class MovieController {
                                 frmMovie.getLblPoster().getHeight(), Image.SCALE_SMOOTH)));
                         
                         MoviePoster moviePoster = new MoviePoster();
-                        moviePoster.setMoviePosterID(0);
+                        moviePoster.setMoviePosterID(0l);
                         moviePoster.setPosterImage(bi);
                         
                         movie.setMoviePoster(moviePoster);
@@ -476,7 +475,7 @@ public class MovieController {
 
     private Movie makeMovieFromForm() {
         Movie movie = new Movie();
-        movie.setMovieID(Integer.parseInt(frmMovie.getTxtMovieID().getText().trim()));
+        movie.setMovieID(Long.parseLong(frmMovie.getTxtMovieID().getText().trim()));
         movie.setName(frmMovie.getTxtName().getText().trim());
         movie.setDescription(frmMovie.getTxtDescription().getText().trim());
         movie.setScore(Double.parseDouble(frmMovie.getTxtScore().getText()));
@@ -494,7 +493,7 @@ public class MovieController {
         icon.paintIcon(null, g, 0, 0);
         g.dispose();
 
-        moviePoster.setMoviePosterID(0);
+        moviePoster.setMoviePosterID(0l);
         moviePoster.setPosterImage(image);
         
         movie.setMoviePoster(moviePoster);

@@ -54,7 +54,7 @@ public class ReviewController {
                     User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
                     
                     Review review = new Review();
-                    review.setReviewID(0);
+                    review.setReviewID(0l);
                     review.setReviewText(frmReview.getTxtReviewText().getText().trim());
                     review.setReviewScore(Integer.parseInt(frmReview.getTxtReviewScore().getText().trim()));
                     review.setReviewDate(LocalDateTime.now());

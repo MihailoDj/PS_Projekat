@@ -195,7 +195,7 @@ public class DirectorController {
     
     private Director makeDirectorFromForm() {
         Director director = new Director();
-        director.setDirectorID(Integer.parseInt(frmDirector.getTxtDirectorID().getText().trim()));
+        director.setDirectorID(Long.parseLong(frmDirector.getTxtDirectorID().getText().trim()));
         director.setFirstName(frmDirector.getTxtDirectorFirstName().getText().trim());
         director.setLastName(frmDirector.getTxtDirectorLastName().getText().trim());
         director.setDateOfBirth(frmDirector.getDateOfBirth().getDate());

@@ -58,7 +58,7 @@ public class FrmMovieCollection extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Naziv", "Datum izdanja", "Prosečna ocena", "Režiser"
+                "ID", "Name", "Rel. date", "Score", "Director"
             }
         ) {
             Class[] types = new Class [] {

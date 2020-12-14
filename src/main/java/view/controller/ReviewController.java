@@ -10,6 +10,8 @@ import domain.Review;
 import domain.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 import view.constant.Constants;
@@ -28,6 +30,7 @@ public class ReviewController {
     public ReviewController(FrmReview frmReview) {
         this.frmReview = frmReview;
         addActionListener();
+        addKeyListener();
     }
     
     public void openForm(FormMode formMode) {
@@ -36,6 +39,32 @@ public class ReviewController {
         frmReview.setLocationRelativeTo(null);
         frmReview.setVisible(true);
     }
+    
+    private void addKeyListener() {
+        frmReview.txtReviewTextKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                int reviewLength = frmReview.getTxtReviewText().getText().length();
+                int charsRemaining = 300 - reviewLength;
+                frmReview.getLblCharactersRemaining().setText("Characters remaining: " + charsRemaining);
+                
+                if (charsRemaining < 0)
+                    frmReview.getBtnUpdate().setEnabled(false);
+                else
+                    frmReview.getBtnUpdate().setEnabled(true);
+            }
+        });
+    };
     
     private void addActionListener() {
         frmReview.btnCancelActionListener(new ActionListener() {
@@ -117,6 +146,7 @@ public class ReviewController {
                 review = new Review();
                 frmReview.getTxtReviewScore().setText("");
                 frmReview.getTxtReviewText().setText("");
+                frmReview.getLblCharactersRemaining().setText("Characters remaining: 300");
                 
                 frmReview.getBtnSave().setEnabled(true);
                 frmReview.getBtnCancel().setEnabled(true);
@@ -127,6 +157,7 @@ public class ReviewController {
                 
                 frmReview.getTxtReviewScore().setText(review.getReviewScore() + "");
                 frmReview.getTxtReviewText().setText(review.getReviewText());
+                frmReview.getLblCharactersRemaining().setText("Characters remaining: " + (300 - review.getReviewText().length()));
                 
                 frmReview.getBtnSave().setEnabled(false);
                 frmReview.getBtnCancel().setEnabled(true);
@@ -136,8 +167,14 @@ public class ReviewController {
     }
     
     private void validateForm() throws Exception {
-        if (frmReview.getTxtReviewScore().getText().isEmpty() || frmReview.getTxtReviewText().getText().isEmpty()) {
+        String reviewScore = frmReview.getTxtReviewScore().getText();
+        String reviewText = frmReview.getTxtReviewText().getText();
+        
+        if (reviewText.isEmpty() || reviewScore.isEmpty()) 
             throw new Exception("Fields can't be empty!");
-        }
+        if (Integer.parseInt(reviewScore) < 1 || Integer.parseInt(reviewScore) > 10)
+            throw new Exception("Review score must be an integer between 1 and 10");
+        if (reviewScore.length() > 300)
+            throw new Exception("Limit review to 300 characters!");
     }
 }

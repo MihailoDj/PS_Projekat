@@ -26,24 +26,6 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblActorFirstName" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblActorID" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblActorLastName" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblBiography" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtActorID" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtActorFirstName" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtActorLastName" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="btnUpdate" min="-2" max="-2" attributes="0"/>
@@ -58,6 +40,28 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnAdd" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblActorFirstName" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblActorID" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblActorLastName" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblBiography" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="lblCharactersRemaining" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="txtActorID" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtActorFirstName" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtActorLastName" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -87,7 +91,9 @@
                   <Component id="lblBiography" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="29" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="lblCharactersRemaining" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="27" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnDelete" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnAdd" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -163,10 +169,16 @@
         <Component class="javax.swing.JTextArea" name="txtBiography">
           <Properties>
             <Property name="columns" type="int" value="20"/>
+            <Property name="lineWrap" type="boolean" value="true"/>
             <Property name="rows" type="int" value="5"/>
           </Properties>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="lblCharactersRemaining">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Characters remaining: "/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

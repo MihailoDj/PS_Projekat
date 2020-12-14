@@ -80,6 +80,8 @@ public class AccountSettingsController {
                     String oldPass = ((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER)).getPassword();
                     if (String.copyValueOf(form.getTxtOldPassword().getPassword()).equals(oldPass)) {
                         try {
+                            validateForm();
+                            
                             ((User)MainCoordinator.getInstance().getParam(
                                     Constants.CURRENT_USER)).setUsername(form.getTxtUsername().getText().trim());
                             ((User)MainCoordinator.getInstance().getParam(
@@ -111,5 +113,15 @@ public class AccountSettingsController {
         } catch (Exception ex) {
             Logger.getLogger(AccountSettingsController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private void validateForm() throws Exception{
+        String oldPass = String.copyValueOf(form.getTxtOldPassword().getPassword());
+        String newPass = String.copyValueOf(form.getTxtNewPassword().getPassword());
+        String username = form.getTxtUsername().getText();
+        if (username.isEmpty() || oldPass.isEmpty() || newPass.isEmpty())
+            throw new Exception("Fields can't be empty!");
+        if (newPass.equals(oldPass))
+            throw new Exception("Your new password can't be the same as your old password!");
     }
 }

@@ -8,6 +8,8 @@ import communication.Communication;
 import domain.Actor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -26,6 +28,26 @@ public class ActorController {
     public ActorController(FrmActor frmActor) {
         this.frmActor = frmActor;
         addActionListener();
+        addKeyListener();
+    }
+    
+    private void addKeyListener() {
+        frmActor.txtBiographyKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                int descriptionLength = frmActor.getBiography().getText().length();
+                int charsRemaining = 150 - descriptionLength;
+                frmActor.getLblCharactersRemaining().setText("Characters remaining: " + charsRemaining);
+            }
+        });
     }
     
     private void addActionListener() {
@@ -140,6 +162,7 @@ public class ActorController {
         switch (formMode) {
             case FORM_ADD:
                 frmActor.getTxtActorID().setText("auto");
+                frmActor.getLblCharactersRemaining().setText("Characters remaining: 150");
                 
                 frmActor.getBtnCancel().setEnabled(true);
                 frmActor.getBtnDelete().setEnabled(false);
@@ -169,6 +192,7 @@ public class ActorController {
                 frmActor.getTxtActorFirstName().setText(actor.getFirstName());
                 frmActor.getTxtActorLastName().setText(actor.getLastName());
                 frmActor.getBiography().setText(actor.getBiography());
+                frmActor.getLblCharactersRemaining().setText("Characters remaining: " + (150 - actor.getBiography().length()));
                 break;
             case FORM_EDIT:
                 frmActor.getBtnCancel().setEnabled(true);

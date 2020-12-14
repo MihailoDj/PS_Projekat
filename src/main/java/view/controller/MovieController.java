@@ -18,6 +18,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -57,6 +59,23 @@ public class MovieController {
         this.frmMovie = frmMovie;
         addActionListeners();
         addListSelectionListener();
+        addKeyListener();
+    }
+    
+    private void addKeyListener() {
+        frmMovie.txtDescriptionKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+            @Override
+            public void keyPressed(KeyEvent e) {}
+            @Override
+            public void keyReleased(KeyEvent e) {
+                int descriptionLength = frmMovie.getTxtDescription().getText().length();
+                int charsRemaining = 200 - descriptionLength;
+                frmMovie.getLblCharactersRemaining().setText("Characters remaining: " + charsRemaining);
+                
+            }
+        });
     }
 
     private void addActionListeners() {
@@ -175,14 +194,20 @@ public class MovieController {
         frmMovie.addBtnAddActorActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Role role = new Role();
-                role.setMovie(movie);
-                role.setRoleName(frmMovie.getTxtRoleName().getText().trim());
-                role.setActor((Actor)frmMovie.getCbActors().getSelectedItem());
+                String roleName = frmMovie.getTxtRoleName().getText().trim();
                 
-                movie.getRoles().add(role);
-                fillTblRoles(movie.getRoles());
-                frmMovie.getBtnRemoveAllRoles().setEnabled(true);
+                if (!roleName.isEmpty()) {
+                    Role role = new Role();
+                    role.setMovie(movie);
+                    role.setRoleName(roleName);
+                    role.setActor((Actor)frmMovie.getCbActors().getSelectedItem());
+
+                    movie.getRoles().add(role);
+                    fillTblRoles(movie.getRoles());
+                    frmMovie.getBtnRemoveAllRoles().setEnabled(true);
+                } else {
+                    JOptionPane.showMessageDialog(frmMovie, "Role name can't be empty", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         frmMovie.addBtnRemoveActorActionListener(new ActionListener() {
@@ -373,6 +398,7 @@ public class MovieController {
                 
                 frmMovie.getTxtMovieID().setText("auto");
                 frmMovie.getTxtScore().setText(String.valueOf(0));
+                frmMovie.getLblCharactersRemaining().setText("Characters remaining: 200");
                 
                 frmMovie.getBtnCancel().setEnabled(true);
                 frmMovie.getBtnDelete().setEnabled(false);
@@ -390,6 +416,9 @@ public class MovieController {
                 break;
             case FORM_VIEW:
                 movie = (Movie) MainCoordinator.getInstance().getParam(Constants.PARAM_MOVIE);
+                
+                frmMovie.getLblCharactersRemaining().setText("Characters remaining: " 
+                        + (200 - movie.getDescription().length()));
                 
                 frmMovie.getTxtMovieID().setText(movie.getMovieID() + "");
                 frmMovie.getTxtName().setText(movie.getName());
@@ -502,10 +531,11 @@ public class MovieController {
     }
     
     public void validateForm() throws Exception{
-        if (frmMovie.getTxtName().getText().trim().isEmpty() || frmMovie.getTxtName() == null 
-                || frmMovie.getReleaseDate().getDate() == null) {
+        if (frmMovie.getTxtName().getText().trim().isEmpty() || frmMovie.getReleaseDate().getDate() == null ||
+                frmMovie.getLblPoster().getIcon() == null) 
             throw new Exception("Invalid input");
-        }
+        if (frmMovie.getTxtDescription().getText().length() > 200)
+            throw new Exception("Limit description to 200 characters!");
     }
     
     private void fillCbDirector() {

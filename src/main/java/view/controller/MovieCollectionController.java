@@ -64,7 +64,7 @@ public class MovieCollectionController {
                 if (row != -1) {
                     Movie movie = ((MovieTableModel) frmMovieCollection.getTblCollection().getModel()).getMovieAt(row);
                     MainCoordinator.getInstance().addParam(Constants.PARAM_MOVIE, movie);
-                    MainCoordinator.getInstance().openMovieDetailsForm();
+                    MainCoordinator.getInstance().openUserMovieForm();
                 } else {
                     JOptionPane.showMessageDialog(frmMovieCollection, "You must select a movie", "Error", JOptionPane.ERROR_MESSAGE);
                 }

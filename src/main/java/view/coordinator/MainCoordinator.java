@@ -17,6 +17,7 @@ import view.controller.MovieController;
 import view.controller.RegisterController;
 import view.controller.ReviewController;
 import view.controller.UserMainController;
+import view.controller.UserMovieController;
 import view.controller.ViewAllActorsController;
 import view.controller.ViewAllDirectorsController;
 import view.controller.ViewAllMoviesController;
@@ -31,6 +32,7 @@ import view.form.FrmMovieCollection;
 import view.form.FrmRegister;
 import view.form.FrmReview;
 import view.form.FrmUserMain;
+import view.form.FrmUserMovie;
 import view.form.FrmViewActors;
 import view.form.FrmViewDirectors;
 import view.form.FrmViewMovies;
@@ -122,6 +124,11 @@ public class MainCoordinator {
         FrmMovie movieDetails = new FrmMovie(mainController.getFrmMain(), true);
         MovieController movieController = new MovieController(movieDetails);
         movieController.openForm(FormMode.FORM_VIEW);
+    }
+    
+    public void openUserMovieForm() {
+        UserMovieController cont = new UserMovieController(new FrmUserMovie(null, true));
+        cont.openForm();
     }
     
     public void openDirectorForm() {

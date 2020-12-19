@@ -26,6 +26,7 @@ import view.form.util.FormMode;
 public class ReviewController {
     private final FrmReview frmReview;
     private Review review;
+    private boolean isFormModeAdd = true;
     
     public ReviewController(FrmReview frmReview) {
         this.frmReview = frmReview;
@@ -59,9 +60,15 @@ public class ReviewController {
                 frmReview.getLblCharactersRemaining().setText("Characters remaining: " + charsRemaining);
                 
                 if (charsRemaining < 0)
-                    frmReview.getBtnUpdate().setEnabled(false);
+                    if(isFormModeAdd)
+                        frmReview.getBtnSave().setEnabled(false);
+                    else
+                        frmReview.getBtnUpdate().setEnabled(false);
                 else
-                    frmReview.getBtnUpdate().setEnabled(true);
+                    if(isFormModeAdd)
+                        frmReview.getBtnSave().setEnabled(true);
+                    else
+                        frmReview.getBtnUpdate().setEnabled(true);
             }
         });
     };
@@ -85,7 +92,7 @@ public class ReviewController {
                     Review review = new Review();
                     review.setReviewID(0l);
                     review.setReviewText(frmReview.getTxtReviewText().getText().trim());
-                    review.setReviewScore(Integer.parseInt(frmReview.getTxtReviewScore().getText().trim()));
+                    review.setReviewScore(frmReview.getStarRater().getSelection());
                     review.setReviewDate(LocalDateTime.now());
                     review.setUser(user);
                     review.setMovie(movie);
@@ -114,7 +121,7 @@ public class ReviewController {
                         
                         Review review = new Review();
                         review.setReviewText(frmReview.getTxtReviewText().getText().trim());
-                        review.setReviewScore(Integer.parseInt(frmReview.getTxtReviewScore().getText().trim()));
+                        review.setReviewScore(frmReview.getStarRater().getSelection());
                         review.setUser(user);
                         review.setMovie(movie);
                         
@@ -143,8 +150,10 @@ public class ReviewController {
     private void setUpComponents(FormMode formMode) {
         switch(formMode) {
             case FORM_ADD:
+                isFormModeAdd = true;
+                
                 review = new Review();
-                frmReview.getTxtReviewScore().setText("");
+                frmReview.getStarRater().setSelection(0);
                 frmReview.getTxtReviewText().setText("");
                 frmReview.getLblCharactersRemaining().setText("Characters remaining: 300");
                 
@@ -153,9 +162,11 @@ public class ReviewController {
                 frmReview.getBtnUpdate().setEnabled(false);
                 break;
             case FORM_EDIT:
+                isFormModeAdd = false;
+                
                 review = ((Review)MainCoordinator.getInstance().getParam(Constants.PARAM_REVIEW));
                 
-                frmReview.getTxtReviewScore().setText(review.getReviewScore() + "");
+                frmReview.getStarRater().setRating(review.getReviewScore());
                 frmReview.getTxtReviewText().setText(review.getReviewText());
                 frmReview.getLblCharactersRemaining().setText("Characters remaining: " + (300 - review.getReviewText().length()));
                 
@@ -167,14 +178,13 @@ public class ReviewController {
     }
     
     private void validateForm() throws Exception {
-        String reviewScore = frmReview.getTxtReviewScore().getText();
         String reviewText = frmReview.getTxtReviewText().getText();
         
-        if (reviewText.isEmpty() || reviewScore.isEmpty()) 
+        if (frmReview.getStarRater().getSelection() == 0)
+            throw new Exception("Review score can't be 0!");
+        if (reviewText.isEmpty()) 
             throw new Exception("Fields can't be empty!");
-        if (Integer.parseInt(reviewScore) < 1 || Integer.parseInt(reviewScore) > 10)
-            throw new Exception("Review score must be an integer between 1 and 10");
-        if (reviewScore.length() > 300)
+        if (reviewText.length() > 300)
             throw new Exception("Limit review to 300 characters!");
     }
 }

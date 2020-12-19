@@ -42,7 +42,7 @@ public class UserMovieController {
         
         form.getLblName().setText(movie.getName());
         form.getTxtDescription().setText(movie.getDescription());
-        form.getLblScore().setText(String.valueOf(movie.getScore()));
+        form.getStarRater().setRating((float) movie.getScore());
         form.getLblReleaseDate().setText(movie.getReleaseDate() + "");
         form.getLblDirector().setText(movie.getDirector() + "");
         

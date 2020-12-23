@@ -5,13 +5,20 @@
  */
 package view.controller;
 
+import communication.Communication;
 import domain.User;
+import domain.UserStatistics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.table.TableColumnModel;
 import view.constant.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmMain;
+import view.form.component.table.UserStatisticsTableModel;
 
 /**
  *
@@ -32,6 +39,8 @@ public class MainController {
         User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
         String systemRole = (user.isAdmin()) ? "administrator" : "user";
         frmMain.getLblCurrentUser().setText("Current " + systemRole + ": " + user.getUsername());
+        
+        setUpTableuserStatistics();
         
         frmMain.setVisible(true);
         frmMain.setExtendedState( JFrame.MAXIMIZED_BOTH);
@@ -110,5 +119,30 @@ public class MainController {
     
     public FrmMain getFrmMain() {
         return frmMain;
+    }
+    
+    public void setUpTableuserStatistics() {
+        try {
+            List<UserStatistics> userStats = Communication.getInstance().selectUserStatistics();
+            
+            UserStatisticsTableModel ustm = new UserStatisticsTableModel(userStats);
+            frmMain.getTblUserStatistics().setModel(ustm);
+            
+            TableColumnModel tcm = frmMain.getTblUserStatistics().getColumnModel();
+
+            frmMain.getTblUserStatistics().setAutoCreateRowSorter(true);
+            frmMain.getTblUserStatistics().getTableHeader().setResizingAllowed(false);
+
+            frmMain.getTblUserStatistics().setRowHeight(30);
+            tcm.getColumn(0).setPreferredWidth(15);
+            tcm.getColumn(1).setPreferredWidth(150);
+            tcm.getColumn(2).setPreferredWidth(100);
+            tcm.getColumn(3).setPreferredWidth(100);
+            tcm.getColumn(4).setPreferredWidth(100);
+            tcm.getColumn(5).setPreferredWidth(150);
+            tcm.getColumn(6).setPreferredWidth(35);
+        } catch (Exception ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

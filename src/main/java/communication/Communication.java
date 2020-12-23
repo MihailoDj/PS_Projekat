@@ -18,6 +18,7 @@ import domain.ProductionCompany;
 import domain.Review;
 import domain.User;
 import domain.UserMovieCollection;
+import domain.UserStatistics;
 import java.net.Socket;
 import java.util.List;
 
@@ -335,5 +336,16 @@ public class Communication {
         
         if(response.getException() != null)
              throw response.getException();
+    }
+    
+    public List<UserStatistics> selectUserStatistics() throws Exception{
+        Request request = new Request(Operation.SELECT_USER_STATISTICS, null);
+        sender.send(request);
+        Response response = (Response)receiver.receive();
+        
+        if(response.getException() == null) 
+            return (List<UserStatistics>)response.getResult();
+        else
+            throw response.getException();
     }
 }

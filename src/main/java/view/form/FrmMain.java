@@ -7,6 +7,7 @@ package view.form;
 
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 
 /**
  *
@@ -31,6 +32,9 @@ public class FrmMain extends javax.swing.JFrame {
     private void initComponents() {
 
         lblCurrentUser = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblUserStatistics = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBarMain = new javax.swing.JMenuBar();
         jmMovie = new javax.swing.JMenu();
         jmiNewMovie = new javax.swing.JMenuItem();
@@ -47,6 +51,20 @@ public class FrmMain extends javax.swing.JFrame {
         jmiAboutSoftware = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lblCurrentUser.setText("Current user:");
+
+        tblUserStatistics.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Username", "System role", "Collection size", "Review count", "Highest rated movie", "Score"
+            }
+        ));
+        jScrollPane1.setViewportView(tblUserStatistics);
+
+        jLabel1.setText("User statistics:");
 
         jmMovie.setText("Movie");
 
@@ -100,24 +118,33 @@ public class FrmMain extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblCurrentUser)
-                .addContainerGap(607, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 808, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblCurrentUser))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(22, 22, 22)
                 .addComponent(lblCurrentUser)
-                .addContainerGap(377, Short.MAX_VALUE))
+                .addGap(40, 40, 40)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenuAbout;
     private javax.swing.JMenu jMenuAccount;
     private javax.swing.JMenuBar jMenuBarMain;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu jmActor;
     private javax.swing.JMenu jmDirector;
     private javax.swing.JMenu jmMovie;
@@ -130,6 +157,7 @@ public class FrmMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiViewAllDirectors;
     private javax.swing.JMenuItem jmiViewAllMovies;
     private javax.swing.JLabel lblCurrentUser;
+    private javax.swing.JTable tblUserStatistics;
     // End of variables declaration//GEN-END:variables
 
     public void jmiNewMovieAddActionListener(ActionListener actionListener) {
@@ -163,4 +191,10 @@ public class FrmMain extends javax.swing.JFrame {
     public JLabel getLblCurrentUser () {
         return lblCurrentUser;
     }
+
+    public JTable getTblUserStatistics() {
+        return tblUserStatistics;
+    }
+    
+    
 }

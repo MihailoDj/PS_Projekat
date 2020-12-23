@@ -55,9 +55,10 @@ public class ViewAllReviewsController {
         frmViewReviews.getTblReviews().setRowHeight(30);
         tcm.getColumn(0).setPreferredWidth(15);
         tcm.getColumn(1).setPreferredWidth(150);
-        tcm.getColumn(2).setPreferredWidth(15);
-        tcm.getColumn(3).setPreferredWidth(150);
+        tcm.getColumn(2).setPreferredWidth(150);
+        tcm.getColumn(3).setPreferredWidth(15);
         tcm.getColumn(4).setPreferredWidth(150);
+        tcm.getColumn(5).setPreferredWidth(150);
     }
 
     private void addActionListener() {

@@ -6,6 +6,7 @@
 package view.form.component.table;
 import domain.Movie;
 import domain.Review;
+import domain.User;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -17,8 +18,8 @@ import javax.swing.table.AbstractTableModel;
 public class ReviewTableModel extends AbstractTableModel{
 
     private final List<Review> reviews;
-    private final String[] columnNames = new String[]{"ID", "Review", "Score", "Posted on", "Movie"};
-    private final Class[] columnClasses = new Class[]{Integer.class, String.class, Double.class, LocalDateTime.class, Movie.class};
+    private final String[] columnNames = new String[]{"ID", "Movie", "Review", "Score", "Posted on", "Posted by"};
+    private final Class[] columnClasses = new Class[]{Integer.class, Movie.class, String.class, Double.class, LocalDateTime.class, User.class};
     
     public ReviewTableModel(List<Review> reviews) throws Exception {
         this.reviews = reviews;
@@ -40,10 +41,11 @@ public class ReviewTableModel extends AbstractTableModel{
         
         switch(columnIndex) {
             case 0: return review.getReviewID();
-            case 1: return review.getReviewText();
-            case 2: return review.getReviewScore();
-            case 3: return review.getReviewDate();
-            case 4: return review.getMovie();
+            case 1: return review.getMovie();
+            case 2: return review.getReviewText();
+            case 3: return review.getReviewScore();
+            case 4: return review.getReviewDate();
+            case 5: return review.getUser();
             default: return "N/A"; 
         }
     }

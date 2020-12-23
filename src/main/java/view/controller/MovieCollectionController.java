@@ -33,7 +33,9 @@ import javax.swing.table.TableRowSorter;
 import view.constant.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmMovieCollection;
+import view.form.FrmReview;
 import view.form.component.table.MovieTableModel;
+import view.form.component.table.ReviewTableModel;
 
 /**
  *
@@ -122,16 +124,37 @@ public class MovieCollectionController {
                 }
             }
         });
+        frmMovieCollection.btnReviewDetailsActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = frmMovieCollection.getTblReviews().getSelectedRow();
+                Review review = ((ReviewTableModel)frmMovieCollection.getTblReviews().getModel()).getReviewAt(selectedRow);
+                MainCoordinator.getInstance().addParam(Constants.PARAM_REVIEW, review);
+                
+                MainCoordinator.getInstance().openReviewDetailsForm();
+            }
+        });
     }
     
     private void addListSelectionListeners() {
         frmMovieCollection.tblCollectionListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (frmMovieCollection.getTblCollection().getSelectedRow() != -1)
+                if (frmMovieCollection.getTblCollection().getSelectedRow() != -1){
                     enableButtons();
+                    fillTblReviews();
+                }
                 else
                     disableButtons();
+            }
+        });
+        frmMovieCollection.tblReviewsListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (frmMovieCollection.getTblReviews().getSelectedRow() != -1)
+                    frmMovieCollection.getBtnReviewDetails().setEnabled(true);
+                else
+                    frmMovieCollection.getBtnReviewDetails().setEnabled(false);
             }
         });
     }
@@ -205,6 +228,27 @@ public class MovieCollectionController {
             JOptionPane.showMessageDialog(frmMovieCollection, "Error loading collection", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    private void fillTblReviews() {
+        try {
+            int selectedRow = frmMovieCollection.getTblCollection().getSelectedRow();
+
+            Movie selectedMovie = ((MovieTableModel)frmMovieCollection.getTblCollection().getModel()).getMovieAt(selectedRow);
+            User user = new User();
+            user.setUserID(0l);
+
+            Review r = new Review();
+            r.setMovie(selectedMovie);
+            r.setUser(user);
+
+            List<Review> reviews = Communication.getInstance().selectReviews(r);
+            ReviewTableModel rtm = new ReviewTableModel(reviews);
+            frmMovieCollection.getTblReviews().setModel(rtm);
+            setUpReviewTableColumns();
+        } catch (Exception ex) {
+            Logger.getLogger(MovieCollectionController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     private void setUpTableColumns() throws Exception {
         List<Director> directors = Communication.getInstance().selectAllDirectors();
@@ -227,6 +271,22 @@ public class MovieCollectionController {
         tcm.getColumn(2).setPreferredWidth(100);
         tcm.getColumn(3).setPreferredWidth(75);
         tcm.getColumn(4).setPreferredWidth(15);
+        tcm.getColumn(5).setPreferredWidth(100);
+        
+    }
+    
+    private void setUpReviewTableColumns() {
+        TableColumnModel tcm = frmMovieCollection.getTblReviews().getColumnModel();
+
+        frmMovieCollection.getTblReviews().setAutoCreateRowSorter(true);
+        frmMovieCollection.getTblReviews().getTableHeader().setResizingAllowed(false);
+
+        frmMovieCollection.getTblReviews().setRowHeight(30);
+        tcm.getColumn(0).setPreferredWidth(15);
+        tcm.getColumn(1).setPreferredWidth(150);
+        tcm.getColumn(2).setPreferredWidth(100);
+        tcm.getColumn(3).setPreferredWidth(15);
+        tcm.getColumn(4).setPreferredWidth(150);
         tcm.getColumn(5).setPreferredWidth(100);
     }
 }

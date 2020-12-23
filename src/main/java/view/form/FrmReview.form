@@ -80,7 +80,7 @@
               <Component id="jScrollPane1" min="-2" pref="136" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               <Component id="lblCharactersRemaining" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace pref="32" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnSave" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnUpdate" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -141,9 +141,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblCharactersRemaining">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Characters remaining:"/>
-      </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanelStarRating">
 

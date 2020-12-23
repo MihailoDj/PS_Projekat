@@ -174,6 +174,22 @@ public class ReviewController {
                 frmReview.getBtnCancel().setEnabled(true);
                 frmReview.getBtnUpdate().setEnabled(true);
                 break;
+            case FORM_VIEW:
+                isFormModeAdd = false;
+                
+                review = ((Review)MainCoordinator.getInstance().getParam(Constants.PARAM_REVIEW));
+                
+                frmReview.getStarRater().setRating(review.getReviewScore());
+                frmReview.getTxtReviewText().setText(review.getReviewText());
+                
+                frmReview.remove(frmReview.getBtnSave());
+                frmReview.remove(frmReview.getBtnCancel());
+                frmReview.remove(frmReview.getBtnUpdate());
+                
+                frmReview.getStarRater().setEnabled(false);
+                frmReview.getTxtReviewText().setEditable(false);
+                
+                break;
         }
     }
     

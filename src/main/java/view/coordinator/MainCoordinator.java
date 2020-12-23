@@ -102,6 +102,11 @@ public class MainCoordinator {
         reviewController.openForm(FormMode.FORM_EDIT);
     }
     
+    public void openReviewDetailsForm() {
+        ReviewController reviewController = new ReviewController(new FrmReview(null, true));
+        reviewController.openForm(FormMode.FORM_VIEW);
+    }
+    
     public void openMovieCollectionForm() {
         MovieCollectionController mcc = new MovieCollectionController(
                 new FrmMovieCollection(userMainController.getFrmUserMain(), true));

@@ -45,7 +45,7 @@ public class FrmViewReviews extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Review", "Score", "Posted on", "Movie"
+                "ID", "Movie", "Review", "Score", "Posted on", "Posted by"
             }
         ));
         jScrollPane1.setViewportView(tblReviews);

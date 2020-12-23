@@ -42,6 +42,10 @@ public class FrmMovieCollection extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCollection = new javax.swing.JTable();
         btnDetails = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblReviews = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        btnReviewDetails = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -81,6 +85,29 @@ public class FrmMovieCollection extends javax.swing.JDialog {
         btnDetails.setText("Details");
         btnDetails.setEnabled(false);
 
+        tblReviews.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Movie", "Review", "Score", "Posted on", "Posted by"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(tblReviews);
+
+        jLabel1.setText("Reviews");
+
+        btnReviewDetails.setText("Details");
+        btnReviewDetails.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -89,17 +116,23 @@ public class FrmMovieCollection extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnReview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnRemove, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(btnRemove, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnReviewDetails))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -109,15 +142,21 @@ public class FrmMovieCollection extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFilter))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnReview)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnRemove)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnDetails))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReviewDetails))
                 .addContainerGap())
         );
 
@@ -128,9 +167,13 @@ public class FrmMovieCollection extends javax.swing.JDialog {
     private javax.swing.JButton btnDetails;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnReview;
+    private javax.swing.JButton btnReviewDetails;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblFilter;
     private javax.swing.JTable tblCollection;
+    private javax.swing.JTable tblReviews;
     private javax.swing.JTextField txtFilter;
     // End of variables declaration//GEN-END:variables
 
@@ -149,13 +192,25 @@ public class FrmMovieCollection extends javax.swing.JDialog {
     public JTable getTblCollection() {
         return tblCollection;
     }
+    
+    public JTable getTblReviews() {
+        return tblReviews;
+    }
 
     public JTextField getTxtFilter() {
         return txtFilter;
     }
     
+    public JButton getBtnReviewDetails() {
+        return btnReviewDetails;
+    }
+    
     public void btnReviewActionListener(ActionListener actionListener) {
         btnReview.addActionListener(actionListener);
+    }
+    
+    public void btnReviewDetailsActionListener(ActionListener actionListener) {
+        btnReviewDetails.addActionListener(actionListener);
     }
     
     public void btnRemoveActionListener(ActionListener actionListener) {
@@ -168,6 +223,10 @@ public class FrmMovieCollection extends javax.swing.JDialog {
     
     public void tblCollectionListSelectionListener(ListSelectionListener lsl) {
         tblCollection.getSelectionModel().addListSelectionListener(lsl);
+    }
+    
+    public void tblReviewsListSelectionListener(ListSelectionListener lsl) {
+        tblReviews.getSelectionModel().addListSelectionListener(lsl);
     }
     
     public void filterKeyPressed(KeyListener kl) {

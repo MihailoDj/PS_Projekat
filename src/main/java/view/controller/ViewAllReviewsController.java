@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package view.controller;
+import comm.Operation;
+import comm.Request;
+import comm.Response;
 import communication.Communication;
 import domain.Movie;
 import domain.Review;
@@ -19,7 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
-import view.constant.Constants;
+import util.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmViewReviews;
 import view.form.component.table.ReviewTableModel;
@@ -77,7 +80,10 @@ public class ViewAllReviewsController {
                 if (check == JOptionPane.YES_OPTION) {
                     try {
                         Review review = ((ReviewTableModel)frmViewReviews.getTblReviews().getModel()).getReviewAt(row);
-                        Communication.getInstance().deleteReview(review);
+                        
+                        Request request = new Request(Operation.DELETE_REVIEW, review);
+                        Communication.getInstance().sendUserRequest(request);
+                        
                         JOptionPane.showMessageDialog(frmViewReviews, "Review deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
                     } catch (Exception ex) {
                         Logger.getLogger(ViewAllReviewsController.class.getName()).log(Level.SEVERE, null, ex);
@@ -122,7 +128,11 @@ public class ViewAllReviewsController {
             Review review = new Review();
             review.setUser(user);
             
-            List<Review> reviews = Communication.getInstance().selectReviews(review);
+            Request request = new Request(Operation.SELECT_REVIEWS, review);
+            Communication.getInstance().sendUserRequest(request);
+            Response response = Communication.getInstance().receiveServerResponse();
+            List<Review> reviews = (List<Review>) response.getResult();
+            
             ReviewTableModel rtm = new ReviewTableModel(reviews);
             frmViewReviews.getTblReviews().setModel(rtm);
             setUpTableColumns();

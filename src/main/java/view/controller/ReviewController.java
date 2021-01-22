@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package view.controller;
+import comm.Operation;
+import comm.Request;
 import communication.Communication;
 import domain.Movie;
 import domain.Review;
@@ -14,10 +16,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
-import view.constant.Constants;
+import util.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmReview;
-import view.form.util.FormMode;
+import util.FormMode;
 
 /**
  *
@@ -97,7 +99,9 @@ public class ReviewController {
                     review.setUser(user);
                     review.setMovie(movie);
                 
-                    Communication.getInstance().insertReview(review);
+                    Request request = new Request(Operation.INSERT_REVIEW, review);
+                    Communication.getInstance().sendUserRequest(request);
+                    
                     JOptionPane.showMessageDialog(frmReview, movie.getName() + " successfully reviewd!", 
                             "Success", JOptionPane.INFORMATION_MESSAGE);
                     frmReview.dispose();
@@ -125,7 +129,9 @@ public class ReviewController {
                         review.setUser(user);
                         review.setMovie(movie);
                         
-                        Communication.getInstance().updateReview(review);
+                        Request request = new Request(Operation.UPDATE_REVIEW, review);
+                        Communication.getInstance().sendUserRequest(request);
+                        
                         JOptionPane.showMessageDialog(frmReview, "Review successfully updated", 
                                 "Success", JOptionPane.INFORMATION_MESSAGE);
                         frmReview.dispose();

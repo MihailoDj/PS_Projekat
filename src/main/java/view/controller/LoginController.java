@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package view.controller;
+import comm.Operation;
+import comm.Request;
 import communication.Communication;
 import domain.User;
 import java.awt.event.ActionEvent;
@@ -11,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JOptionPane;
-import view.constant.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmLogin;
 
@@ -97,18 +98,20 @@ public class LoginController {
             String password = String.copyValueOf(frmLogin.getTxtPassword().getPassword());
 
             validateForm(username, password);
-
-            User user = Communication.getInstance().login(username, password);
+            
+            User user = new User();
+            user.setUsername(username);
+            user.setPassword(password);
+            
+            Request request = new Request(Operation.LOGIN, user);
+            Communication.getInstance().sendUserRequest(request);
+            
             JOptionPane.showMessageDialog(
                     frmLogin, "Welcome " + user.toString(), "Login successful", JOptionPane.INFORMATION_MESSAGE);
 
             frmLogin.dispose();
 
-            MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, user);
-            if(user.isAdmin())
-                MainCoordinator.getInstance().openMainForm();
-            else
-                MainCoordinator.getInstance().openUserMainForm();
+            MainCoordinator.getInstance().openUserMainForm();
             
             
         } catch (Exception e) {

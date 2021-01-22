@@ -6,6 +6,9 @@
 package view.controller;
 
 import com.github.lgooddatepicker.tableeditors.DateTableEditor;
+import comm.Operation;
+import comm.Request;
+import comm.Response;
 import communication.Communication;
 import domain.Director;
 import domain.Movie;
@@ -28,10 +31,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import view.constant.Constants;
+import util.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmUserMain;
-import view.form.component.table.MovieTableModel;
+import component.MovieTableModel;
 
 /**
  *
@@ -122,7 +125,11 @@ public class UserMainController {
                     movie.setDirector(director);
                     movie.setMoviePoster(mp);
                     
-                    List<Movie> movies = Communication.getInstance().selectMovies(movie);
+                    Request request = new Request(Operation.SELECT_MOVIES, movie);
+                    Communication.getInstance().sendUserRequest(request);
+                    Response response = Communication.getInstance().receiveServerResponse();
+                    List<Movie> movies = (List<Movie>) response.getResult();
+                    
                     fillTblMovies(movies);
                 } catch (Exception ex) {
                     Logger.getLogger(UserMainController.class.getName()).log(Level.SEVERE, null, ex);
@@ -143,7 +150,9 @@ public class UserMainController {
                     collection.setMovie(movie);
                     collection.setUser(user);
                     
-                    Communication.getInstance().insertCollection(collection);
+                    Request request = new Request(Operation.INSERT_COLLECTION, collection);
+                    Communication.getInstance().sendUserRequest(request);
+                    
                     JOptionPane.showMessageDialog(frmUserMain, "Movie successfully saved to collection!", 
                             "Success", JOptionPane.INFORMATION_MESSAGE);
                 
@@ -170,13 +179,8 @@ public class UserMainController {
     }
     
     public void setUpTableColumns() throws Exception {
-        List<Director> directors = Communication.getInstance().selectAllDirectors();
-        JComboBox cbDirector = new JComboBox(directors.toArray());
-
         TableColumnModel tcm = frmUserMain.getTblMovies().getColumnModel();
-        TableColumn tcDirector = tcm.getColumn(5);
-        tcDirector.setCellEditor(new DefaultCellEditor(cbDirector));
-
+        
         TableColumn tcReleaseDate = tcm.getColumn(2);
         tcReleaseDate.setCellEditor(new DateTableEditor());
         tcReleaseDate.setCellRenderer(new DateTableEditor());

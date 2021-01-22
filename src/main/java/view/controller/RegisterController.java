@@ -4,10 +4,15 @@
  * and open the template in the editor.
  */
 package view.controller;
+import comm.Operation;
+import comm.Request;
+import comm.Response;
 import communication.Communication;
+import domain.Review;
 import domain.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -50,7 +55,9 @@ public class RegisterController {
                     user.setPassword(String.copyValueOf(frmRegister.getTxtPassword().getPassword()));
                     user.setAdmin(false);
                    
-                    Communication.getInstance().insertUser(user);
+                    Request request = new Request(Operation.INSERT_USER, user);
+                    Communication.getInstance().sendUserRequest(request);
+                    
                     JOptionPane.showMessageDialog(frmRegister, "Account registration successful", "Register", 
                             JOptionPane.INFORMATION_MESSAGE);
                     frmRegister.dispose();

@@ -4,14 +4,19 @@
  * and open the template in the editor.
  */
 package view.controller;
+import comm.Operation;
+import comm.Request;
+import comm.Response;
 import communication.Communication;
+import domain.Review;
 import domain.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import view.constant.Constants;
+import util.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmAccountSettings;
 
@@ -53,7 +58,10 @@ public class AccountSettingsController {
                     if (String.copyValueOf(form.getTxtOldPassword().getPassword()).equals(oldPass)) {
                         try {
                             User user = ((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
-                            Communication.getInstance().deleteUser(user);
+                            
+                            Request request = new Request(Operation.DELETE_USER, user);
+                            Communication.getInstance().sendUserRequest(request);
+                            
                             JOptionPane.showMessageDialog(form, "Account successfully deleted", 
                                     "Goodbye!" ,JOptionPane.INFORMATION_MESSAGE);
                             
@@ -87,7 +95,9 @@ public class AccountSettingsController {
                             ((User)MainCoordinator.getInstance().getParam(
                                     Constants.CURRENT_USER)).setPassword(String.copyValueOf(form.getTxtNewPassword().getPassword()));
 
-                            Communication.getInstance().updateUser((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
+                            Request request = new Request(Operation.UPDATE_USER, (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
+                            Communication.getInstance().sendUserRequest(request);
+                            
                             JOptionPane.showMessageDialog(form, "Account info successfully updated", 
                                     "Success", JOptionPane.INFORMATION_MESSAGE);
                         } catch (Exception ex) {
@@ -106,7 +116,11 @@ public class AccountSettingsController {
     private void prepareView() {
        try {
             User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
-            user = Communication.getInstance().selectUser(user).get(0);
+            
+            Request request = new Request(Operation.SELECT_USER, user);
+            Communication.getInstance().sendUserRequest(request);
+            Response response = Communication.getInstance().receiveServerResponse();
+            user = (User) response.getResult();
             
             form.getTxtUsername().setText(user.getUsername());
             MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, user);

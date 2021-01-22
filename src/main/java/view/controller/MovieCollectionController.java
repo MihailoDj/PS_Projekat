@@ -5,6 +5,9 @@
  */
 package view.controller;
 import com.github.lgooddatepicker.tableeditors.DateTableEditor;
+import comm.Operation;
+import comm.Request;
+import comm.Response;
 import communication.Communication;
 import domain.Director;
 import domain.Movie;
@@ -30,11 +33,10 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
-import view.constant.Constants;
+import util.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmMovieCollection;
-import view.form.FrmReview;
-import view.form.component.table.MovieTableModel;
+import component.MovieTableModel;
 import view.form.component.table.ReviewTableModel;
 
 /**
@@ -108,7 +110,8 @@ public class MovieCollectionController {
                             umc.setMovie(movie);
                             umc.setUser(user);
                             
-                            Communication.getInstance().deleteCollection(umc);
+                            Request request = new Request(Operation.DELETE_COLLECTION, umc);
+                            Communication.getInstance().sendUserRequest(request);
                         }
 
                             JOptionPane.showMessageDialog(frmMovieCollection, "Movie successfully removed",
@@ -216,7 +219,12 @@ public class MovieCollectionController {
             UserMovieCollection collection = new UserMovieCollection();
             collection.setUser(user);
             
-            for (UserMovieCollection umc : Communication.getInstance().selectCollections(collection)) {
+            Request request = new Request(Operation.SELECT_COLLECTIONS, collection);
+            Communication.getInstance().sendUserRequest(request);
+            Response response = Communication.getInstance().receiveServerResponse();
+            List<UserMovieCollection> collections = (List<UserMovieCollection>) response.getResult();
+            
+            for (UserMovieCollection umc : collections) {
                 movies.add(umc.getMovie());
             }
             
@@ -241,7 +249,11 @@ public class MovieCollectionController {
             r.setMovie(selectedMovie);
             r.setUser(user);
 
-            List<Review> reviews = Communication.getInstance().selectReviews(r);
+            Request request = new Request(Operation.SELECT_REVIEWS, r);
+            Communication.getInstance().sendUserRequest(request);
+            Response response = Communication.getInstance().receiveServerResponse();
+            List<Review> reviews = (List<Review>) response.getResult();
+            
             ReviewTableModel rtm = new ReviewTableModel(reviews);
             frmMovieCollection.getTblReviews().setModel(rtm);
             setUpReviewTableColumns();
@@ -251,13 +263,8 @@ public class MovieCollectionController {
     }
 
     private void setUpTableColumns() throws Exception {
-        List<Director> directors = Communication.getInstance().selectAllDirectors();
-        JComboBox cbDirector = new JComboBox(directors.toArray());
-
         TableColumnModel tcm = frmMovieCollection.getTblCollection().getColumnModel();
-        TableColumn tcDirector = tcm.getColumn(5);
-        tcDirector.setCellEditor(new DefaultCellEditor(cbDirector));
-
+        
         TableColumn tcReleaseDate = tcm.getColumn(2);
         tcReleaseDate.setCellEditor(new DateTableEditor());
         tcReleaseDate.setCellRenderer(new DateTableEditor());

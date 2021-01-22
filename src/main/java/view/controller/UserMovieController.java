@@ -8,12 +8,12 @@ import domain.Movie;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.table.TableColumnModel;
-import view.constant.Constants;
+import util.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmUserMovie;
-import view.form.component.table.MovieGenreTableModel;
-import view.form.component.table.ProductionTableModel;
-import view.form.component.table.RoleTableModel;
+import component.MovieGenreTableModel;
+import component.ProductionTableModel;
+import component.RoleTableModel;
 
 /**
  *

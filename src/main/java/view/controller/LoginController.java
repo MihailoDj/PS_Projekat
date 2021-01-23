@@ -105,17 +105,14 @@ public class LoginController {
             
             Request request = new Request(Operation.LOGIN, user);
             Communication.getInstance().sendUserRequest(request);
-            
-            JOptionPane.showMessageDialog(
-                    frmLogin, "Welcome " + user.toString(), "Login successful", JOptionPane.INFORMATION_MESSAGE);
-
-            frmLogin.dispose();
-
-            MainCoordinator.getInstance().openUserMainForm();
-            
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(frmLogin, e.getMessage(), "Login error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public FrmLogin getFrmLogin() {
+        return frmLogin;
+    }
+    
+    
 }

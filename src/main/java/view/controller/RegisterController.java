@@ -6,13 +6,10 @@
 package view.controller;
 import comm.Operation;
 import comm.Request;
-import comm.Response;
 import communication.Communication;
-import domain.Review;
 import domain.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;

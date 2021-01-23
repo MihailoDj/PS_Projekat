@@ -7,7 +7,12 @@ package thread;
 
 import comm.Response;
 import communication.Communication;
+import domain.Movie;
+import domain.Review;
 import domain.User;
+import domain.UserMovieCollection;
+import java.util.List;
+import javax.swing.JOptionPane;
 import util.Constants;
 import view.coordinator.MainCoordinator;
 
@@ -24,16 +29,47 @@ public class ServerResponseHandler extends Thread{
                 Response response = Communication.getInstance().receiveServerResponse();
                 switch(response.getOperation()){
                     case LOGIN:
-                        User user = (User)response.getResult();
-                        MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, user);
+                        User userLogin = (User)response.getResult();
+                        
+                        if (userLogin != null) {
+                            MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, userLogin);
+                            JOptionPane.showMessageDialog(
+                                MainCoordinator.getInstance().getLoginController().getFrmLogin(), "Welcome " + userLogin.toString(), "Login successful", JOptionPane.INFORMATION_MESSAGE);
+                            
+                            MainCoordinator.getInstance().getLoginController().getFrmLogin().dispose();
+                            MainCoordinator.getInstance().openUserMainForm();
+                        } else {
+                            JOptionPane.showMessageDialog(
+                                MainCoordinator.getInstance().getLoginController().getFrmLogin(), "Invalid credentials", "Login failed", JOptionPane.ERROR_MESSAGE);
+                        
+                        }
+                        break;
+                    case SELECT_COLLECTIONS:
+                        List<UserMovieCollection> collections = (List<UserMovieCollection>) response.getResult();
+                        MainCoordinator.getInstance().getMovieCollectionController().fillTblCollection(collections);
+                        break;
+                    case SELECT_REVIEWS:
+                        List<Review> reviews = (List<Review>) response.getResult();
+                        if (MainCoordinator.getInstance().getMovieCollectionController() != null){
+                            MainCoordinator.getInstance().getMovieCollectionController().fillTblReviews(reviews);
+                        } else {
+                            MainCoordinator.getInstance().getViewAllReviewsController().fillTblReviews(reviews);
+                        }
+                        break;
+                    case SELECT_MOVIES:
+                        List<Movie> movies = (List<Movie>) response.getResult();
+                        MainCoordinator.getInstance().getUserMainController().fillTblMovies(movies);
                         break;
                     /*case LOGOUT:
                         ClientController.getInstance().logout();
                         break;
-                    case LOGOUT_ALL:
-                        ClientController.getInstance().turnServerOff();
-                        break;
                     */
+                    case LOGOUT_ALL:
+                        JOptionPane.showMessageDialog(MainCoordinator.getInstance().getUserMainController().getFrmUserMain(), "Server is closed");
+                        Communication.stopCommunication();
+                        MainCoordinator.getInstance().getUserMainController().getFrmUserMain().dispose();
+                        break;
+                    
 
                 }
 

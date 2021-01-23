@@ -8,7 +8,6 @@ package view.controller;
 import com.github.lgooddatepicker.tableeditors.DateTableEditor;
 import comm.Operation;
 import comm.Request;
-import comm.Response;
 import communication.Communication;
 import domain.Director;
 import domain.Movie;
@@ -24,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -35,6 +32,7 @@ import util.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmUserMain;
 import component.MovieTableModel;
+import java.net.Socket;
 
 /**
  *
@@ -78,6 +76,7 @@ public class UserMainController {
             public void windowActivated(WindowEvent e) {
                 fillTblMovies(new ArrayList<>());
             }
+            
         });
         frmUserMain.jmiAccountSettings(new ActionListener() {
             @Override
@@ -89,6 +88,7 @@ public class UserMainController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frmUserMain.dispose();
+                
                 MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, null);
                 MainCoordinator.getInstance().openLoginForm();
             }
@@ -127,10 +127,7 @@ public class UserMainController {
                     
                     Request request = new Request(Operation.SELECT_MOVIES, movie);
                     Communication.getInstance().sendUserRequest(request);
-                    Response response = Communication.getInstance().receiveServerResponse();
-                    List<Movie> movies = (List<Movie>) response.getResult();
                     
-                    fillTblMovies(movies);
                 } catch (Exception ex) {
                     Logger.getLogger(UserMainController.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(frmUserMain, ex.getMessage(), 
@@ -165,7 +162,7 @@ public class UserMainController {
         });
     }
     
-    private void fillTblMovies(List<Movie> movies) {
+    public void fillTblMovies(List<Movie> movies) {
         try {
             MovieTableModel mtm = new MovieTableModel(movies);
             frmUserMain.getTblMovies().setModel(mtm);

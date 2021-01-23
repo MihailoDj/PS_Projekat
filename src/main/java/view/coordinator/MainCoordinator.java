@@ -31,8 +31,17 @@ import util.FormMode;
  */
 public class MainCoordinator {
     private static MainCoordinator instance;
-    private final UserMainController userMainController;
     private final Map<String, Object> params;
+    
+    private UserMainController userMainController;
+    private UserMovieController userMovieController = null;
+    private ViewAllReviewsController viewAllReviewsController = null;
+    private ReviewController reviewController = null;
+    private RegisterController registerController = null;
+    private MovieCollectionController movieCollectionController = null;
+    private LoginController loginController = null;
+    private AccountSettingsController accountSettingsController = null;
+    
     
     private MainCoordinator() {
         userMainController = new UserMainController(new FrmUserMain());
@@ -48,11 +57,13 @@ public class MainCoordinator {
     
     public void openLoginForm() {
         LoginController loginContoller = new LoginController(new FrmLogin());
+        this.loginController = loginContoller;
         loginContoller.openForm();
     }
     
     public void openRegisterForm() {
         RegisterController registerController = new RegisterController(new FrmRegister());
+        this.registerController = registerController;
         registerController.openForm();
     }
     
@@ -64,17 +75,20 @@ public class MainCoordinator {
     public void openAccountSettingsForm() {
         AccountSettingsController asc = new AccountSettingsController(
                 new FrmAccountSettings(userMainController.getFrmUserMain(), true));
+        this.accountSettingsController = asc;
         asc.openForm();
     }
     
     public void openViewAllReviewsForm() {
         ViewAllReviewsController cont = new ViewAllReviewsController(
                 new FrmViewReviews(MainCoordinator.getInstance().getUserMainController().getFrmUserMain(), true));
+        this.viewAllReviewsController = cont;
         cont.openForm();
     }
     
     public void openReviewForm() {
         ReviewController reviewController = new ReviewController(new FrmReview(null, true));
+        this.reviewController = reviewController;
         reviewController.openForm(FormMode.FORM_ADD);
     }
     
@@ -85,17 +99,20 @@ public class MainCoordinator {
     
     public void openReviewDetailsForm() {
         ReviewController reviewController = new ReviewController(new FrmReview(null, true));
+        this.reviewController = reviewController;
         reviewController.openForm(FormMode.FORM_VIEW);
     }
     
     public void openMovieCollectionForm() {
         MovieCollectionController mcc = new MovieCollectionController(
                 new FrmMovieCollection(userMainController.getFrmUserMain(), true));
+        this.movieCollectionController = mcc;
         mcc.openForm();
     }
     
     public void openUserMovieForm() {
         UserMovieController cont = new UserMovieController(new FrmUserMovie(null, true));
+        this.userMovieController = cont;
         cont.openForm();
     }
     
@@ -111,4 +128,38 @@ public class MainCoordinator {
     public Object getParam(String name) {
         return params.get(name);
     }
+
+    public Map<String, Object> getParams() {
+        return params;
+    }
+
+    public UserMovieController getUserMovieController() {
+        return userMovieController;
+    }
+
+    public ViewAllReviewsController getViewAllReviewsController() {
+        return viewAllReviewsController;
+    }
+
+    public ReviewController getReviewController() {
+        return reviewController;
+    }
+
+    public RegisterController getRegisterController() {
+        return registerController;
+    }
+
+    public MovieCollectionController getMovieCollectionController() {
+        return movieCollectionController;
+    }
+
+    public LoginController getLoginController() {
+        return loginController;
+    }
+
+    public AccountSettingsController getAccountSettingsController() {
+        return accountSettingsController;
+    }
+    
+    
 }

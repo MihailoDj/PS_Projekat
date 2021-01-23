@@ -36,6 +36,7 @@ public class Communication {
     }
     
     public static void stopCommunication() {
+        
         instance = null;
     }
     
@@ -61,4 +62,5 @@ public class Communication {
         
         return response;
     }
+    
 }

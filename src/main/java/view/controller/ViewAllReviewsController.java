@@ -67,7 +67,16 @@ public class ViewAllReviewsController {
         frmViewReviews.addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent e) {
-                fillTblReviews();
+                try {
+                    User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
+                    Review review = new Review();
+                    review.setUser(user);
+                    
+                    Request request = new Request(Operation.SELECT_REVIEWS, review);
+                    Communication.getInstance().sendUserRequest(request);
+                } catch (Exception ex) {
+                    Logger.getLogger(ViewAllReviewsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             
         });
@@ -122,17 +131,8 @@ public class ViewAllReviewsController {
         });
     }
     
-    private void fillTblReviews() {
+    public void fillTblReviews(List<Review> reviews) {
         try {
-            User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
-            Review review = new Review();
-            review.setUser(user);
-            
-            Request request = new Request(Operation.SELECT_REVIEWS, review);
-            Communication.getInstance().sendUserRequest(request);
-            Response response = Communication.getInstance().receiveServerResponse();
-            List<Review> reviews = (List<Review>) response.getResult();
-            
             ReviewTableModel rtm = new ReviewTableModel(reviews);
             frmViewReviews.getTblReviews().setModel(rtm);
             setUpTableColumns();

@@ -8,11 +8,9 @@ import comm.Operation;
 import comm.Request;
 import comm.Response;
 import communication.Communication;
-import domain.Review;
 import domain.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -117,13 +115,7 @@ public class AccountSettingsController {
        try {
             User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
             
-            Request request = new Request(Operation.SELECT_USER, user);
-            Communication.getInstance().sendUserRequest(request);
-            Response response = Communication.getInstance().receiveServerResponse();
-            user = (User) response.getResult();
-            
             form.getTxtUsername().setText(user.getUsername());
-            MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, user);
         } catch (Exception ex) {
             Logger.getLogger(AccountSettingsController.class.getName()).log(Level.SEVERE, null, ex);
         }

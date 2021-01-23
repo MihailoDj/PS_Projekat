@@ -57,7 +57,16 @@ public class MovieCollectionController {
         frmMovieCollection.addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent e) {
-                fillTblCollection();
+                try {
+                    User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
+                    UserMovieCollection collection = new UserMovieCollection();
+                    collection.setUser(user);
+                    
+                    Request request = new Request(Operation.SELECT_COLLECTIONS, collection);
+                    Communication.getInstance().sendUserRequest(request);
+                } catch (Exception ex) {
+                    Logger.getLogger(MovieCollectionController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         frmMovieCollection.btnDetailsActionListener(new ActionListener() {
@@ -144,8 +153,25 @@ public class MovieCollectionController {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (frmMovieCollection.getTblCollection().getSelectedRow() != -1){
-                    enableButtons();
-                    fillTblReviews();
+                    try {
+                        enableButtons();
+                        
+                        int selectedRow = frmMovieCollection.getTblCollection().getSelectedRow();
+                        
+                        Movie selectedMovie = ((MovieTableModel)frmMovieCollection.getTblCollection().getModel()).getMovieAt(selectedRow);
+                        User user = new User();
+                        user.setUserID(0l);
+                        
+                        Review r = new Review();
+                        r.setMovie(selectedMovie);
+                        r.setUser(user);
+                        
+                        Request request = new Request(Operation.SELECT_REVIEWS, r);
+                        Communication.getInstance().sendUserRequest(request);
+                    } catch (Exception ex) {
+                        Logger.getLogger(MovieCollectionController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
                 }
                 else
                     disableButtons();
@@ -212,17 +238,9 @@ public class MovieCollectionController {
         
     }
     
-    private void fillTblCollection () {
+    public void fillTblCollection (List<UserMovieCollection> collections) {
         try {
             List<Movie> movies = new ArrayList<>();
-            User user = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
-            UserMovieCollection collection = new UserMovieCollection();
-            collection.setUser(user);
-            
-            Request request = new Request(Operation.SELECT_COLLECTIONS, collection);
-            Communication.getInstance().sendUserRequest(request);
-            Response response = Communication.getInstance().receiveServerResponse();
-            List<UserMovieCollection> collections = (List<UserMovieCollection>) response.getResult();
             
             for (UserMovieCollection umc : collections) {
                 movies.add(umc.getMovie());
@@ -237,23 +255,8 @@ public class MovieCollectionController {
         }
     }
     
-    private void fillTblReviews() {
+    public void fillTblReviews(List<Review> reviews) {
         try {
-            int selectedRow = frmMovieCollection.getTblCollection().getSelectedRow();
-
-            Movie selectedMovie = ((MovieTableModel)frmMovieCollection.getTblCollection().getModel()).getMovieAt(selectedRow);
-            User user = new User();
-            user.setUserID(0l);
-
-            Review r = new Review();
-            r.setMovie(selectedMovie);
-            r.setUser(user);
-
-            Request request = new Request(Operation.SELECT_REVIEWS, r);
-            Communication.getInstance().sendUserRequest(request);
-            Response response = Communication.getInstance().receiveServerResponse();
-            List<Review> reviews = (List<Review>) response.getResult();
-            
             ReviewTableModel rtm = new ReviewTableModel(reviews);
             frmMovieCollection.getTblReviews().setModel(rtm);
             setUpReviewTableColumns();

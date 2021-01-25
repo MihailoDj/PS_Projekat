@@ -50,7 +50,7 @@ public class RegisterController {
                     user.setUserID(0l);
                     user.setUsername(frmRegister.getTxtUsername().getText().trim());
                     user.setPassword(String.copyValueOf(frmRegister.getTxtPassword().getPassword()));
-                    user.setAdmin(false);
+                    user.setStatus("offline");
                    
                     Request request = new Request(Operation.INSERT_USER, user);
                     Communication.getInstance().sendUserRequest(request);

@@ -44,6 +44,24 @@ public class ServerResponseHandler extends Thread{
                         
                         }
                         break;
+                    case INSERT_USER:
+                        if (response.getException() != null) {
+                            JOptionPane.showMessageDialog(MainCoordinator.getInstance().getRegisterController().getFrmRegister(), "Unable to register account!", "Error", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(MainCoordinator.getInstance().getRegisterController().getFrmRegister(), "Account registration successful", "Register", 
+                            JOptionPane.INFORMATION_MESSAGE);
+                            MainCoordinator.getInstance().getRegisterController().getFrmRegister().dispose();
+                        }
+                        break;
+                    case INSERT_COLLECTION:
+                        if (response.getException() != null) {
+                            JOptionPane.showMessageDialog(MainCoordinator.getInstance().getUserMainController().getFrmUserMain(), "Unable to save movie!", "Error", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(MainCoordinator.getInstance().getUserMainController().getFrmUserMain(), "Movie added to collection", "Success", 
+                            JOptionPane.INFORMATION_MESSAGE);
+                            MainCoordinator.getInstance().getUserMainController().getFrmUserMain().dispose();
+                        }
+                        break;
                     case SELECT_COLLECTIONS:
                         List<UserMovieCollection> collections = (List<UserMovieCollection>) response.getResult();
                         MainCoordinator.getInstance().getMovieCollectionController().fillTblCollection(collections);

@@ -55,9 +55,6 @@ public class RegisterController {
                     Request request = new Request(Operation.INSERT_USER, user);
                     Communication.getInstance().sendUserRequest(request);
                     
-                    JOptionPane.showMessageDialog(frmRegister, "Account registration successful", "Register", 
-                            JOptionPane.INFORMATION_MESSAGE);
-                    frmRegister.dispose();
                 } catch (Exception ex) {
                     Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(frmRegister, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -74,4 +71,10 @@ public class RegisterController {
             throw new Exception("Username and password can't be empty!");
         }
     }
+
+    public FrmRegister getFrmRegister() {
+        return frmRegister;
+    }
+    
+    
 }

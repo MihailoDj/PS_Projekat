@@ -32,7 +32,6 @@ import util.Constants;
 import view.coordinator.MainCoordinator;
 import view.form.FrmUserMain;
 import component.MovieTableModel;
-import java.net.Socket;
 
 /**
  *
@@ -149,9 +148,6 @@ public class UserMainController {
                     Request request = new Request(Operation.INSERT_COLLECTION, collection);
                     Communication.getInstance().sendUserRequest(request);
                     
-                    JOptionPane.showMessageDialog(frmUserMain, "Movie successfully saved to collection!", 
-                            "Success", JOptionPane.INFORMATION_MESSAGE);
-                
                 } catch (Exception ex) {
                     Logger.getLogger(UserMainController.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(frmUserMain, "Unable to save movie to collection!", 

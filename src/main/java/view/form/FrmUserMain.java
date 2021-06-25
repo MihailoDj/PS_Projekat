@@ -41,6 +41,7 @@ public class FrmUserMain extends javax.swing.JFrame {
         txtSearch = new javax.swing.JTextField();
         btnSave = new javax.swing.JButton();
         btnSearch = new javax.swing.JButton();
+        btnShowAll = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuMyMovies = new javax.swing.JMenu();
         jmiViewMyMovies = new javax.swing.JMenuItem();
@@ -68,6 +69,8 @@ public class FrmUserMain extends javax.swing.JFrame {
         btnSave.setEnabled(false);
 
         btnSearch.setText("Search");
+
+        btnShowAll.setText("Show all");
 
         jMenuMyMovies.setText("My movies");
 
@@ -113,6 +116,8 @@ public class FrmUserMain extends javax.swing.JFrame {
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnSearch)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnShowAll)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -128,7 +133,8 @@ public class FrmUserMain extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSearch)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch))
+                    .addComponent(btnSearch)
+                    .addComponent(btnShowAll))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -142,6 +148,7 @@ public class FrmUserMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnShowAll;
     private javax.swing.JMenu jMenuAccount;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuMyMovies;
@@ -199,5 +206,9 @@ public class FrmUserMain extends javax.swing.JFrame {
     
     public void tblMoviesAddListSelectionListener(ListSelectionListener listSelectionListener) {
         tblMovies.getSelectionModel().addListSelectionListener(listSelectionListener);
+    }
+    
+    public void btnShowAllActionListener(ActionListener actionListener) {
+        btnShowAll.addActionListener(actionListener);
     }
 }

@@ -77,13 +77,15 @@ public class ServerResponseHandler extends Thread{
                         List<Movie> movies = (List<Movie>) response.getResult();
                         MainCoordinator.getInstance().getUserMainController().fillTblMovies(movies);
                         break;
+                    case SELECT_ALL_MOVIES:
+                        List<Movie> allMovies = (List<Movie>) response.getResult();
+                        MainCoordinator.getInstance().getUserMainController().fillTblMovies(allMovies);
+                        break;
                     case LOGOUT_ALL:
                         JOptionPane.showMessageDialog(MainCoordinator.getInstance().getUserMainController().getFrmUserMain(), "Server is closed");
                         Communication.stopCommunication();
                         MainCoordinator.getInstance().getUserMainController().getFrmUserMain().dispose();
                         break;
-                    
-
                 }
 
             }

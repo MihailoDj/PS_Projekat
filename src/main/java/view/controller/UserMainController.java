@@ -80,8 +80,6 @@ public class UserMainController {
                 logout();
             }
             
-            
-            
         });
         frmUserMain.jmiAccountSettings(new ActionListener() {
             @Override
@@ -156,6 +154,18 @@ public class UserMainController {
                     Logger.getLogger(UserMainController.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(frmUserMain, "Unable to save movie to collection!", 
                             "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        
+        frmUserMain.btnShowAllActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Request request = new Request(Operation.SELECT_ALL_MOVIES, null);
+                    Communication.getInstance().sendUserRequest(request);
+                } catch (Exception ex) {
+                    Logger.getLogger(UserMainController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });

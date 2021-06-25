@@ -74,6 +74,13 @@ public class UserMainController {
             public void windowActivated(WindowEvent e) {
                 fillTblMovies(new ArrayList<>());
             }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                logout();
+            }
+            
+            
             
         });
         frmUserMain.jmiAccountSettings(new ActionListener() {
@@ -85,10 +92,7 @@ public class UserMainController {
         frmUserMain.jmiLogoutActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frmUserMain.dispose();
-                
-                MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, null);
-                MainCoordinator.getInstance().openLoginForm();
+                logout();
             }
         });
         frmUserMain.jmiViewMyMoviesActionListener(new ActionListener() {
@@ -192,6 +196,22 @@ public class UserMainController {
     private void validateSearchField() throws Exception{
         if(frmUserMain.getTxtSearch().getText().trim().isEmpty()) {
             throw new Exception("Search field can't be empty!");
+        }
+    }
+    
+    private void logout() {
+        try {
+            User currentUser = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
+            currentUser.setStatus("offline");
+            Request request = new Request(Operation.UPDATE_USER, currentUser);
+            Communication.getInstance().sendUserRequest(request);
+            
+            Communication.stopCommunication();
+
+            MainCoordinator.getInstance().addParam(Constants.CURRENT_USER, null);
+            frmUserMain.dispose();
+        } catch (Exception ex) {
+            Logger.getLogger(UserMainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

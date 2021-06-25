@@ -64,6 +64,13 @@ public class MovieCollectionController {
                     Logger.getLogger(MovieCollectionController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                MainCoordinator.getInstance().setMovieCollectionController(null);
+            }
+            
+            
         });
         frmMovieCollection.btnDetailsActionListener(new ActionListener() {
             @Override

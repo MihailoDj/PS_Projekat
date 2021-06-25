@@ -160,6 +160,14 @@ public class MainCoordinator {
     public AccountSettingsController getAccountSettingsController() {
         return accountSettingsController;
     }
+
+    public void setViewAllReviewsController(ViewAllReviewsController viewAllReviewsController) {
+        this.viewAllReviewsController = viewAllReviewsController;
+    }
+
+    public void setMovieCollectionController(MovieCollectionController movieCollectionController) {
+        this.movieCollectionController = movieCollectionController;
+    }
     
     
 }

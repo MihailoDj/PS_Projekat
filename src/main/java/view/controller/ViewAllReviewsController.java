@@ -6,7 +6,6 @@
 package view.controller;
 import comm.Operation;
 import comm.Request;
-import comm.Response;
 import communication.Communication;
 import domain.Movie;
 import domain.Review;
@@ -78,6 +77,13 @@ public class ViewAllReviewsController {
                     Logger.getLogger(ViewAllReviewsController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                MainCoordinator.getInstance().setViewAllReviewsController(null);
+            }
+            
+            
             
         });
         frmViewReviews.btnRemoveReviewActionListener(new ActionListener() {

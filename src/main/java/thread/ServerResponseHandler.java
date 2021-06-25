@@ -59,7 +59,6 @@ public class ServerResponseHandler extends Thread{
                         } else {
                             JOptionPane.showMessageDialog(MainCoordinator.getInstance().getUserMainController().getFrmUserMain(), "Movie added to collection", "Success", 
                             JOptionPane.INFORMATION_MESSAGE);
-                            MainCoordinator.getInstance().getUserMainController().getFrmUserMain().dispose();
                         }
                         break;
                     case SELECT_COLLECTIONS:
@@ -78,10 +77,6 @@ public class ServerResponseHandler extends Thread{
                         List<Movie> movies = (List<Movie>) response.getResult();
                         MainCoordinator.getInstance().getUserMainController().fillTblMovies(movies);
                         break;
-                    /*case LOGOUT:
-                        ClientController.getInstance().logout();
-                        break;
-                    */
                     case LOGOUT_ALL:
                         JOptionPane.showMessageDialog(MainCoordinator.getInstance().getUserMainController().getFrmUserMain(), "Server is closed");
                         Communication.stopCommunication();

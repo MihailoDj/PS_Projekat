@@ -50,6 +50,7 @@ public class RegisterController {
                     user.setUserID(0l);
                     user.setUsername(frmRegister.getTxtUsername().getText().trim());
                     user.setPassword(String.copyValueOf(frmRegister.getTxtPassword().getPassword()));
+                    user.setEmail(frmRegister.getTxtEmail().getText().trim());
                     user.setStatus("offline");
                    
                     Request request = new Request(Operation.INSERT_USER, user);
@@ -66,9 +67,19 @@ public class RegisterController {
     private void validateForm() throws Exception{
         String username = frmRegister.getTxtUsername().getText().trim();
         String password = String.copyValueOf(frmRegister.getTxtPassword().getPassword());
+        String email = frmRegister.getTxtEmail().getText().trim();
+        String passwordRepeat = String.copyValueOf(frmRegister.getTxtRepeatPassword().getPassword());
         
         if (username.isEmpty() || password.isEmpty()) {
             throw new Exception("Username and password can't be empty!");
+        }
+        
+        if (!email.contains("@") && !email.contains(".com")) {
+            throw new Exception("Invalid email address!");
+        }
+        
+        if (!password.equals(passwordRepeat)) {
+            throw new Exception("Please correctly retype your password!");
         }
     }
 

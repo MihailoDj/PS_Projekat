@@ -6,7 +6,6 @@
 package view.controller;
 import comm.Operation;
 import comm.Request;
-import comm.Response;
 import communication.Communication;
 import domain.User;
 import java.awt.event.ActionEvent;
@@ -107,6 +106,18 @@ public class AccountSettingsController {
                                 "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
+            }
+        });
+        
+        form.btnEnableChangesAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                form.getBtnDeactivate().setEnabled(true);
+                form.getBtnUpdate().setEnabled(true);
+                
+                form.getTxtNewPassword().setEditable(true);
+                form.getTxtOldPassword().setEditable(true);
+                form.getTxtUsername().setEditable(true);
             }
         });
     }

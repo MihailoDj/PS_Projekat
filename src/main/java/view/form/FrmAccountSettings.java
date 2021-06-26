@@ -42,20 +42,31 @@ public class FrmAccountSettings extends javax.swing.JDialog {
         lblNewPassword = new javax.swing.JLabel();
         txtNewPassword = new javax.swing.JPasswordField();
         btnDeactivate = new javax.swing.JButton();
+        btnEnableChanges = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         lblUsername.setText("Username:");
 
+        txtUsername.setEditable(false);
+
         lblOldPassword.setText("Old password:");
 
+        txtOldPassword.setEditable(false);
+
         btnUpdate.setText("Update");
+        btnUpdate.setEnabled(false);
 
         btnCancel.setText("Cancel");
 
         lblNewPassword.setText("New password:");
 
+        txtNewPassword.setEditable(false);
+
         btnDeactivate.setText("Deactivate");
+        btnDeactivate.setEnabled(false);
+
+        btnEnableChanges.setText("Enable changes");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,6 +77,8 @@ public class FrmAccountSettings extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnDeactivate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEnableChanges, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -78,8 +91,8 @@ public class FrmAccountSettings extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtUsername)
-                            .addComponent(txtOldPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-                            .addComponent(txtNewPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE))))
+                            .addComponent(txtOldPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                            .addComponent(txtNewPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -101,7 +114,8 @@ public class FrmAccountSettings extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdate)
                     .addComponent(btnCancel)
-                    .addComponent(btnDeactivate))
+                    .addComponent(btnDeactivate)
+                    .addComponent(btnEnableChanges))
                 .addContainerGap())
         );
 
@@ -112,6 +126,7 @@ public class FrmAccountSettings extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDeactivate;
+    private javax.swing.JButton btnEnableChanges;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel lblNewPassword;
     private javax.swing.JLabel lblOldPassword;
@@ -145,6 +160,10 @@ public class FrmAccountSettings extends javax.swing.JDialog {
         return txtUsername;
     }
 
+    public JButton getBtnEnableChanges() {
+        return btnEnableChanges;
+    }
+
     public void btnUpdateAddActionListener(ActionListener actionListener) {
         btnUpdate.addActionListener(actionListener);
     }
@@ -155,5 +174,9 @@ public class FrmAccountSettings extends javax.swing.JDialog {
     
     public void btnDeactivateAddActionListener(ActionListener actionListener) {
         btnDeactivate.addActionListener(actionListener);
+    }
+    
+    public void btnEnableChangesAddActionListener(ActionListener actionListener) {
+        btnEnableChanges.addActionListener(actionListener);
     }
 }

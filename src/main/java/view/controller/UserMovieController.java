@@ -45,6 +45,7 @@ public class UserMovieController {
         form.getStarRater().setRating((float) movie.getScore());
         form.getLblReleaseDate().setText(movie.getReleaseDate() + "");
         form.getLblDirector().setText(movie.getDirector() + "");
+        form.getLblDuration().setText(movie.getDuration() + " min");
         
         RoleTableModel rtm = new RoleTableModel(movie.getRoles());
         form.getTblRoles().setModel(rtm);

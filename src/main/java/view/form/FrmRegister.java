@@ -6,6 +6,7 @@
 package view.form;
 
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -41,6 +42,9 @@ public class FrmRegister extends javax.swing.JFrame {
         txtRepeatPassword = new javax.swing.JPasswordField();
         lblUsername1 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
+        btnSendVerificationCode = new javax.swing.JButton();
+        lblVerificationCode = new javax.swing.JLabel();
+        txtVerificationCode = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -48,13 +52,20 @@ public class FrmRegister extends javax.swing.JFrame {
 
         lblPassword.setText("Password");
 
-        btnConfirm.setText("Confirm");
+        btnConfirm.setText("Register");
+        btnConfirm.setEnabled(false);
 
         btnCancel.setText("Cancel");
 
         lblRepeatPassword.setText("Repeat password");
 
         lblUsername1.setText("E-mail");
+
+        btnSendVerificationCode.setText("Send verification code");
+
+        lblVerificationCode.setText("Verification code");
+
+        txtVerificationCode.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,9 +75,10 @@ public class FrmRegister extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 259, Short.MAX_VALUE)
                         .addComponent(btnCancel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSendVerificationCode)
+                        .addGap(18, 18, 18)
                         .addComponent(btnConfirm))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -79,7 +91,11 @@ public class FrmRegister extends javax.swing.JFrame {
                             .addComponent(txtPassword)
                             .addComponent(txtUsername)
                             .addComponent(txtRepeatPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
-                            .addComponent(txtEmail))))
+                            .addComponent(txtEmail)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblVerificationCode)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                        .addComponent(txtVerificationCode, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -101,10 +117,15 @@ public class FrmRegister extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtRepeatPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblRepeatPassword))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblVerificationCode)
+                    .addComponent(txtVerificationCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfirm)
-                    .addComponent(btnCancel))
+                    .addComponent(btnCancel)
+                    .addComponent(btnSendVerificationCode))
                 .addContainerGap())
         );
 
@@ -115,14 +136,17 @@ public class FrmRegister extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnConfirm;
+    private javax.swing.JButton btnSendVerificationCode;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblRepeatPassword;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JLabel lblUsername1;
+    private javax.swing.JLabel lblVerificationCode;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JPasswordField txtRepeatPassword;
     private javax.swing.JTextField txtUsername;
+    private javax.swing.JTextField txtVerificationCode;
     // End of variables declaration//GEN-END:variables
 
 
@@ -141,6 +165,14 @@ public class FrmRegister extends javax.swing.JFrame {
     public JPasswordField getTxtRepeatPassword() {
         return txtRepeatPassword;
     }
+
+    public JTextField getTxtVerificationCode() {
+        return txtVerificationCode;
+    }
+
+    public JButton getBtnConfirm() {
+        return btnConfirm;
+    }
     
     public void btnConfirmAddActionListener(ActionListener actionListener) {
         btnConfirm.addActionListener(actionListener);
@@ -149,4 +181,10 @@ public class FrmRegister extends javax.swing.JFrame {
     public void btnCancelAddActionListener(ActionListener actionListener) {
         btnCancel.addActionListener(actionListener);
     }
+    
+    public void btnSendVerificationCodeAddActionListener(ActionListener actionListener) {
+        btnSendVerificationCode.addActionListener(actionListener);
+    }
+    
+    
 }

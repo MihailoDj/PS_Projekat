@@ -23,6 +23,7 @@ import view.form.FrmAccountSettings;
  */
 public class AccountSettingsController {
     private final FrmAccountSettings form;
+    private String deactivationCode;
 
     public AccountSettingsController(FrmAccountSettings form) {
         this.form = form;
@@ -47,32 +48,37 @@ public class AccountSettingsController {
         form.btnDeactivateAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int check = JOptionPane.showConfirmDialog(form, "Are you sure you want to deactivate your account?", 
-                        "Account deactivation", JOptionPane.YES_NO_OPTION);
-                
-                if(check == JOptionPane.YES_OPTION) {
-                    String oldPass = ((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER)).getPassword();
-                    if (String.copyValueOf(form.getTxtOldPassword().getPassword()).equals(oldPass)) {
-                        try {
-                            User user = ((User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
-                            
-                            Request request = new Request(Operation.DELETE_USER, user);
-                            Communication.getInstance().sendUserRequest(request);
-                            
-                            JOptionPane.showMessageDialog(form, "Account successfully deleted", 
-                                    "Goodbye!" ,JOptionPane.INFORMATION_MESSAGE);
-                            
-                            form.dispose();
-                            MainCoordinator.getInstance().getUserMainController().getFrmUserMain().dispose();
-                            MainCoordinator.getInstance().openLoginForm();
-                        } catch (Exception ex) {
-                            Logger.getLogger(AccountSettingsController.class.getName()).log(Level.SEVERE, null, ex);
+                if (form.getTxtDeactivationCode().getText().trim().equals(deactivationCode)) {
+                    int check = JOptionPane.showConfirmDialog(form, "Are you sure you want to deactivate your account?",
+                            "Account deactivation", JOptionPane.YES_NO_OPTION);
+
+                    if (check == JOptionPane.YES_OPTION) {
+                        String oldPass = ((User) MainCoordinator.getInstance().getParam(Constants.CURRENT_USER)).getPassword();
+                        if (String.copyValueOf(form.getTxtOldPassword().getPassword()).equals(oldPass)) {
+                            try {
+                                User user = ((User) MainCoordinator.getInstance().getParam(Constants.CURRENT_USER));
+
+                                Request request = new Request(Operation.DELETE_USER, user);
+                                Communication.getInstance().sendUserRequest(request);
+
+                                JOptionPane.showMessageDialog(form, "Account successfully deleted",
+                                        "Goodbye!", JOptionPane.INFORMATION_MESSAGE);
+
+                                form.dispose();
+                                MainCoordinator.getInstance().getUserMainController().getFrmUserMain().dispose();
+                                MainCoordinator.getInstance().openLoginForm();
+                            } catch (Exception ex) {
+                                Logger.getLogger(AccountSettingsController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(form, "You must enter your old password correctly",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(form, "You must enter your old password correctly",
-                                "Error" , JOptionPane.ERROR_MESSAGE);
                     }
+                } else {
+                    JOptionPane.showMessageDialog(form, "Incorrect deactivation code!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+                
             }
         });
         form.btnUpdateAddActionListener(new ActionListener() {
@@ -112,12 +118,30 @@ public class AccountSettingsController {
         form.btnEnableChangesAddActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                form.getBtnDeactivate().setEnabled(true);
+                form.getBtnSendDeactivationCode().setEnabled(true);
                 form.getBtnUpdate().setEnabled(true);
                 
                 form.getTxtNewPassword().setEditable(true);
                 form.getTxtOldPassword().setEditable(true);
                 form.getTxtUsername().setEditable(true);
+                
+            }
+        });
+        
+        form.btnSendDeactivationCodeAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    form.getBtnDeactivate().setEnabled(true);
+                    form.getTxtDeactivationCode().setEditable(true);
+                    
+                    User userToDeactivate = (User)MainCoordinator.getInstance().getParam(Constants.CURRENT_USER);
+                    
+                    Request request = new Request(Operation.VERIFY_DEACTIVATION, userToDeactivate);
+                    Communication.getInstance().sendUserRequest(request);
+                } catch (Exception ex) {
+                    Logger.getLogger(AccountSettingsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -141,4 +165,14 @@ public class AccountSettingsController {
         if (newPass.equals(oldPass))
             throw new Exception("Your new password can't be the same as your old password!");
     }
+
+    public String getDeactivationCode() {
+        return deactivationCode;
+    }
+
+    public void setDeactivationCode(String deactivationCode) {
+        this.deactivationCode = deactivationCode;
+    }
+    
+    
 }

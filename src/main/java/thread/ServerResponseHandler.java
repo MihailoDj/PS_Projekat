@@ -86,6 +86,14 @@ public class ServerResponseHandler extends Thread{
                         Communication.stopCommunication();
                         MainCoordinator.getInstance().getUserMainController().getFrmUserMain().dispose();
                         break;
+                    case VERIFY_CODE:
+                        String generatedCode = String.valueOf(response.getResult());
+                        MainCoordinator.getInstance().getRegisterController().setGeneratedCode(generatedCode);
+                        break;
+                    case VERIFY_DEACTIVATION:
+                        String deactivationCoe = String.valueOf(response.getResult());
+                        MainCoordinator.getInstance().getAccountSettingsController().setDeactivationCode(deactivationCoe);
+                        break;
                 }
 
             }

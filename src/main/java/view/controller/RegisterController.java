@@ -21,6 +21,7 @@ import view.form.FrmRegister;
  */
 public class RegisterController {
     private final FrmRegister frmRegister;
+    private String generatedCode;
 
     public RegisterController(FrmRegister frmRegister) {
         this.frmRegister = frmRegister;
@@ -46,6 +47,10 @@ public class RegisterController {
                 try{
                     validateForm();
                     
+                    if (!frmRegister.getTxtVerificationCode().getText().trim().equals(generatedCode)) {
+                        throw new Exception("Invalid verification code!");
+                    }
+                    
                     User user = new User();
                     user.setUserID(0l);
                     user.setUsername(frmRegister.getTxtUsername().getText().trim());
@@ -56,6 +61,27 @@ public class RegisterController {
                     Request request = new Request(Operation.INSERT_USER, user);
                     Communication.getInstance().sendUserRequest(request);
                     
+                } catch (Exception ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(frmRegister, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        
+        frmRegister.btnSendVerificationCodeAddActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    validateForm();
+                    frmRegister.getBtnConfirm().setEnabled(true);
+                    frmRegister.getTxtVerificationCode().setEditable(true);
+                    
+                    //verify email validitiy using regex
+                    User userToVerify = new User();
+                    userToVerify.setEmail(frmRegister.getTxtEmail().getText().trim());
+                    
+                    Request request = new Request(Operation.VERIFY_CODE, userToVerify);
+                    Communication.getInstance().sendUserRequest(request);
                 } catch (Exception ex) {
                     Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(frmRegister, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -74,7 +100,7 @@ public class RegisterController {
             throw new Exception("Username and password can't be empty!");
         }
         
-        if (!email.contains("@") && !email.contains(".com")) {
+        if (!email.contains("@") || !email.contains(".com")) {
             throw new Exception("Invalid email address!");
         }
         
@@ -86,6 +112,12 @@ public class RegisterController {
     public FrmRegister getFrmRegister() {
         return frmRegister;
     }
-    
-    
+
+    public String getGeneratedCode() {
+        return generatedCode;
+    }
+
+    public void setGeneratedCode(String generatedCode) {
+        this.generatedCode = generatedCode;
+    }
 }
